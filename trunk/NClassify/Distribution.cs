@@ -106,7 +106,8 @@ namespace IvanAkcheurov.NClassify
                 throw new ArgumentOutOfRangeException("minCountAllowed", "Only non-negative values allowed");
             IEnumerable<T> removedItems =
                 _distribution.DistinctItems()
-                .Where(event_ => _distribution.NumberOfCopies(event_) < minCountAllowed);
+                .Where(event_ => _distribution.NumberOfCopies(event_) < minCountAllowed)
+                .ToList();
             foreach (var item in removedItems)
             {
                 _distribution.RemoveAllCopies(item);
