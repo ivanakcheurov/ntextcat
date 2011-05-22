@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NClassify;
+using IvanAkcheurov.NClassify;
 
-namespace NTextCatLib
+namespace IvanAkcheurov.NTextCat.Lib
 {
     public class LanguageModelDistanceCalculator : IDistanceCalculator<IDistribution<string>>
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using NClassify;
+using IvanAkcheurov.NClassify;
 using NGram = System.UInt64;
 
-namespace NTextCatLib
+namespace IvanAkcheurov.NTextCat.Lib
 {
     public class LanguageModelPersister
     {

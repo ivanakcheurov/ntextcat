@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using NClassify;
+using IvanAkcheurov.NClassify;
 using NGram = System.UInt64;
 
-namespace NTextCatLib
+namespace IvanAkcheurov.NTextCat.Lib
 {
     public class LanguageModelCreator<T>
     {
@@ -14,7 +14,7 @@ namespace NTextCatLib
         {
             IModifiableDistribution<T> distribution = new Distribution<T>();
             distribution.AddEventRange(tokens);
-            // text_cat prunes by count, then by rank.
+            // text_cat prunes by count and then by rank.
             // resulting distribution should not contain threshold-values (text_cat excludes them),
             // but distribution's PruneByCount leaves threshold in distribution, hence lower threshold by one.
             if (minOccuranceNumberThreshold > 0)

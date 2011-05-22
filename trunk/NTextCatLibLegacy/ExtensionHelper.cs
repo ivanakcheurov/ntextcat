@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NTextCatLib;
+using IvanAkcheurov.NTextCat.Lib;
 
-namespace NTextCatLibLegacy
+namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
     public static class ExtensionHelper
     {

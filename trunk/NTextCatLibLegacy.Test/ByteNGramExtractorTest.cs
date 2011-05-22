@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using NUnit.Framework;
 
-namespace NTextCatLibLegacy.Test
+namespace IvanAkcheurov.NTextCat.Lib.Legacy.Test
 {
     [TestFixture]
     public class ByteNGramExtractorTest

@@ -8,8 +8,8 @@
     <ProjectGuid>{E645E620-70F5-4DF7-96DD-5189F353D79A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTextCatLib</RootNamespace>
-    <AssemblyName>NTextCatLib</AssemblyName>
+    <RootNamespace>IvanAkcheurov.NTextCat.Lib</RootNamespace>
+    <AssemblyName>IvanAkcheurov.NTextCat.Lib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextLanguageGuesser.cs" />
     <Compile Include="LanguageModelCreator.cs" />
     <Compile Include="LanguageModelDistanceCalculator.cs" />
     <Compile Include="LanguageModelPersister.cs" />

@@ -8,8 +8,8 @@
     <ProjectGuid>{5A3E5875-AD86-4E19-93E6-CBE612DA83A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTextCatLibLegacy.Test</RootNamespace>
-    <AssemblyName>NTextCatLibLegacy.Test</AssemblyName>
+    <RootNamespace>IvanAkcheurov.NTextCat.Lib.Legacy.Test</RootNamespace>
+    <AssemblyName>IvanAkcheurov.NTextCat.Lib.Legacy.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

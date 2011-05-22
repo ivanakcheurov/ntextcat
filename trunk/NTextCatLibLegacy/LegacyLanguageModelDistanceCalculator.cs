@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using NClassify;
+using IvanAkcheurov.NClassify;
 
-namespace NTextCatLibLegacy
+namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
     public class LegacyLanguageModelDistanceCalculator : IDistanceCalculator<IDictionary<ulong, int>>
     {

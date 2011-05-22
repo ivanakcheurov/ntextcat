@@ -8,8 +8,8 @@
     <ProjectGuid>{E33BCC4E-226B-4D83-99A2-30A3B7890F46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NTextCatLib.Test</RootNamespace>
-    <AssemblyName>NTextCatLib.Test</AssemblyName>
+    <RootNamespace>IvanAkcheurov.NTextCatLib.Test</RootNamespace>
+    <AssemblyName>IvanAkcheurov.NTextCatLib.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

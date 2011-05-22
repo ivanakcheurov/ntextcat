@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Wintellect.PowerCollections;
 
-namespace NClassify
+namespace IvanAkcheurov.NClassify
 {
     /// <summary>
     /// 

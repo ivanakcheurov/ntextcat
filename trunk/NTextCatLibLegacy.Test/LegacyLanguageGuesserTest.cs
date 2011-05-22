@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NClassify;
-using NTextCatLib;
+using IvanAkcheurov.NClassify;
+using IvanAkcheurov.NTextCat.Lib;
 using NUnit.Framework;
 
-namespace NTextCatLibLegacy.Test
+namespace IvanAkcheurov.NTextCat.Lib.Legacy.Test
 {
     [TestFixture]
     class LegacyLanguageGuesserTest

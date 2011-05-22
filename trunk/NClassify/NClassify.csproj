@@ -8,8 +8,8 @@
     <ProjectGuid>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NClassify</RootNamespace>
-    <AssemblyName>NClassify</AssemblyName>
+    <RootNamespace>IvanAkcheurov.NClassify</RootNamespace>
+    <AssemblyName>IvanAkcheurov.NClassify</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

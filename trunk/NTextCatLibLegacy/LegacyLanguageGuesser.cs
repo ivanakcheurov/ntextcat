@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NClassify;
-using NTextCatLib;
+using IvanAkcheurov.NClassify;
+using IvanAkcheurov.NTextCat.Lib;
 
-namespace NTextCatLibLegacy
+namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
     /// <summary>
     /// 

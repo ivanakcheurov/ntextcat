@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NClassify;
+using IvanAkcheurov.NClassify;
 
-namespace NTextCatLibLegacy
+namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
     public class ByteToUInt64NGramExtractor : IFeatureExtractor<byte[], ulong>, IFeatureExtractor<Stream, ulong>
     {
