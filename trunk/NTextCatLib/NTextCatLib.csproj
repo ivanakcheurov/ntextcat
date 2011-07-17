@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StringExtensions.cs" />
     <Compile Include="TextLanguageGuesser.cs" />
     <Compile Include="LanguageModelCreator.cs" />
     <Compile Include="LanguageModelDistanceCalculator.cs" />

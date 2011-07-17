@@ -15,12 +15,12 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
 {
     class Program
     {
+        private const string NoPromptSwitch = "noprompt";
         static void Main(string[] args)
         {
             //Debugger.Launch();
             //MemoryStream s = new MemoryStream();
             //Console.OpenStandardInput().CopyTo(s);
-
             double defaultWorstAcceptableThreshold = XmlConvert.ToDouble(ConfigurationManager.AppSettings["WorstAcceptableThreshold"]);
             int defaultTooManyLanguagesThreshold = XmlConvert.ToInt32(ConfigurationManager.AppSettings["TooManyLanguagesThreshold"]);
             string defaultLanguageModelsDirectory = ConfigurationManager.AppSettings["LanguageModelsDirectory"];
@@ -39,6 +39,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
             long opt_OnlyReadFirstNLines = long.MaxValue;
             int opt_MaximumSizeOfDistribution = defaultMaximumSizeOfDistribution;
             bool opt_verbose = false;
+            bool opt_noPrompt = false;
             
             OptionSet option_set = new OptionSet()
 
@@ -96,7 +97,10 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                    (double option) => opt_WorstAcceptableThreshold = option)
                 .Add("v",
                    @"verbose. Continuation messages are written to standard error.",
-                   option => opt_verbose = option != null);
+                   option => opt_verbose = option != null)
+                .Add(NoPromptSwitch,
+                   @"prevents text input prompt from being shown.",
+                   option => opt_noPrompt = option != null);
 
             try
             {
@@ -117,9 +121,14 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
             if (opt_train)
             {
                 IDistribution<ulong> langaugeModel;
-                Stream input = string.IsNullOrWhiteSpace(opt_trainOnFile)
-                                   ? Console.OpenStandardInput()
-                                   : File.OpenRead(opt_trainOnFile);
+                Stream input;
+                if (string.IsNullOrWhiteSpace(opt_trainOnFile))
+                {
+                    if (!opt_noPrompt) 
+                        DisplayInputPrompt("Train from text input");
+                    input = Console.OpenStandardInput();
+                }
+                else input = File.OpenRead(opt_trainOnFile);
                 using (input)
                 {
                     IEnumerable<UInt64> tokens = new ByteToUInt64NGramExtractor(5, opt_OnlyReadFirstNLines).GetFeatures(input);
@@ -142,6 +151,8 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                 }
                 else if (opt_classifyFromInputPerLine)
                 {
+                    if (!opt_noPrompt) 
+                        DisplayInputPrompt("Classify each line from text input");
                     using (Stream input = Console.OpenStandardInput())
                     {
                         // suboptimal read performance, but per-line mode is not intended to be used in heavy scenarios
@@ -157,13 +168,32 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                 }
                 else
                 {
+                    if (!opt_noPrompt) 
+                        DisplayInputPrompt("Classify text input");
                     using (Stream input = Console.OpenStandardInput())
                     {
                         ClassifyBytes(input, opt_TooManyLanguagesThreshold, opt_LanguageModelsDirectory, opt_OccuranceNumberThreshold, opt_OnlyReadFirstNLines, opt_MaximumSizeOfDistribution, opt_WorstAcceptableThreshold);
                     }
                 }
             }
+        }
 
+        private static void DisplayInputPrompt(string mode)
+        {
+            Console.WriteLine(
+                    string.Empty
+                    .AddLine("Welcome!")
+                    .AddLine("NTextCat is text classification tool")
+                    .AddLine("which is primarily used for identifying language of text.")
+                    .AddLine("Current mode is " + mode)
+                    .AddLine("To get help on command line switches please type:")
+                    .AddLine("\t" + Assembly.GetExecutingAssembly().GetName().Name + " /?")
+                    .AddLine("To prevent this prompt from being shown please add /" + NoPromptSwitch + " switch to your command line call.")
+                    .AddLine()
+                    .AddLine("Currently TEXT INPUT IS EXPECTED from you.")
+                    .AddLine("Finish your typing with pressing Enter, Ctrl+Z, Enter.")
+                    .ToString()
+                    );
         }
 
         private static IEnumerable<IEnumerable<T>> Split<T>(IEnumerable<T> sequence,  bool removeEmptyEntries, params T[] splitters)
@@ -225,7 +255,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
         private static void ShowHelp(OptionSet optionSet)
         {
             
-            Console.Write(string.Format(
+            Console.Write(
 @"Text Categorization. Typically used to determine the language of a
 given document. 
 
@@ -243,9 +273,10 @@ Usage
 * for creating new language model, based on text read from file or standard input (if filename is not specified):
 
 {0} -n[=filename] [-v]
-", Assembly.GetExecutingAssembly().GetName().Name));
-            Console.WriteLine();
-            Console.WriteLine("Options:");
+".FormatWith(Assembly.GetExecutingAssembly().GetName().Name)
+            .AddLine()
+            .AddLine("Options:"));
+            
             optionSet.WriteOptionDescriptions(Console.Out);
         }
     }
