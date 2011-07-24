@@ -141,13 +141,14 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
             }
             else
             {
+                var languageIdentifier = new LanguageIdentifier(opt_LanguageModelsDirectory, opt_MaximumSizeOfDistribution);
+                var settings = new LanguageIdentifier.LanguageIdentifierSettings(
+                    opt_TooManyLanguagesThreshold, opt_OccuranceNumberThreshold, opt_OnlyReadFirstNLines,
+                    opt_WorstAcceptableThreshold, 5);
                 if (opt_classifyFromArgument != null)
                 {
-                    using (Stream input = new MemoryStream(Encoding.UTF8.GetBytes(opt_classifyFromArgument)))
-                    {
-                        ClassifyBytes(input, opt_TooManyLanguagesThreshold, opt_LanguageModelsDirectory, opt_OccuranceNumberThreshold, opt_OnlyReadFirstNLines,
-                                      opt_MaximumSizeOfDistribution, opt_WorstAcceptableThreshold);
-                    }
+                    var languages = languageIdentifier.ClassifyText(opt_classifyFromArgument, settings);
+                    OutputIdentifiedLanguages(languages);
                 }
                 else if (opt_classifyFromInputPerLine)
                 {
@@ -158,10 +159,10 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                         // suboptimal read performance, but per-line mode is not intended to be used in heavy scenarios
                         foreach (IEnumerable<byte> line in Split<byte>(EnumerateAllBytes(input), true, 0xD, 0xA))
                         {
-                            using (MemoryStream linestream = new MemoryStream(line.ToArray()))
+                            using (var linestream = new MemoryStream(line.ToArray()))
                             {
-                                ClassifyBytes(linestream, opt_TooManyLanguagesThreshold, opt_LanguageModelsDirectory, opt_OccuranceNumberThreshold, opt_OnlyReadFirstNLines,
-                                              opt_MaximumSizeOfDistribution, opt_WorstAcceptableThreshold);
+                                var languages = languageIdentifier.ClassifyBytes(linestream, null, settings);
+                                OutputIdentifiedLanguages(languages);
                             }
                         }
                     }
@@ -172,7 +173,8 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                         DisplayInputPrompt("Classify text input");
                     using (Stream input = Console.OpenStandardInput())
                     {
-                        ClassifyBytes(input, opt_TooManyLanguagesThreshold, opt_LanguageModelsDirectory, opt_OccuranceNumberThreshold, opt_OnlyReadFirstNLines, opt_MaximumSizeOfDistribution, opt_WorstAcceptableThreshold);
+                        var languages = languageIdentifier.ClassifyBytes(input, null, settings);
+                        OutputIdentifiedLanguages(languages);
                     }
                 }
             }
@@ -223,34 +225,21 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                 yield return (byte)readByte;
         }
 
-        private static void ClassifyBytes(Stream input, int opt_TooManyLanguagesThreshold, string opt_LanguageModelsDirectory, int opt_OccuranceNumberThreshold, long opt_OnlyReadFirstNLines, int opt_MaximumSizeOfDistribution, double opt_WorstAcceptableThreshold)
+        private static void OutputIdentifiedLanguages(IEnumerable<Tuple<string, double>> languages)
         {
-            IEnumerable<UInt64> tokens = new ByteToUInt64NGramExtractor(5, opt_OnlyReadFirstNLines).GetFeatures(input);
-            var langaugeModel = LanguageModelCreator<UInt64>.CreateLangaugeModel(tokens, opt_OccuranceNumberThreshold, opt_MaximumSizeOfDistribution);
-
-            LegacyLanguageGuesser languageGuesser = new LegacyLanguageGuesser(400);
-            LanguageModelPersister persister = new LanguageModelPersister();
-            foreach (string filename in Directory.GetFiles(opt_LanguageModelsDirectory))
-            {
-                using (FileStream sourceStream = File.OpenRead(filename))
-                {
-                    languageGuesser.AddEtalonLanguageModel(Path.GetFileNameWithoutExtension(filename), persister.Load(sourceStream));
-                }
-            }
-
-            List<Tuple<string, double>> result = languageGuesser.Classify(langaugeModel).ToList();
-            double leastDistance = result.First().Item2;
-            List<Tuple<string, double>> acceptableResults = result.Where(t => t.Item2 <= leastDistance * opt_WorstAcceptableThreshold).ToList();
-            if (acceptableResults.Count > opt_TooManyLanguagesThreshold)
-                Console.WriteLine("Unknown");
+            languages = languages.ToList();
+            if (languages.Any() == false)
+                Console.WriteLine("unknown");
             else
             {
-                foreach (Tuple<string, double> acceptableResult in acceptableResults)
+                foreach (var language in languages)
                 {
-                    Console.WriteLine(acceptableResult.Item1);
+                    Console.WriteLine(language.Item1);
                 }
             }
         }
+
+        
 
         private static void ShowHelp(OptionSet optionSet)
         {

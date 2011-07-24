@@ -4,12 +4,16 @@ using IvanAkcheurov.NClassify;
 
 namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
-    public class LegacyLanguageModelDistanceCalculator : IDistanceCalculator<IDictionary<ulong, int>>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T">type of token used in Language Models</typeparam>
+    public class LegacyLanguageModelDistanceCalculator<T> : IDistanceCalculator<IDictionary<T, int>>
     {
         /// <summary>
         /// HACK! Read remarks for the constructor parameter guessedLanguageModel
         /// </summary>
-        private IDictionary<ulong, int> _guessedLanguageModel;
+        private IDictionary<T, int> _guessedLanguageModel;
 
         private int _defaultRankDistanceOnAbsence;
 
@@ -24,17 +28,17 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// To repeat original behavior, you should know which object is guessed language!
         /// </param>
         /// <param name="defaultRankDistanceOnAbsence">if ngram is absent in known language model, this number will be used as rank distance for this ngram between unknown and known language models</param>
-        public LegacyLanguageModelDistanceCalculator(IDictionary<ulong, int> guessedLanguageModel, int defaultRankDistanceOnAbsence)
+        public LegacyLanguageModelDistanceCalculator(IDictionary<T, int> guessedLanguageModel, int defaultRankDistanceOnAbsence)
         {
             _guessedLanguageModel = guessedLanguageModel;
             _defaultRankDistanceOnAbsence = defaultRankDistanceOnAbsence;
         }
 
-        public double CalculateDistance(IDictionary<ulong, int> obj1, IDictionary<ulong, int> obj2)
+        public double CalculateDistance(IDictionary<T, int> obj1, IDictionary<T, int> obj2)
         {
             // HACK! Read remarks for the constructor parameter guessedLanguageModel
-            IDictionary<ulong, int> unknown;
-            IDictionary<ulong, int> known;
+            IDictionary<T, int> unknown;
+            IDictionary<T, int> known;
             if (ReferenceEquals(obj1, _guessedLanguageModel))
             {
                 unknown = obj1;

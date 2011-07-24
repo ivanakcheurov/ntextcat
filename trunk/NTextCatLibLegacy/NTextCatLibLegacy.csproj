@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\IvanAkcheurov.NTextCat.Lib.Legacy.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,7 +43,8 @@
   <ItemGroup>
     <Compile Include="ByteToUInt64NGramExtractor.cs" />
     <Compile Include="ExtensionHelper.cs" />
-    <Compile Include="LegacyLanguageGuesser.cs" />
+    <Compile Include="LanguageIdentifier.cs" />
+    <Compile Include="RankedClassifier.cs" />
     <Compile Include="LegacyLanguageModelDistanceCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

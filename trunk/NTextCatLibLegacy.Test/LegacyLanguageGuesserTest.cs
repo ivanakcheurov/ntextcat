@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using IvanAkcheurov.NClassify;
 using IvanAkcheurov.NTextCat.Lib;
+using IvanAkcheurov.NTextCat.Lib.Test;
 using NUnit.Framework;
 
 namespace IvanAkcheurov.NTextCat.Lib.Legacy.Test
@@ -11,6 +12,13 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy.Test
     [TestFixture]
     class LegacyLanguageGuesserTest
     {
+        [Test]
+        [Ignore("Identifies as Bulgarian instead of Russian")]
+        public void Test2()
+        {
+            //"Главная задача сэмпла - предоставить желающим качать возможность оценить реальное качество материала без скачивания всей раздачи целиком. Поэтому вырезать сэмпл надо из середины фильма и без каких либо искажений. Достаточно фрагмента на 1-2 минуты. Заливать сэмпл следует только на файлообменники";
+        }
+
         [Test]
         public void Test()
         {
@@ -71,7 +79,7 @@ koningin Elizabeth.");
             Func<byte[], IDistribution<UInt64>> languageModelCreator = 
                 bytes => LanguageModelCreator<UInt64>.CreateLangaugeModel(tokenizer.GetFeatures(bytes), 0, 400);
 
-            LegacyLanguageGuesser guesser = new LegacyLanguageGuesser(400);
+            var guesser = new RankedClassifier<ulong>(400);
             guesser.AddEtalonLanguageModel("en", languageModelCreator(englishEtalon));
             guesser.AddEtalonLanguageModel("nl", languageModelCreator(dutchEtalon));
             guesser.AddEtalonLanguageModel("ru", languageModelCreator(russianEtalon));
@@ -80,11 +88,12 @@ koningin Elizabeth.");
             Assert.AreEqual("en", guesser.Classify(languageModelCreator(englishQuery)).First().Item1);
         }
 
-        //[Test]
-        //public void ExhaustiveTest()
-        //{
-        //    IEnumerable<TestHelpers.TestData> testDatas = TestHelpers.GetTestData(System.Reflection.MethodBase.GetCurrentMethod());
+        [Test]
+        [Ignore("Test is not implemented completely")]
+        public void ExhaustiveTest()
+        {
+            IEnumerable<TestHelpers.TestData> testDatas = TestHelpers.GetTestData(System.Reflection.MethodBase.GetCurrentMethod());
 
-        //}
+        }
     }
 }

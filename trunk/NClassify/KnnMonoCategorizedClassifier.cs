@@ -13,8 +13,12 @@ namespace IvanAkcheurov.NClassify
 
         public KnnMonoCategorizedClassifier(IDistanceCalculator<TItem> distanceCalculator, IDictionary<TItem, TCategory> knownInstances)
         {
+            if (distanceCalculator == null) throw new ArgumentNullException("distanceCalculator");
+            if (knownInstances == null) throw new ArgumentNullException("knownInstances");
             _distanceCalculator = distanceCalculator;
             _knownInstances = new Dictionary<TItem, TCategory>(knownInstances);
+            if (_knownInstances.Count == 0)
+                throw new ArgumentException("Cannot be empty", "knownInstances");
         }
 
         public IEnumerable<Tuple<TCategory, double>> Classify(TItem item)

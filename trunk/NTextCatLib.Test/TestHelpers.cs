@@ -7,7 +7,7 @@ using System.Text;
 
 namespace IvanAkcheurov.NTextCat.Lib.Test
 {
-    class TestHelpers
+    public class TestHelpers
     {
         private const string InputDataFilenameSuffix = ".input";
         private const string ExpectedResultsFilenameSuffix = ".expected";

@@ -50,6 +50,7 @@
     <Compile Include="LanguageModelCreatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers.cs" />
+    <Compile Include="TestTextReaderStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NClassify\NClassify.csproj">
