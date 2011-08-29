@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NClassify")]
+[assembly: AssemblyTitle("NTextCatLegacy (.Net 3.5)")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 
@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a18e0b82-59af-4605-8530-0ce647f81ce4")]
+[assembly: Guid("91ba6070-6c57-4c7e-8075-ca19b7e0cb70")]

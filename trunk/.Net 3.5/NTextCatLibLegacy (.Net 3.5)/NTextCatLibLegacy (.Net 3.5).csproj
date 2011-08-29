@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</ProjectGuid>
+    <ProjectGuid>{A6DE11D3-21BB-46E6-BB59-92B3C5750124}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IvanAkcheurov.NClassify</RootNamespace>
-    <AssemblyName>IvanAkcheurov.NClassify</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>IvanAkcheurov.NTextCat.Lib.Legacy</RootNamespace>
+    <AssemblyName>IvanAkcheurov.NTextCat.Lib.Legacy</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,39 +30,45 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\IvanAkcheurov.NClassify.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PowerCollections">
-      <HintPath>..\Libs\PowerCollections\PowerCollections.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NTextCat\Properties\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\NTextCatLibLegacy\ByteToUInt64NGramExtractor.cs">
+      <Link>ByteToUInt64NGramExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCatLibLegacy\ExtensionHelper.cs">
+      <Link>ExtensionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCatLibLegacy\LanguageIdentifier.cs">
+      <Link>LanguageIdentifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCatLibLegacy\LegacyLanguageModelDistanceCalculator.cs">
+      <Link>LegacyLanguageModelDistanceCalculator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCatLibLegacy\RankedClassifier.cs">
+      <Link>RankedClassifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCat\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ComparisonComparer.cs" />
-    <Compile Include="Distribution.cs" />
-    <Compile Include="ICategorizedClassifier.cs" />
-    <Compile Include="IClassifier.cs" />
-    <Compile Include="IDistanceCalculator.cs" />
-    <Compile Include="IDistribution.cs" />
-    <Compile Include="IFeatureExtractor.cs" />
-    <Compile Include="IModifiableDistribution.cs" />
-    <Compile Include="IStringTokenizer.cs" />
-    <Compile Include="ITextReaderTokenizer.cs" />
-    <Compile Include="ITrainee.cs" />
-    <Compile Include="KnnMonoCategorizedClassifier.cs" />
-    <Compile Include="NonlinearVectorDistanceCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VectorDistanceCalculator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NClassify %28.Net 3.5%29\NClassify %28.Net 3.5%29.csproj">
+      <Project>{B7F1DF8E-C307-4255-9AEA-33B68BB100FF}</Project>
+      <Name>NClassify %28.Net 3.5%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NTextCatLib %28.Net 3.5%29\NTextCatLib %28.Net 3.5%29.csproj">
+      <Project>{3FC51F8D-C618-451F-A3F7-E753DCAFF572}</Project>
+      <Name>NTextCatLib %28.Net 3.5%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

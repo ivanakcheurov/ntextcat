@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NTextCat\Properties\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ByteToUInt64NGramExtractor.cs" />
     <Compile Include="ExtensionHelper.cs" />
     <Compile Include="LanguageIdentifier.cs" />

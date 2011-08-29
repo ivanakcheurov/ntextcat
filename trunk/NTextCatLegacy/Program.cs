@@ -122,7 +122,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
             {
                 IDistribution<ulong> langaugeModel;
                 Stream input;
-                if (string.IsNullOrWhiteSpace(opt_trainOnFile))
+                if (string.IsNullOrEmpty(opt_trainOnFile))
                 {
                     if (!opt_noPrompt) 
                         DisplayInputPrompt("Train from text input");

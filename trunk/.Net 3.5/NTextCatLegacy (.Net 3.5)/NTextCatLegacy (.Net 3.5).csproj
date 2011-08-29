@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A0B4C582-B157-4CFC-88CF-02EEC54E1290}</ProjectGuid>
+    <ProjectGuid>{5AE885D7-AE39-4CCF-8B23-94662E01D728}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IvanAkcheurov.NTextCat.App.Legacy</RootNamespace>
     <AssemblyName>NTextCatLegacy</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,7 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,27 +39,33 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Options.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="..\..\NTextCatLegacy\Options.cs">
+      <Link>Options.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCatLegacy\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCat\Properties\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NClassify\NClassify.csproj">
-      <Project>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</Project>
-      <Name>NClassify</Name>
+    <ProjectReference Include="..\NClassify %28.Net 3.5%29\NClassify %28.Net 3.5%29.csproj">
+      <Project>{B7F1DF8E-C307-4255-9AEA-33B68BB100FF}</Project>
+      <Name>NClassify %28.Net 3.5%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NTextCatLibLegacy\NTextCatLibLegacy.csproj">
-      <Project>{F24E7DFF-AD74-4733-95C3-B3EEF182311F}</Project>
-      <Name>NTextCatLibLegacy</Name>
+    <ProjectReference Include="..\NTextCatLib %28.Net 3.5%29\NTextCatLib %28.Net 3.5%29.csproj">
+      <Project>{3FC51F8D-C618-451F-A3F7-E753DCAFF572}</Project>
+      <Name>NTextCatLib %28.Net 3.5%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NTextCatLib\NTextCatLib.csproj">
-      <Project>{E645E620-70F5-4DF7-96DD-5189F353D79A}</Project>
-      <Name>NTextCatLib</Name>
+    <ProjectReference Include="..\NTextCatLibLegacy %28.Net 3.5%29\NTextCatLibLegacy %28.Net 3.5%29.csproj">
+      <Project>{A6DE11D3-21BB-46E6-BB59-92B3C5750124}</Project>
+      <Name>NTextCatLibLegacy %28.Net 3.5%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +73,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /i /s /y $(SolutionDir)LanguageModels $(TargetDir)LanguageModels</PostBuildEvent>
+    <PostBuildEvent>xcopy /i /s /y "$(SolutionDir)LanguageModels" "$(TargetDir)LanguageModels"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
