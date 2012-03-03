@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NTextCatLib (.Net 3.5)")]
+[assembly: AssemblyTitle("IvanAkcheurov.NTextCatLib (.Net 3.5)")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using IvanAkcheurov.Commons.IO;
 
 namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
@@ -134,7 +135,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
             IEnumerable<UInt64> tokens = 
                 new ByteToUInt64NGramExtractor(settings.MaxNgramLength, settings.OnlyReadFirstNLines)
                 .GetFeatures(input);
-            var langaugeModel = LanguageModelCreator<UInt64>.CreateLangaugeModel(
+            var langaugeModel = LanguageModelCreator.CreateLangaugeModel(
                 tokens, settings.OccuranceNumberThreshold, _maximumSizeOfDistribution);
 
             List<Tuple<string, double>> result = _classifier.Classify(langaugeModel).ToList();

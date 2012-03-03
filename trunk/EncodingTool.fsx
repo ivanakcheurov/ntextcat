@@ -93,9 +93,9 @@ let saveXStream (filename:string) (xstream:XStreamingElement) =
 let itself item =
     item
 
-do
-    printfn "saving to xml"
-    charEncodingMap |> charEncodingMapToXml |> (saveXStream @"D:\Files\Projects\NLP\NTextCat\AllRep\trunk\charEncodingMap.xml")
+//do
+//    printfn "saving to xml"
+//    charEncodingMap |> charEncodingMapToXml |> (saveXStream @"D:\Files\Projects\NLP\NTextCat\AllRep\trunk\charEncodingMap.xml")
     
 let stringToUTF32 string =
     let enumerator = StringInfo.GetTextElementEnumerator(string)
@@ -152,30 +152,30 @@ let getEncodingDistribution charDistribution =
         //|> toDistribution
     encodingDistribution
 
-do
-    let encodings = Encoding.GetEncodings()
-    use textWriter = new StreamWriter(@"d:\Files\Projects\NLP\NTextCat\AllRep\trunk\languageEncodingMatrix.csv")
-    textWriter.Write("language")
-    for enc in encodings do 
-        textWriter.Write(", {0} ({1})", enc.DisplayName.Replace(",", "`"), enc.CodePage)
-    textWriter.WriteLine()
-    Directory.GetFiles(@"d:\WikiDump\Wiki\extract\trainData\")
-    |> Seq.map (addSnd File.ReadAllText)
-    |> PSeq.ordered
-    |> PSeq.map (mapSnd (fun content -> 
-        let encodingDistributionMap =
-            content
-            |> getCharDistribution 
-            |> getEncodingDistribution
-            |> Seq.map (mapFst (fun enc -> enc.CodePage))
-            |> Map.ofSeq
-        encodingDistributionMap))
-    |> Seq.iter (fun (file, encodingDistributionMap) -> 
-        textWriter.Write(Path.GetFileNameWithoutExtension(file))
-        for enc in encodings do 
-            textWriter.Write(", {0}", if encodingDistributionMap.ContainsKey(enc.CodePage) then encodingDistributionMap.Item enc.CodePage else 0.0)
-        textWriter.WriteLine()
-        )
+//do
+//    let encodings = Encoding.GetEncodings()
+//    use textWriter = new StreamWriter(@"d:\Files\Projects\NLP\NTextCat\AllRep\trunk\languageEncodingMatrix.csv")
+//    textWriter.Write("language")
+//    for enc in encodings do 
+//        textWriter.Write(", {0} ({1})", enc.DisplayName.Replace(",", "`"), enc.CodePage)
+//    textWriter.WriteLine()
+//    Directory.GetFiles(@"d:\WikiDump\Wiki\extract\trainData\")
+//    |> Seq.map (addSnd File.ReadAllText)
+//    |> PSeq.ordered
+//    |> PSeq.map (mapSnd (fun content -> 
+//        let encodingDistributionMap =
+//            content
+//            |> getCharDistribution 
+//            |> getEncodingDistribution
+//            |> Seq.map (mapFst (fun enc -> enc.CodePage))
+//            |> Map.ofSeq
+//        encodingDistributionMap))
+//    |> Seq.iter (fun (file, encodingDistributionMap) -> 
+//        textWriter.Write(Path.GetFileNameWithoutExtension(file))
+//        for enc in encodings do 
+//            textWriter.Write(", {0}", if encodingDistributionMap.ContainsKey(enc.CodePage) then encodingDistributionMap.Item enc.CodePage else 0.0)
+//        textWriter.WriteLine()
+//        )
 
 let streamLinesFromFile (filename:string) =
     seq {
@@ -206,27 +206,66 @@ let loadLanguageEncodingMapping (filename:string) =
 #r @"NTextCatLib\bin\Debug\IvanAkcheurov.NTextCat.Lib.dll"
 #r @"NTextCatLibLegacy\bin\Debug\IvanAkcheurov.NTextCat.Lib.Legacy.dll "
 
-do
-    let languageEncodingMapping =
-        loadLanguageEncodingMapping @"d:\Files\Projects\NLP\NTextCat\AllRep\trunk\languageEncodingMatrix.csv"
-        |> Seq.map (mapSnd (fun encoding2CompatibilitySeq -> encoding2CompatibilitySeq |> Seq.filter (fun (enc, compat) -> compat > 0.9)))
-        |> Map.ofSeq
-    Directory.EnumerateFiles(@"d:\WikiDump\Wiki\extract\trainData\")
-    |> Seq.map (fun file -> 
-        let lang = Path.GetFileNameWithoutExtension(file)
-        lang, file, languageEncodingMapping.Item lang)
-    |> PSeq.iter (fun (lang, file, encodings) -> 
-        let fileContents = File.ReadAllText(file)
-        encodings
-        |> Seq.map fst
-        |> Seq.iter (fun cp -> 
-            use input = new IvanAkcheurov.NTextCat.Lib.TextReaderStream(new StreamReader(file), Encoding.GetEncoding(cp));
-            let tokens = (new IvanAkcheurov.NTextCat.Lib.Legacy.ByteToUInt64NGramExtractor(5, Int64.MaxValue)).GetFeatures(input)
-            let langaugeModel = IvanAkcheurov.NTextCat.Lib.LanguageModelCreator<UInt64>.CreateLangaugeModel(tokens, 0, 400);
-            use output = new FileStream(Path.Combine(@"d:\WikiDump\Wiki\extract\trainData\lm_enc\", lang + "_cp" + cp.ToString() + ".txt"), FileMode.Create);
-            (new IvanAkcheurov.NTextCat.Lib.LanguageModelPersister()).Save(langaugeModel, output))
-        )
+// train only compatible models
+//do
+//    let languageEncodingMapping =
+//        loadLanguageEncodingMapping @"d:\Files\Projects\NLP\NTextCat\AllRep\trunk\languageEncodingMatrix.csv"
+//        |> Seq.map (mapSnd (fun encoding2CompatibilitySeq -> encoding2CompatibilitySeq |> Seq.filter (fun (enc, compat) -> compat > 0.9)))
+//        |> Map.ofSeq
+//    Directory.EnumerateFiles(@"d:\WikiDump\Wiki\extract\trainData\")
+//    |> Seq.map (fun file -> 
+//        let lang = Path.GetFileNameWithoutExtension(file)
+//        lang, file, languageEncodingMapping.Item lang)
+//    |> PSeq.iter (fun (lang, file, encodings) -> 
+//        let fileContents = File.ReadAllText(file)
+//        encodings
+//        |> Seq.map fst
+//        |> Seq.iter (fun cp -> 
+//            use input = new IvanAkcheurov.NTextCat.Lib.TextReaderStream(new StreamReader(file), Encoding.GetEncoding(cp));
+//            let tokens = (new IvanAkcheurov.NTextCat.Lib.Legacy.ByteToUInt64NGramExtractor(5, Int64.MaxValue)).GetFeatures(input)
+//            let langaugeModel = IvanAkcheurov.NTextCat.Lib.LanguageModelCreator<UInt64>.CreateLangaugeModel(tokens, 0, 400);
+//            use output = new FileStream(Path.Combine(@"d:\WikiDump\Wiki\extract\trainData\lm_enc\", lang + "_cp" + cp.ToString() + ".txt"), FileMode.Create);
+//            (new IvanAkcheurov.NTextCat.Lib.LanguageModelPersister()).Save(langaugeModel, output))
+//        )
 
+let joinWith separator (items:seq<'T>) =
+    String.Join(separator, items)
+
+do
+    
+        loadLanguageEncodingMapping @"d:\Files\Projects\NLP\NTextCat\AllRep\trunk\languageEncodingMatrix.csv"
+        |> Seq.map (
+            mapSnd (
+                fun encoding2CompatibilitySeq -> 
+                    let singleByteAndUnicodeEncs =
+                        encoding2CompatibilitySeq 
+                        |> Seq.filter (
+                            fun (enc, compat) -> 
+                                let encoding = Encoding.GetEncoding(enc)
+                                let isIbmIgnored = encoding.WebName.ToLowerInvariant().StartsWith("ibm") && not (encoding.EncodingName.ToLowerInvariant().Contains("dos"))
+                                let isIa5Ignored = encoding.WebName.ToLowerInvariant().StartsWith("x-ia5")
+                                compat >= 0.99 && encoding.IsSingleByte && not isIbmIgnored && not isIa5Ignored) 
+                        |> Array.ofSeq
+                    let nonUnicode =
+                        if singleByteAndUnicodeEncs.Any() then
+                            singleByteAndUnicodeEncs |> Seq.ofArray
+                        else
+                            encoding2CompatibilitySeq 
+                            |> Seq.filter (
+                                fun (enc, compat) -> 
+                                    compat >= 0.99 && not ([|1200; 1201; 12000; 12001; 65000; 65001|].Contains(enc)))
+                    let utf8_16 =
+                        encoding2CompatibilitySeq |> Seq.filter (fun (enc, comp) -> enc = 1200 || enc = 65001)
+                    Seq.append utf8_16 nonUnicode
+                ))
+        |> Seq.map (
+            mapSnd (fun encoding2CompatibilitySeq -> encoding2CompatibilitySeq |> Seq.sortBy snd |> Array.ofSeq |> Array.rev |> Seq.ofArray))
+        |> Seq.iter (fun (lang, enc2compSeq) -> printfn "%s:\t%s" lang (enc2compSeq |> Seq.map (fun (enc, comp) -> sprintf "%s: %f" (Encoding.GetEncoding(enc).WebName) comp) |> joinWith "; "))
+//        |> Seq.iter (
+//            fun (lang, enc2compat) ->
+//                printfn "%s: %s" lang (String.Join(", ", enc2compat |> Seq.map fst |> Seq.map Encoding.GetEncoding |> Seq.map (fun enc -> sprintf "%s (%d)" enc.EncodingName enc.CodePage) )))
+                    //encoding2CompatibilitySeq |> Seq.filter (fun (enc, compat) -> compat > 0.9)))
+    //ignore 1
 
 //F0000–FFFFF
 //100000–10FFFF

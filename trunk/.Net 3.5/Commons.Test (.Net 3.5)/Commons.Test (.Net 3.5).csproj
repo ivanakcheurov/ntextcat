@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E33BCC4E-226B-4D83-99A2-30A3B7890F46}</ProjectGuid>
+    <ProjectGuid>{82F053B4-0BBD-4C7C-B2AF-09E2A7D44E8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IvanAkcheurov.NTextCatLib.Test</RootNamespace>
-    <AssemblyName>IvanAkcheurov.NTextCatLib.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>IvanAkcheurov.Commons.Test</RootNamespace>
+    <AssemblyName>IvanAkcheurov.Commons.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,41 +33,35 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>..\Libs\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\PowerCollections\PowerCollections.dll</HintPath>
+      <HintPath>..\..\Libs\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NTextCat\Properties\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\Commons.Test\TestExternalApplication.cs">
+      <Link>TestExternalApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Commons.Test\TestStringsTextReader.cs">
+      <Link>TestStringsTextReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Commons.Test\TestTextReaderStream.cs">
+      <Link>TestTextReaderStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NTextCat\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="LanguageModelCreatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NClassify\NClassify.csproj">
-      <Project>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</Project>
-      <Name>NClassify</Name>
+    <ProjectReference Include="..\Commons %28.Net 3.5%29\Commons %28.Net 3.5%29.csproj">
+      <Project>{A33149FC-351A-47A0-B39A-C08758F32BBF}</Project>
+      <Name>Commons %28.Net 3.5%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NTextCatLib\NTextCatLib.csproj">
-      <Project>{E645E620-70F5-4DF7-96DD-5189F353D79A}</Project>
-      <Name>NTextCatLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestData\expected.txt" />
-    <Content Include="TestData\sample.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Wintellect.PowerCollections;
 
 namespace IvanAkcheurov.NClassify
 {
@@ -16,7 +15,12 @@ namespace IvanAkcheurov.NClassify
     /// </remarks>
     public class Distribution<T> : IModifiableDistribution<T>
     {
-        private Bag<T> _distribution = new Bag<T>();
+        private IBag<T> _store;
+
+        public Distribution(IBag<T> store)
+        {
+            _store = store;
+        }
 
         #region Implementation of IEnumerable
 
@@ -31,8 +35,8 @@ namespace IvanAkcheurov.NClassify
 
         public IEnumerator<KeyValuePair<T, double>> GetEnumerator()
         {
-            int count = _distribution.Count;
-            return _distribution.DistinctItems().Select(item => new KeyValuePair<T, double>(item, _distribution.NumberOfCopies(item) / (double)count)).GetEnumerator();
+            long count = _store.TotalCopiesCount;
+            return _store.Select(kvp => new KeyValuePair<T, double>(kvp.Key, kvp.Value / (double)count)).GetEnumerator();
         }
 
         #endregion
@@ -46,22 +50,22 @@ namespace IvanAkcheurov.NClassify
 
         public IEnumerable<T> Events
         {
-            get { return _distribution.DistinctItems(); }
+            get { return _store.DistinctItems; }
         }
 
         public double GetEventFrequency(T obj)
         {
-            return _distribution.NumberOfCopies(obj) / (double)_distribution.Count;
+            return _store.GetNumberOfCopies(obj) / (double)_store.TotalCopiesCount;
         }
 
         public long GetEventCount(T obj)
         {
-            return _distribution.NumberOfCopies(obj);
+            return _store.GetNumberOfCopies(obj);
         }
 
         public long TotalEventCount
         {
-            get { return _distribution.Count; }
+            get { return _store.TotalCopiesCount; }
         }
 
         #endregion
@@ -70,33 +74,32 @@ namespace IvanAkcheurov.NClassify
 
         public void AddEvent(T obj)
         {
-            _distribution.Add(obj);
+            AddEvent(obj, 1);
         }
 
         public void AddEvent(T obj, long count)
         {
             if (count < 0)
                 throw new ArgumentOutOfRangeException("Cannot add negative number of items");
-            if (count > int.MaxValue)
-                throw new NotSupportedException("Current implementation of IDistribution<T> doesn't support more items than 2,147,483,647 of items");
-            int numberOfCopies = _distribution.NumberOfCopies(obj);
-            _distribution.ChangeNumberOfCopies(obj, numberOfCopies + (int)count);
+            _store.AddCopies(obj, count);
         }
 
         public void AddEventRange(IEnumerable<T> collection)
         {
-            _distribution.AddMany(collection);
+            foreach (var item in collection)
+                AddEvent(item);
         }
 
         public void PruneByRank(long maxRankAllowed)
         {
             IEnumerable<T> removedItems = 
-                _distribution.DistinctItems()
-                .OrderBy(_distribution.NumberOfCopies)
+                _store
+                .OrderBy(kvp => kvp.Value)
+                .Select(kvp => kvp.Key)
                 .Take((int) Math.Max(0, this.Events.LongCount() - maxRankAllowed));
             foreach (var item in removedItems)
             {
-                _distribution.RemoveAllCopies(item);
+                _store.RemoveAllCopies(item);
             }
         }
 
@@ -105,12 +108,13 @@ namespace IvanAkcheurov.NClassify
             if (minCountAllowed < 0)
                 throw new ArgumentOutOfRangeException("minCountAllowed", "Only non-negative values allowed");
             IEnumerable<T> removedItems =
-                _distribution.DistinctItems()
-                .Where(event_ => _distribution.NumberOfCopies(event_) < minCountAllowed)
+                _store
+                .Where(kvp => kvp.Value < minCountAllowed)
+                .Select(kvp => kvp.Key)
                 .ToList();
             foreach (var item in removedItems)
             {
-                _distribution.RemoveAllCopies(item);
+                _store.RemoveAllCopies(item);
             }
         }
 

@@ -77,7 +77,7 @@ koningin Elizabeth.");
 
             var tokenizer = new ByteToUInt64NGramExtractor(5);
             Func<byte[], IDistribution<UInt64>> languageModelCreator = 
-                bytes => LanguageModelCreator<UInt64>.CreateLangaugeModel(tokenizer.GetFeatures(bytes), 0, 400);
+                bytes => LanguageModelCreator.CreateLangaugeModel(tokenizer.GetFeatures(bytes), 0, 400);
 
             var guesser = new RankedClassifier<ulong>(400);
             guesser.AddEtalonLanguageModel("en", languageModelCreator(englishEtalon));

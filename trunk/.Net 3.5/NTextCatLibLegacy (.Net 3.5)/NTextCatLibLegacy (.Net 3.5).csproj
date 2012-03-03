@@ -61,6 +61,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commons %28.Net 3.5%29\Commons %28.Net 3.5%29.csproj">
+      <Project>{A33149FC-351A-47A0-B39A-C08758F32BBF}</Project>
+      <Name>Commons %28.Net 3.5%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NClassify %28.Net 3.5%29\NClassify %28.Net 3.5%29.csproj">
       <Project>{B7F1DF8E-C307-4255-9AEA-33B68BB100FF}</Project>
       <Name>NClassify %28.Net 3.5%29</Name>

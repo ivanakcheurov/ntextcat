@@ -47,8 +47,11 @@
     <Compile Include="..\NTextCat\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Bag.cs" />
     <Compile Include="ComparisonComparer.cs" />
     <Compile Include="Distribution.cs" />
+    <Compile Include="GaussianBag.cs" />
+    <Compile Include="IBag.cs" />
     <Compile Include="ICategorizedClassifier.cs" />
     <Compile Include="IClassifier.cs" />
     <Compile Include="IDistanceCalculator.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="ITrainee.cs" />
     <Compile Include="KnnMonoCategorizedClassifier.cs" />
     <Compile Include="NonlinearVectorDistanceCalculator.cs" />
+    <Compile Include="PowerCollectionsBag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VectorDistanceCalculator.cs" />
   </ItemGroup>

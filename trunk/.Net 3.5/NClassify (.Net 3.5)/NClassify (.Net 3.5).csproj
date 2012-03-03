@@ -43,11 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\NClassify\Bag.cs">
+      <Link>Bag.cs</Link>
+    </Compile>
     <Compile Include="..\..\NClassify\ComparisonComparer.cs">
       <Link>ComparisonComparer.cs</Link>
     </Compile>
     <Compile Include="..\..\NClassify\Distribution.cs">
       <Link>Distribution.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NClassify\GaussianBag.cs">
+      <Link>GaussianBag.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NClassify\IBag.cs">
+      <Link>IBag.cs</Link>
     </Compile>
     <Compile Include="..\..\NClassify\ICategorizedClassifier.cs">
       <Link>ICategorizedClassifier.cs</Link>
@@ -81,6 +90,9 @@
     </Compile>
     <Compile Include="..\..\NClassify\NonlinearVectorDistanceCalculator.cs">
       <Link>NonlinearVectorDistanceCalculator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NClassify\PowerCollectionsBag.cs">
+      <Link>PowerCollectionsBag.cs</Link>
     </Compile>
     <Compile Include="..\..\NClassify\VectorDistanceCalculator.cs">
       <Link>VectorDistanceCalculator.cs</Link>

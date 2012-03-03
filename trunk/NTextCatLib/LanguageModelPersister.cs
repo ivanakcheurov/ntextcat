@@ -12,7 +12,7 @@ namespace IvanAkcheurov.NTextCat.Lib
     {
         public IDistribution<NGram> Load(Stream sourceStream)
         {
-            Distribution<NGram> result = new Distribution<ulong>();
+            Distribution<NGram> result = new Distribution<ulong>(new Bag<ulong>());
             StreamReader streamReader = new StreamReader(sourceStream, Encoding.GetEncoding(1250));
             
             string line;

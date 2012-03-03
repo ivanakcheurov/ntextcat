@@ -40,9 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\NTextCatLib\ExternalApplication.cs">
-      <Link>ExternalApplication.cs</Link>
-    </Compile>
     <Compile Include="..\..\NTextCatLib\LanguageModelCreator.cs">
       <Link>LanguageModelCreator.cs</Link>
     </Compile>
@@ -52,14 +49,8 @@
     <Compile Include="..\..\NTextCatLib\LanguageModelPersister.cs">
       <Link>LanguageModelPersister.cs</Link>
     </Compile>
-    <Compile Include="..\..\NTextCatLib\StringExtensions.cs">
-      <Link>StringExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\..\NTextCatLib\TextLanguageGuesser.cs">
       <Link>TextLanguageGuesser.cs</Link>
-    </Compile>
-    <Compile Include="..\..\NTextCatLib\TextReaderStream.cs">
-      <Link>TextReaderStream.cs</Link>
     </Compile>
     <Compile Include="..\..\NTextCat\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>

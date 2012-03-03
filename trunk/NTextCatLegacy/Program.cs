@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using IvanAkcheurov.Commons;
 using Mono.Options;
 using IvanAkcheurov.NClassify;
 using IvanAkcheurov.NTextCat.Lib;
@@ -132,7 +133,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                 using (input)
                 {
                     IEnumerable<UInt64> tokens = new ByteToUInt64NGramExtractor(5, opt_OnlyReadFirstNLines).GetFeatures(input);
-                    langaugeModel = LanguageModelCreator<UInt64>.CreateLangaugeModel(tokens, opt_OccuranceNumberThreshold, opt_MaximumSizeOfDistribution);
+                    langaugeModel = LanguageModelCreator.CreateLangaugeModel(tokens, opt_OccuranceNumberThreshold, opt_MaximumSizeOfDistribution);
                 }
                 using (Stream standardOutput = Console.OpenStandardOutput())
                 {
