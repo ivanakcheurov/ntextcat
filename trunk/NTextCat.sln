@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons.Test", "Commons.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons.Test (.Net 3.5)", ".Net 3.5\Commons.Test (.Net 3.5)\Commons.Test (.Net 3.5).csproj", "{82F053B4-0BBD-4C7C-B2AF-09E2A7D44E8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTextCatDemoSite", "NTextCatDemoSite\NTextCatDemoSite.csproj", "{551F2F57-C94B-47C6-9A53-567D9D41FD30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -200,6 +202,16 @@ Global
 		{82F053B4-0BBD-4C7C-B2AF-09E2A7D44E8A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{82F053B4-0BBD-4C7C-B2AF-09E2A7D44E8A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{82F053B4-0BBD-4C7C-B2AF-09E2A7D44E8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{551F2F57-C94B-47C6-9A53-567D9D41FD30}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
