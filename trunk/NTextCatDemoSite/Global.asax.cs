@@ -44,6 +44,8 @@ namespace NTextCatDemoSite
             RegisterRoutes(RouteTable.Routes);
 
             BundleTable.Bundles.RegisterTemplateBundles();
+
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }
