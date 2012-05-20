@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\IvanAkcheurov.NTextCat.Lib.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\StrongNameKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +50,7 @@
     <Compile Include="..\NTextCat\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BagOfWordsFeatureExtractor.cs" />
     <Compile Include="TextLanguageGuesser.cs" />
     <Compile Include="LanguageModelCreator.cs" />
     <Compile Include="LanguageModelDistanceCalculator.cs" />
@@ -51,10 +58,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commons\Commons.csproj">
+      <Project>{40BA5817-6C02-489A-AF9D-B211643C1493}</Project>
+      <Name>Commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NClassify\NClassify.csproj">
       <Project>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</Project>
       <Name>NClassify</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\StrongNameKey.snk">
+      <Link>StrongNameKey.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

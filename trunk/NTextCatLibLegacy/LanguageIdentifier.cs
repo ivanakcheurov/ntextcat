@@ -110,6 +110,28 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="languageModelsDirectory"></param>
+        /// <param name="maximumSizeOfDistribution"></param>
+        public LanguageIdentifier(
+            IEnumerable<Tuple<string, Stream>> namesAndLanguageModelStreams,
+            int maximumSizeOfDistribution = MaximumSizeOfDistributionDefault
+            )
+        {
+            _maximumSizeOfDistribution = maximumSizeOfDistribution;
+            _classifier = new RankedClassifier<ulong>(_maximumSizeOfDistribution);
+            var persister = new LanguageModelPersister();
+            foreach (var tuple in namesAndLanguageModelStreams)
+            {
+                using (tuple.Item2)
+                {
+                    _classifier.AddEtalonLanguageModel(tuple.Item1, persister.Load(tuple.Item2));
+                }
+            }
+        }
+
+        /// <summary>
         /// returns possible languages of text contained in <paramref name="input"/> or empty sequence if too uncertain.
         /// </summary>
         /// <param name="input"></param>
@@ -126,7 +148,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
             {
                 // we can afford to not dispose TextReaderStream wrapper as it doesn't contain unmanaged resources
                 // we do not own base stream passed so we cannot close it
-                input = new TextReaderStream(new StreamReader(input, encoding), Encoding.UTF8);
+                input = new TextReaderStream(new StreamReader(input, encoding), Encoding.UTF8); // decodes stream into UTF8 from any other encoding
                 // todo: restrict to searching among UTF8 language models only
             }
             if (settings == null)
