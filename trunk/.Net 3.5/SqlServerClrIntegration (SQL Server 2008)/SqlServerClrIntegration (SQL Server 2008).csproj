@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <DeployCode>true</DeployCode>
+    <DocumentationFile>bin\Debug\SqlServerClrIntegration.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -34,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <DeployCode>true</DeployCode>
+    <DocumentationFile>bin\Release\SqlServerClrIntegration.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>SqlServerClrIntegration</RootNamespace>
