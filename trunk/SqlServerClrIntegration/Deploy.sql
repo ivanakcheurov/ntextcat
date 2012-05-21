@@ -8,7 +8,7 @@ RECONFIGURE WITH OVERRIDE;
 GO
 
 USE [master]
-CREATE ASYMMETRIC KEY IonicZipKey FROM EXECUTABLE FILE = '$(AssemblyDir)IonicZip.dll'   
+CREATE ASYMMETRIC KEY IonicZipKey FROM EXECUTABLE FILE = '$(AssemblyDir)Ionic.Zip.dll'   
 CREATE LOGIN IonicZipLogin FROM ASYMMETRIC KEY IonicZipKey   
 GRANT UNSAFE ASSEMBLY TO IonicZipLogin
 GO 
@@ -17,21 +17,8 @@ CREATE LOGIN [IvanAkcheurov.NTextCat.Login] FROM ASYMMETRIC KEY [IvanAkcheurov.N
 GRANT UNSAFE ASSEMBLY TO [IvanAkcheurov.NTextCat.Login] 
 GO 
 
-USE [$(DatabaseName)]
+CREATE DATABASE [$(DatabaseName)]
 GO
-
-CREATE ASSEMBLY IonicZip
-FROM '$(AssemblyDir)IonicZip.dll' WITH PERMISSION_SET = UNSAFE
-
-CREATE ASSEMBLY [IvanAkcheurov.Commons.dll]
-FROM '$(AssemblyDir)IvanAkcheurov.Commons.dll'
-CREATE ASSEMBLY [IvanAkcheurov.NClassify.dll]
-FROM '$(AssemblyDir)IvanAkcheurov.NClassify.dll' WITH PERMISSION_SET = UNSAFE
-CREATE ASSEMBLY [IvanAkcheurov.NTextCat.Lib.dll]
-FROM '$(AssemblyDir)IvanAkcheurov.NTextCat.Lib.dll' WITH PERMISSION_SET = UNSAFE
-CREATE ASSEMBLY [IvanAkcheurov.NTextCat.Lib.Legacy.dll]
-FROM '$(AssemblyDir)IvanAkcheurov.NTextCat.Lib.Legacy.dll' WITH PERMISSION_SET = UNSAFE
-GO 
 
 USE [$(DatabaseName)]
 GO
@@ -50,9 +37,9 @@ AUTHORIZATION [dbo]
 FROM '$(AssemblyDir)IvanAkcheurov.Commons.dll'
 WITH PERMISSION_SET = SAFE
 GO
-/****** Object:  SqlAssembly [IonicZip]    Script Date: 05/18/2012 18:05:32 ******/
-IF NOT EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'IonicZip' and is_user_defined = 1)
-CREATE ASSEMBLY [IonicZip]
+/****** Object:  SqlAssembly [Ionic.Zip.dll]    Script Date: 05/18/2012 18:05:32 ******/
+IF NOT EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'Ionic.Zip.dll' and is_user_defined = 1)
+CREATE ASSEMBLY [Ionic.Zip.dll]
 AUTHORIZATION [dbo]
 FROM '$(AssemblyDir)Ionic.Zip.dll'
 WITH PERMISSION_SET = UNSAFE

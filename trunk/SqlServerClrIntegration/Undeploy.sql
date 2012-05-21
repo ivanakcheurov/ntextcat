@@ -53,9 +53,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'IvanAkcheurov.NTextCat.Lib.dll' and is_user_defined = 1)
 DROP ASSEMBLY [IvanAkcheurov.NTextCat.Lib.dll]
 GO
-/****** Object:  SqlAssembly [IonicZip]    Script Date: 05/18/2012 18:05:32 ******/
-IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'IonicZip' and is_user_defined = 1)
-DROP ASSEMBLY [IonicZip]
+/****** Object:  SqlAssembly [Ionic.Zip.dll]    Script Date: 05/18/2012 18:05:32 ******/
+IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'Ionic.Zip.dll' and is_user_defined = 1)
+DROP ASSEMBLY [Ionic.Zip.dll]
 GO
 /****** Object:  SqlAssembly [IvanAkcheurov.Commons.dll]    Script Date: 05/18/2012 18:05:32 ******/
 IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'IvanAkcheurov.Commons.dll' and is_user_defined = 1)
