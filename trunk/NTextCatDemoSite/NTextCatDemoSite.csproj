@@ -1070,30 +1070,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\.Net 3.5\Commons %28.Net 3.5%29\Commons %28.Net 3.5%29.csproj">
-      <Project>{A33149FC-351A-47A0-B39A-C08758F32BBF}</Project>
-      <Name>Commons %28.Net 3.5%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\.Net 3.5\Commons.Test %28.Net 3.5%29\Commons.Test %28.Net 3.5%29.csproj">
-      <Project>{82F053B4-0BBD-4C7C-B2AF-09E2A7D44E8A}</Project>
-      <Name>Commons.Test %28.Net 3.5%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\.Net 3.5\NClassify %28.Net 3.5%29\NClassify %28.Net 3.5%29.csproj">
-      <Project>{B7F1DF8E-C307-4255-9AEA-33B68BB100FF}</Project>
-      <Name>NClassify %28.Net 3.5%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\.Net 3.5\NTextCatLegacy %28.Net 3.5%29\NTextCatLegacy %28.Net 3.5%29.csproj">
-      <Project>{5AE885D7-AE39-4CCF-8B23-94662E01D728}</Project>
-      <Name>NTextCatLegacy %28.Net 3.5%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\.Net 3.5\NTextCatLib %28.Net 3.5%29\NTextCatLib %28.Net 3.5%29.csproj">
-      <Project>{3FC51F8D-C618-451F-A3F7-E753DCAFF572}</Project>
-      <Name>NTextCatLib %28.Net 3.5%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\.Net 3.5\NTextCatLibLegacy %28.Net 3.5%29\NTextCatLibLegacy %28.Net 3.5%29.csproj">
-      <Project>{A6DE11D3-21BB-46E6-BB59-92B3C5750124}</Project>
-      <Name>NTextCatLibLegacy %28.Net 3.5%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Commons.Test\Commons.Test.csproj">
       <Project>{744D3867-3EAF-4D45-BCEF-EE9A67F14F90}</Project>
       <Name>Commons.Test</Name>

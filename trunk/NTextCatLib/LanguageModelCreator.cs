@@ -17,6 +17,7 @@ namespace IvanAkcheurov.NTextCat.Lib
             // text_cat prunes by count and then by rank.
             // resulting distribution should not contain threshold-values (text_cat excludes them),
             // but distribution's PruneByCount leaves threshold in distribution, hence lower threshold by one.
+            // todo: remove correction, update documentation and comments
             if (minOccuranceNumberThreshold > 0)
                 distribution.PruneByCount(minOccuranceNumberThreshold - 1);
             distribution.PruneByRank(maxTokensInDistribution);
@@ -30,6 +31,7 @@ namespace IvanAkcheurov.NTextCat.Lib
             // text_cat prunes by count and then by rank.
             // resulting distribution should not contain threshold-values (text_cat excludes them),
             // but distribution's PruneByCount leaves threshold in distribution, hence lower threshold by one.
+            // todo: remove correction, update documentation and comments
             if (minOccuranceNumberThreshold > 0)
                 distribution.PruneByCount(minOccuranceNumberThreshold - 1);
             distribution.PruneByRank(maxTokensInDistribution);

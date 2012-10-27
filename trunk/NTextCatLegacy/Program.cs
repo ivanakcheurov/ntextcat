@@ -121,7 +121,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
 
             if (opt_train)
             {
-                IDistribution<ulong> langaugeModel;
+                LanguageModel<ulong> langaugeModel;
                 Stream input;
                 if (string.IsNullOrEmpty(opt_trainOnFile))
                 {
@@ -133,11 +133,13 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                 using (input)
                 {
                     IEnumerable<UInt64> tokens = new ByteToUInt64NGramExtractor(5, opt_OnlyReadFirstNLines).GetFeatures(input);
-                    langaugeModel = LanguageModelCreator.CreateLangaugeModel(tokens, opt_OccuranceNumberThreshold, opt_MaximumSizeOfDistribution);
+                    langaugeModel = new LanguageModel<UInt64>(
+                        LanguageModelCreator.CreateLangaugeModel(tokens, opt_OccuranceNumberThreshold, opt_MaximumSizeOfDistribution), 
+                        new LanguageInfo(null, null, null, null) /*API should ask about language*/ );
                 }
                 using (Stream standardOutput = Console.OpenStandardOutput())
                 {
-                    new LanguageModelPersister().Save(langaugeModel, standardOutput);
+                    new ByteLanguageModelPersister().Save(langaugeModel, standardOutput);
                 }
             }
             else
@@ -226,7 +228,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
                 yield return (byte)readByte;
         }
 
-        private static void OutputIdentifiedLanguages(IEnumerable<Tuple<string, double>> languages)
+        private static void OutputIdentifiedLanguages(IEnumerable<Tuple<LanguageInfo, double>> languages)
         {
             languages = languages.ToList();
             if (languages.Any() == false)
@@ -235,7 +237,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
             {
                 foreach (var language in languages)
                 {
-                    Console.WriteLine(language.Item1);
+                    Console.WriteLine(language.Item1.Iso639_2);
                 }
             }
         }

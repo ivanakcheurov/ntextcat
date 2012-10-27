@@ -76,16 +76,16 @@ koningin Elizabeth.");
 как Овидий и Плавт[6], однако школьные журналы не сохранились[7], и теперь ничего нельзя сказать наверняка.");
 
             var tokenizer = new ByteToUInt64NGramExtractor(5);
-            Func<byte[], IDistribution<UInt64>> languageModelCreator = 
+            Func<byte[], IDistribution<UInt64>> createLanguageModel = 
                 bytes => LanguageModelCreator.CreateLangaugeModel(tokenizer.GetFeatures(bytes), 0, 400);
 
             var guesser = new RankedClassifier<ulong>(400);
-            guesser.AddEtalonLanguageModel("en", languageModelCreator(englishEtalon));
-            guesser.AddEtalonLanguageModel("nl", languageModelCreator(dutchEtalon));
-            guesser.AddEtalonLanguageModel("ru", languageModelCreator(russianEtalon));
-            Assert.AreEqual("nl", guesser.Classify(languageModelCreator(dutchQuery)).First().Item1);
-            Assert.AreEqual("ru", guesser.Classify(languageModelCreator(russianQuery)).First().Item1);
-            Assert.AreEqual("en", guesser.Classify(languageModelCreator(englishQuery)).First().Item1);
+            guesser.AddEtalonLanguageModel(new LanguageModel<ulong>(createLanguageModel(englishEtalon), new LanguageInfo("en", null, null, null)));
+            guesser.AddEtalonLanguageModel(new LanguageModel<ulong>(createLanguageModel(dutchEtalon), new LanguageInfo("nl", null, null, null)));
+            guesser.AddEtalonLanguageModel(new LanguageModel<ulong>(createLanguageModel(russianEtalon), new LanguageInfo("ru", null, null, null)));
+            Assert.AreEqual("nl", guesser.Classify(createLanguageModel(dutchQuery)).First().Item1.Iso639_2);
+            Assert.AreEqual("ru", guesser.Classify(createLanguageModel(russianQuery)).First().Item1.Iso639_2);
+            Assert.AreEqual("en", guesser.Classify(createLanguageModel(englishQuery)).First().Item1.Iso639_2);
         }
 
         [Test]

@@ -25,7 +25,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// <param name="maximumSizeOfDistribution"></param>
         /// <param name="settings">null for default settings</param>
         /// <returns></returns>
-        public static IEnumerable<Tuple<string, double>> ClassifyText(
+        public static IEnumerable<Tuple<LanguageInfo, double>> ClassifyText(
             string text,
             string languageModelsDirectory = LanguageModelsDirectoryDefault,
             int maximumSizeOfDistribution = MaximumSizeOfDistributionDefault,
@@ -48,7 +48,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// <param name="maximumSizeOfDistribution"></param>
         /// <param name="settings">null for default settings</param>
         /// <returns></returns>
-        public static IEnumerable<Tuple<string, double>> ClassifyBytes(
+        public static IEnumerable<Tuple<LanguageInfo, double>> ClassifyBytes(
             byte[] input, 
             Encoding encoding = null,
             string languageModelsDirectory = LanguageModelsDirectoryDefault, 
@@ -72,7 +72,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// <param name="maximumSizeOfDistribution"></param>
         /// <param name="settings">null for default settings</param>
         /// <returns></returns>
-        public static IEnumerable<Tuple<string, double>> ClassifyBytes(
+        public static IEnumerable<Tuple<LanguageInfo, double>> ClassifyBytes(
             Stream input, 
             Encoding encoding = null,
             string languageModelsDirectory = LanguageModelsDirectoryDefault, 
@@ -99,12 +99,13 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         {
             _maximumSizeOfDistribution = maximumSizeOfDistribution;
             _classifier = new RankedClassifier<ulong>(_maximumSizeOfDistribution);
-            var persister = new LanguageModelPersister();
+            var persister = new ByteLanguageModelPersister();
             foreach (string filename in Directory.GetFiles(languageModelsDirectory))
             {
                 using (FileStream sourceStream = File.OpenRead(filename))
                 {
-                    _classifier.AddEtalonLanguageModel(Path.GetFileNameWithoutExtension(filename), persister.Load(sourceStream));
+                    var languageModel = persister.Load(sourceStream, new LanguageInfo(Path.GetFileNameWithoutExtension(filename), null, null, null));
+                    _classifier.AddEtalonLanguageModel(languageModel);
                 }
             }
         }
@@ -121,12 +122,13 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         {
             _maximumSizeOfDistribution = maximumSizeOfDistribution;
             _classifier = new RankedClassifier<ulong>(_maximumSizeOfDistribution);
-            var persister = new LanguageModelPersister();
+            var persister = new ByteLanguageModelPersister();
             foreach (var tuple in namesAndLanguageModelStreams)
             {
                 using (tuple.Item2)
                 {
-                    _classifier.AddEtalonLanguageModel(tuple.Item1, persister.Load(tuple.Item2));
+                    var languageModel = persister.Load(tuple.Item2, new LanguageInfo(tuple.Item1, null, null, null));
+                    _classifier.AddEtalonLanguageModel(languageModel);
                 }
             }
         }
@@ -142,7 +144,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// built from UTF8 encoded files (models from folder "Wikipedia-Experimental-UTF8Only")</para></param>
         /// <param name="settings">null for default settings</param>
         /// <returns></returns>
-        public IEnumerable<Tuple<string, double>> ClassifyBytes(Stream input, Encoding encoding = null, LanguageIdentifierSettings settings = null)
+        public IEnumerable<Tuple<LanguageInfo, double>> ClassifyBytes(Stream input, Encoding encoding = null, LanguageIdentifierSettings settings = null)
         {
             if (encoding != null && encoding != Encoding.UTF8)
             {
@@ -160,12 +162,12 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
             var langaugeModel = LanguageModelCreator.CreateLangaugeModel(
                 tokens, settings.OccuranceNumberThreshold, _maximumSizeOfDistribution);
 
-            List<Tuple<string, double>> result = _classifier.Classify(langaugeModel).ToList();
+            List<Tuple<LanguageInfo, double>> result = _classifier.Classify(langaugeModel).ToList();
             double leastDistance = result.First().Item2;
-            List<Tuple<string, double>> acceptableResults = 
+            List<Tuple<LanguageInfo, double>> acceptableResults = 
                 result.Where(t => t.Item2 <= leastDistance * settings.WorstAcceptableThreshold).ToList();
             if (acceptableResults.Count == 0 || acceptableResults.Count > settings.TooManyLanguagesThreshold)
-                return Enumerable.Empty<Tuple<string, double>>();
+                return Enumerable.Empty<Tuple<LanguageInfo, double>>();
             return acceptableResults;
         }
 
@@ -180,7 +182,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// built from UTF8 encoded files (models from folder "Wikipedia-Experimental-UTF8Only")</para></param>
         /// <param name="settings">null for default settings</param>
         /// <returns></returns>
-        public IEnumerable<Tuple<string, double>> ClassifyBytes(byte[] input, Encoding encoding = null, LanguageIdentifierSettings settings = null)
+        public IEnumerable<Tuple<LanguageInfo, double>> ClassifyBytes(byte[] input, Encoding encoding = null, LanguageIdentifierSettings settings = null)
         {
             using (var stream = new MemoryStream(input))
             {
@@ -195,7 +197,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
         /// <param name="text">text language of which should be identified</param>
         /// <param name="settings">null for default settings</param>
         /// <returns></returns>
-        public IEnumerable<Tuple<string, double>> ClassifyText(string text, LanguageIdentifierSettings settings = null)
+        public IEnumerable<Tuple<LanguageInfo, double>> ClassifyText(string text, LanguageIdentifierSettings settings = null)
         {
             return ClassifyBytes(new TextReaderStream(new StringReader(text), Encoding.UTF8), Encoding.UTF8, settings);
         }

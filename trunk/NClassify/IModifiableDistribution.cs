@@ -9,6 +9,7 @@ namespace IvanAkcheurov.NClassify
     {
         void AddEvent(T obj);
         void AddEvent(T obj, long count);
+        void AddNoise(long count);
         void AddEventRange(IEnumerable<T> collection);
         void PruneByRank(long maxRankAllowed);
         void PruneByCount(long minCountAllowed);

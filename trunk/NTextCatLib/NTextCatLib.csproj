@@ -52,11 +52,22 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BagOfWordsFeatureExtractor.cs" />
+    <Compile Include="CharacterNGramExtractor.cs" />
+    <Compile Include="LanguageIdentificationResult.cs" />
+    <Compile Include="LanguageInfo.cs" />
+    <Compile Include="LanguageModel.cs" />
+    <Compile Include="NaiveBayesLanguageIdentifier.cs" />
+    <Compile Include="NaiveBayesLanguageIdentifierFactory.cs" />
+    <Compile Include="RankedLanguageIdentifier.cs" />
+    <Compile Include="RankedLanguageIdentifierFactory.cs" />
     <Compile Include="TextLanguageGuesser.cs" />
     <Compile Include="LanguageModelCreator.cs" />
-    <Compile Include="LanguageModelDistanceCalculator.cs" />
+    <Compile Include="DistributionDistanceCalculator.cs" />
     <Compile Include="LanguageModelPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokenizer.cs" />
+    <Compile Include="XmlLanguageModelPersister.cs" />
+    <Compile Include="XmlProfilePersister.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Commons\Commons.csproj">

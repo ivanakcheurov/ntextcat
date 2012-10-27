@@ -16,6 +16,7 @@ namespace IvanAkcheurov.NClassify
     public class Distribution<T> : IModifiableDistribution<T>
     {
         private IBag<T> _store;
+        private long _totalEventCountWithNoise;
 
         public Distribution(IBag<T> store)
         {
@@ -63,9 +64,28 @@ namespace IvanAkcheurov.NClassify
             return _store.GetNumberOfCopies(obj);
         }
 
-        public long TotalEventCount
+        /// <summary>
+        /// Total count of events that are represented in the distribution (<see cref="GetEventCount"/> returns value &gt; 0)
+        /// </summary>
+        public long TotalRepresentedEventCount
         {
             get { return _store.TotalCopiesCount; }
+        }
+
+        /// <summary>
+        /// Total count of events including those that have been considered as noise and has no representative (<see cref="GetEventCount"/> returns 0)
+        /// </summary>
+        public long TotalEventCountWithNoise
+        {
+            get { return _totalEventCountWithNoise; }
+        }
+
+        /// <summary>
+        /// Total count of events that have been considered as noise and has no representative (<see cref="GetEventCount"/> returns 0)
+        /// </summary>
+        public long TotalNoiseCount
+        {
+            get { return TotalEventCountWithNoise - TotalRepresentedEventCount; }
         }
 
         #endregion
@@ -81,7 +101,15 @@ namespace IvanAkcheurov.NClassify
         {
             if (count < 0)
                 throw new ArgumentOutOfRangeException("Cannot add negative number of items");
-            _store.AddCopies(obj, count);
+            _store.Add(obj, count);
+            _totalEventCountWithNoise += count;
+        }
+
+        public void AddNoise(long count)
+        {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException("Cannot add negative number of items");
+            _totalEventCountWithNoise += count;
         }
 
         public void AddEventRange(IEnumerable<T> collection)

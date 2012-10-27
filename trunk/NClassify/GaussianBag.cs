@@ -26,7 +26,7 @@ namespace IvanAkcheurov.NClassify
             get { return _store.Keys; }
         }
 
-        public bool AddCopies(ulong item, long count)
+        public bool Add(ulong item, long count)
         {
             if (item < ShortcutsRange)
             {
@@ -50,7 +50,7 @@ namespace IvanAkcheurov.NClassify
 
         public bool RemoveCopies(ulong item, long count)
         {
-            return AddCopies(item, -count);
+            return Add(item, -count);
         }
 
         public void RemoveAllCopies(ulong item)

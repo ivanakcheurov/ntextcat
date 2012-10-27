@@ -52,11 +52,12 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ByteToUInt64NGramExtractor.cs" />
+    <Compile Include="CharLanguageIdentifier.cs" />
     <Compile Include="ExtensionHelper.cs" />
     <Compile Include="LanguageIdentifier.cs" />
-    <Compile Include="RankedClassifier.cs" />
     <Compile Include="LegacyLanguageModelDistanceCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankedClassifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Commons\Commons.csproj">

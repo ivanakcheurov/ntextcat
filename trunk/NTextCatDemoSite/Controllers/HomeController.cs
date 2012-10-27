@@ -64,7 +64,7 @@ namespace NTextCatDemoSite.Controllers
             var languages = languageIdentifier.ClassifyText(Text, languageIdentifierSettings).ToList();
             var mostCertainLanguage = languages.FirstOrDefault();
             if (mostCertainLanguage != null)
-                return TryEnrichWithLanguageName(mostCertainLanguage.Item1);
+                return TryEnrichWithLanguageName(mostCertainLanguage.Item1.Iso639_2);
             else
                 return string.Empty;
         }

@@ -5,6 +5,14 @@ using System.Text;
 
 namespace IvanAkcheurov.NClassify
 {
+    /// <summary>
+    /// Finds the most probable label (category) for the item that hasn't been seen before.
+    /// Given unknown item, finds N the closest known and labeled items. With that information produces the rankings for all labels.
+    /// Label's rank is calculated as an average distance to its N closest items.
+    /// Current implementation has N set to infinity.
+    /// </summary>
+    /// <typeparam name="TItem">known items that have been labeled</typeparam>
+    /// <typeparam name="TCategory">labels</typeparam>
     public class KnnMonoCategorizedClassifier<TItem, TCategory> : ICategorizedClassifier<TItem, TCategory>
     {
         private IDistanceCalculator<TItem> _distanceCalculator;

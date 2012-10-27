@@ -8,7 +8,7 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
     {
         public static IEnumerable<string> NgramsToStrings(this IEnumerable<ulong> ngrams)
         {
-            return ngrams.Select(LanguageModelPersister.NgramToString);
+            return ngrams.Select(LanguageModelPersister<ulong>.NgramToString);
         }
     }
 }

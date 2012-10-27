@@ -15,9 +15,9 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
     /// To go beyond 8 bytes, remove alias NGram and create type NGram which will hold sequence of bytes of any length, override <see cref="object.GetHashCode"/> and <see cref="object.Equals(object)"/>
     /// </remarks>
     /// <typeparam name="T">type of event of distribution</typeparam>
-    public class RankedClassifier<T> : ICategorizedClassifier<IDistribution<T>, string>
+    public class RankedClassifier<T> : ICategorizedClassifier<IDistribution<T>, LanguageInfo>
     {
-        private Dictionary<IDictionary<T, int>, string> _etalonLanguageModel2languageName = new Dictionary<IDictionary<T, int>, string>();
+        private Dictionary<IDictionary<T, int>, LanguageInfo> _etalonLanguageModel2languageName = new Dictionary<IDictionary<T, int>, LanguageInfo>();
 
         private int _defaultNgramRankOnAbsence;
 
@@ -26,19 +26,28 @@ namespace IvanAkcheurov.NTextCat.Lib.Legacy
             _defaultNgramRankOnAbsence = defaultNgramRankOnAbsence;
         }
 
-        public void AddEtalonLanguageModel(string name, IDistribution<T> languageModel)
+        public RankedClassifier(IEnumerable<LanguageModel<T>> languageModels, int defaultNgramRankOnAbsence)
         {
-            _etalonLanguageModel2languageName.Add(GetRankedLanguageModel(languageModel), name);
+            _defaultNgramRankOnAbsence = defaultNgramRankOnAbsence;
+            foreach (var languageModel in languageModels)
+            {
+                AddEtalonLanguageModel(languageModel);
+            }
         }
 
-        public IEnumerable<Tuple<string, double>> Classify(IDistribution<T> guessedLanguageModel)
+        public void AddEtalonLanguageModel(LanguageModel<T> languageModel)
+        {
+            _etalonLanguageModel2languageName.Add(GetRankedLanguageModel(languageModel.Features), languageModel.Language);
+        }
+
+        public IEnumerable<Tuple<LanguageInfo, double>> Classify(IDistribution<T> guessedLanguageModel)
         {
             IDictionary<T, int> rankedGuessedLanguageModel = GetRankedLanguageModel(guessedLanguageModel);
             var classifier =
-                new KnnMonoCategorizedClassifier<IDictionary<T, int>, string>(
+                new KnnMonoCategorizedClassifier<IDictionary<T, int>, LanguageInfo>(
                     new LegacyLanguageModelDistanceCalculator<T>(rankedGuessedLanguageModel, _defaultNgramRankOnAbsence),
                     _etalonLanguageModel2languageName);
-            IEnumerable<Tuple<string, double>> likelyLanguages = classifier.Classify(rankedGuessedLanguageModel);
+            IEnumerable<Tuple<LanguageInfo, double>> likelyLanguages = classifier.Classify(rankedGuessedLanguageModel);
             return likelyLanguages;
         }
 

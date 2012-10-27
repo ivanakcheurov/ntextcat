@@ -24,20 +24,20 @@ namespace IvanAkcheurov.NClassify
             get { return _store.Keys; }
         }
 
-        public bool AddCopies(T item, long count)
+        public bool Add(T item, long copiesCount)
         {
             long oldCount;
-            long newCount = (_store.TryGetValue(item, out oldCount) ? oldCount : 0) + count;
+            long newCount = (_store.TryGetValue(item, out oldCount) ? oldCount : 0) + copiesCount;
             if (newCount < 0)
                 return false;
             _store[item] = newCount;
-            _totalCopiesCount += count;
+            _totalCopiesCount += copiesCount;
             return true;
         }
 
         public bool RemoveCopies(T item, long count)
         {
-            return AddCopies(item, -count);
+            return Add(item, -count);
         }
 
         public void RemoveAllCopies(T item)
