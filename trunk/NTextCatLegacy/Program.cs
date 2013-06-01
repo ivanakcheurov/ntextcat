@@ -237,7 +237,7 @@ namespace IvanAkcheurov.NTextCat.App.Legacy
             {
                 foreach (var language in languages)
                 {
-                    Console.WriteLine(language.Item1.Iso639_2);
+                    Console.WriteLine(language.Item1.Iso639_2T);
                 }
             }
         }

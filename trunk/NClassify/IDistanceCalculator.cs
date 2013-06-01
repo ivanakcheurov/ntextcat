@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IvanAkcheurov.NClassify
 {
-    public interface IDistanceCalculator<T>
+    public interface IDistanceCalculator<in T>
     {
         double CalculateDistance(T obj1, T obj2);
     }

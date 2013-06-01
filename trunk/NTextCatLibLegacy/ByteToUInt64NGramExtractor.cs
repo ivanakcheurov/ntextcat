@@ -6,6 +6,10 @@ using IvanAkcheurov.NClassify;
 
 namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
+    /// <summary>
+    /// Extracts ngrams out of a byte stream into UInt64 values
+    /// </summary>
+    [Obsolete("It's no longer maintained and may be removed in the future versions. Though probably it's still intact as covered by unit tests")]
     public class ByteToUInt64NGramExtractor : IFeatureExtractor<byte[], ulong>, IFeatureExtractor<Stream, ulong>
     {
         private readonly int _maxNGramLength = 5;

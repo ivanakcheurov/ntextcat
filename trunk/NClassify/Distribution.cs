@@ -16,6 +16,8 @@ namespace IvanAkcheurov.NClassify
     public class Distribution<T> : IModifiableDistribution<T>
     {
         private IBag<T> _store;
+        private bool _containsUnrepresentedNoiseEvents;
+        private long _distinctEventsCountWithNoise;
         private long _totalEventCountWithNoise;
 
         public Distribution(IBag<T> store)
@@ -36,8 +38,18 @@ namespace IvanAkcheurov.NClassify
 
         public IEnumerator<KeyValuePair<T, double>> GetEnumerator()
         {
+            throw new NotImplementedException("Maybe a bug, should be divided by _totalEventCountWithNoise");
             long count = _store.TotalCopiesCount;
             return _store.Select(kvp => new KeyValuePair<T, double>(kvp.Key, kvp.Value / (double)count)).GetEnumerator();
+        }
+
+        #endregion
+
+        #region Implementation of IEnumerable<out KeyValuePair<T,long>>
+
+        IEnumerator<KeyValuePair<T, long>> IEnumerable<KeyValuePair<T, long>>.GetEnumerator()
+        {
+            return _store.GetEnumerator();
         }
 
         #endregion
@@ -49,9 +61,24 @@ namespace IvanAkcheurov.NClassify
             get { return GetEventFrequency(obj); }
         }
 
-        public IEnumerable<T> Events
+        public IEnumerable<T> DistinctRepresentedEvents
         {
             get { return _store.DistinctItems; }
+        }
+
+        public long DistinctRepresentedEventsCount
+        {
+            get { return _store.DistinctItemsCount; } 
+        }
+
+        public long DistinctEventsCountWithNoise
+        {
+            get { return _distinctEventsCountWithNoise; }
+        }
+
+        public long DistinctNoiseEventsCount
+        {
+            get { return _distinctEventsCountWithNoise - _store.DistinctItemsCount; }
         }
 
         public double GetEventFrequency(T obj)
@@ -64,26 +91,17 @@ namespace IvanAkcheurov.NClassify
             return _store.GetNumberOfCopies(obj);
         }
 
-        /// <summary>
-        /// Total count of events that are represented in the distribution (<see cref="GetEventCount"/> returns value &gt; 0)
-        /// </summary>
         public long TotalRepresentedEventCount
         {
             get { return _store.TotalCopiesCount; }
         }
 
-        /// <summary>
-        /// Total count of events including those that have been considered as noise and has no representative (<see cref="GetEventCount"/> returns 0)
-        /// </summary>
         public long TotalEventCountWithNoise
         {
             get { return _totalEventCountWithNoise; }
         }
 
-        /// <summary>
-        /// Total count of events that have been considered as noise and has no representative (<see cref="GetEventCount"/> returns 0)
-        /// </summary>
-        public long TotalNoiseCount
+        public long TotalNoiseEventsCount
         {
             get { return TotalEventCountWithNoise - TotalRepresentedEventCount; }
         }
@@ -102,14 +120,23 @@ namespace IvanAkcheurov.NClassify
             if (count < 0)
                 throw new ArgumentOutOfRangeException("Cannot add negative number of items");
             _store.Add(obj, count);
+            // impossible because the internal bag should contain all the events (including those that will be considered as noise after pruning)
+            // otherwise we just cannot reliably keep track _distinctEventsCountWithNoise 
+            // (because we cannot distinguish between if the feature has been seen as noise or hasn't been seen at all, 
+            // hence do not know if we should add +1 to _distinctEventsCountWithNoise).
+            if (_containsUnrepresentedNoiseEvents)
+                throw new InvalidOperationException("Cannot add new items to the distribution after it has been pruned.");
+            _distinctEventsCountWithNoise = _store.DistinctItemsCount;
             _totalEventCountWithNoise += count;
         }
 
-        public void AddNoise(long count)
+        public void AddNoise(long totalCount, long distinctCount)
         {
-            if (count < 0)
+            if (totalCount < 0)
                 throw new ArgumentOutOfRangeException("Cannot add negative number of items");
-            _totalEventCountWithNoise += count;
+            _containsUnrepresentedNoiseEvents = true;
+            _distinctEventsCountWithNoise += distinctCount;
+            _totalEventCountWithNoise += totalCount;
         }
 
         public void AddEventRange(IEnumerable<T> collection)
@@ -124,11 +151,12 @@ namespace IvanAkcheurov.NClassify
                 _store
                 .OrderBy(kvp => kvp.Value)
                 .Select(kvp => kvp.Key)
-                .Take((int) Math.Max(0, this.Events.LongCount() - maxRankAllowed));
+                .Take((int) Math.Max(0, this.DistinctRepresentedEvents.LongCount() - maxRankAllowed));
             foreach (var item in removedItems)
             {
                 _store.RemoveAllCopies(item);
             }
+            _containsUnrepresentedNoiseEvents = true;
         }
 
         public void PruneByCount(long minCountAllowed)
@@ -144,6 +172,7 @@ namespace IvanAkcheurov.NClassify
             {
                 _store.RemoveAllCopies(item);
             }
+            _containsUnrepresentedNoiseEvents = true;
         }
 
         #endregion

@@ -15,6 +15,11 @@ namespace IvanAkcheurov.NClassify
 
         public long GetNumberOfCopies(ulong item)
         {
+            if (item < ShortcutsRange)
+            {
+                return _speedCounts[item];
+            }
+
             DictionaryCount count;
             if (_store.TryGetValue(item, out count))
                 return count._count;
@@ -23,7 +28,27 @@ namespace IvanAkcheurov.NClassify
 
         public IEnumerable<ulong> DistinctItems
         {
-            get { return _store.Keys; }
+            get
+            {
+                // todo: check if this yielding doesn't introduce a bottleneck
+                var length = (ulong) _speedCounts.Length;
+                for (ulong i = 0; i < length; i++)
+                {
+                    var count = _speedCounts[i];
+                    if (count > 0)
+                        yield return i;
+
+                }
+                foreach (var key in _store.Keys)
+                {
+                    yield return key;
+                }
+            }
+        }
+
+        public long DistinctItemsCount
+        {
+            get { return _store.Keys.Count; }
         }
 
         public bool Add(ulong item, long count)

@@ -83,9 +83,9 @@ koningin Elizabeth.");
             guesser.AddEtalonLanguageModel(new LanguageModel<ulong>(createLanguageModel(englishEtalon), new LanguageInfo("en", null, null, null)));
             guesser.AddEtalonLanguageModel(new LanguageModel<ulong>(createLanguageModel(dutchEtalon), new LanguageInfo("nl", null, null, null)));
             guesser.AddEtalonLanguageModel(new LanguageModel<ulong>(createLanguageModel(russianEtalon), new LanguageInfo("ru", null, null, null)));
-            Assert.AreEqual("nl", guesser.Classify(createLanguageModel(dutchQuery)).First().Item1.Iso639_2);
-            Assert.AreEqual("ru", guesser.Classify(createLanguageModel(russianQuery)).First().Item1.Iso639_2);
-            Assert.AreEqual("en", guesser.Classify(createLanguageModel(englishQuery)).First().Item1.Iso639_2);
+            Assert.AreEqual("nl", guesser.Classify(createLanguageModel(dutchQuery)).First().Item1.Iso639_2T);
+            Assert.AreEqual("ru", guesser.Classify(createLanguageModel(russianQuery)).First().Item1.Iso639_2T);
+            Assert.AreEqual("en", guesser.Classify(createLanguageModel(englishQuery)).First().Item1.Iso639_2T);
         }
 
         [Test]

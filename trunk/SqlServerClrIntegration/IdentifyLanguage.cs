@@ -11,7 +11,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Ionic.Zip;
-using IvanAkcheurov.NTextCat.Lib.Legacy;
 using Microsoft.SqlServer.Server;
 
 public partial class UserDefinedFunctions

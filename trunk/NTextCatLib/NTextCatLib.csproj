@@ -52,12 +52,15 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BagOfWordsFeatureExtractor.cs" />
+    <Compile Include="BasicProfileFactoryBase.cs" />
     <Compile Include="CharacterNGramExtractor.cs" />
     <Compile Include="LanguageIdentificationResult.cs" />
     <Compile Include="LanguageInfo.cs" />
     <Compile Include="LanguageModel.cs" />
     <Compile Include="NaiveBayesLanguageIdentifier.cs" />
     <Compile Include="NaiveBayesLanguageIdentifierFactory.cs" />
+    <Compile Include="RankedClassifier.cs" />
+    <Compile Include="RankingDistanceCalculator.cs" />
     <Compile Include="RankedLanguageIdentifier.cs" />
     <Compile Include="RankedLanguageIdentifierFactory.cs" />
     <Compile Include="TextLanguageGuesser.cs" />

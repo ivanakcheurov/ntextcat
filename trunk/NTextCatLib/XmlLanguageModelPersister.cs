@@ -16,11 +16,12 @@ namespace IvanAkcheurov.NTextCat.Lib
         private const string MetadataElement = "metadata";
         private const string NGramsElement = "ngrams";
         private const string NGramElement = "ngram";
-        private const string NoiseCountAtribute = "noiseCount";
+        private const string TotalNoiseCountAtribute = "totalNoiseCount";
+        private const string DistinctNoiseCountAtribute = "distinctNoiseCount";
         private const string TextAttribute = "text";
         private const string CountAttribute = "count";
         private const string LanguageElement = "Language";
-        private const string LanguageIso639_2_Attribute = "ISO639-2";
+        private const string LanguageIso639_2T_Attribute = "ISO639-2T";
         private const string LanguageIso639_3_Attribute = "ISO639-3";
         private const string LanguageEnglishNameAttribute = "EnglishName";
         private const string LanguageLocalNameAttribute = "LocalName";
@@ -44,10 +45,10 @@ namespace IvanAkcheurov.NTextCat.Lib
         {
             var metadata = xLanguageModel.Element(MetadataElement).Elements().ToDictionary(el => el.Name.ToString(), el => el.Value);
             var xLanguage = xLanguageModel.Element(LanguageElement);
-            string iso639_2 = null;
-            var xIso639_2 = xLanguage.Attribute(LanguageIso639_2_Attribute);
-            if (xIso639_2 != null)
-                iso639_2 = xIso639_2.Value;
+            string iso639_2T = null;
+            var xIso639_2T = xLanguage.Attribute(LanguageIso639_2T_Attribute);
+            if (xIso639_2T != null)
+                iso639_2T = xIso639_2T.Value;
             string iso639_3 = null;
             var xIso639_3 = xLanguage.Attribute(LanguageIso639_3_Attribute);
             if (xIso639_3 != null)
@@ -60,15 +61,15 @@ namespace IvanAkcheurov.NTextCat.Lib
             var xLocalName = xLanguage.Attribute(LanguageLocalNameAttribute);
             if (xLocalName != null)
                 localName = xLocalName.Value;
-            var language = new LanguageInfo(iso639_2, iso639_3, englishName, localName);
+            var language = new LanguageInfo(iso639_2T, iso639_3, englishName, localName);
             
             var features = new Distribution<T>(new Bag<T>());
             var xNgramsElement = xLanguageModel.Element(NGramsElement);
-            features.AddNoise(long.Parse(xNgramsElement.Attribute(NoiseCountAtribute).Value));
             foreach (var xElement in xNgramsElement.Elements(NGramElement))
             {
                 features.AddEvent(_deserializeFeature(xElement.Attribute(TextAttribute).Value), long.Parse(xElement.Attribute(CountAttribute).Value));
             }
+            features.AddNoise(long.Parse(xNgramsElement.Attribute(TotalNoiseCountAtribute).Value), long.Parse(xNgramsElement.Attribute(DistinctNoiseCountAtribute).Value));
             return new LanguageModel<T>(features, language, metadata);
         }
 
@@ -88,7 +89,7 @@ namespace IvanAkcheurov.NTextCat.Lib
                              new XElement(LanguageElement,
                                           new[]
                                               {
-                                                  Tuple.Create(LanguageIso639_2_Attribute, languageModel.Language.Iso639_2),
+                                                  Tuple.Create(LanguageIso639_2T_Attribute, languageModel.Language.Iso639_2T),
                                                   Tuple.Create(LanguageIso639_3_Attribute, languageModel.Language.Iso639_3),
                                                   Tuple.Create(LanguageEnglishNameAttribute, languageModel.Language.EnglishName),
                                                   Tuple.Create(LanguageLocalNameAttribute, languageModel.Language.LocalName)
@@ -97,8 +98,9 @@ namespace IvanAkcheurov.NTextCat.Lib
                              new XElement(MetadataElement,
                                           languageModel.Metadata.Select(kvp => new XElement(kvp.Key, kvp.Value))),
                              new XElement(NGramsElement,
-                                          new XAttribute(NoiseCountAtribute, languageModel.Features.TotalNoiseCount),
-                                          languageModel.Features.Events
+                                          new XAttribute(TotalNoiseCountAtribute, languageModel.Features.TotalNoiseEventsCount),
+                                          new XAttribute(DistinctNoiseCountAtribute, languageModel.Features.DistinctNoiseEventsCount),
+                                          languageModel.Features.DistinctRepresentedEvents
                                               .Select(
                                                   event_ =>
                                                   new XElement(NGramElement,

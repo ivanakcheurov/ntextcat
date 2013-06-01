@@ -48,9 +48,9 @@ namespace IvanAkcheurov.NTextCat.Lib
         public void Save(LanguageModel<T> languageModel, Stream destinationStream)
         {
             var streamWriter = new StreamWriter(destinationStream, _encoding);
-            foreach (var keyValuePair in languageModel.Features.OrderByDescending(kvp => kvp.Value))
+            foreach (var keyValuePair in languageModel.Features.OrderByDescending<KeyValuePair<T, long>, long>(kvp => kvp.Value))
             {
-                streamWriter.WriteLine("{0}\t {1}", _serializeFeature(keyValuePair.Key), languageModel.Features.GetEventCount(keyValuePair.Key));
+                streamWriter.WriteLine("{0}\t {1}", _serializeFeature(keyValuePair.Key), keyValuePair.Value);
             }
             streamWriter.Flush();
         }

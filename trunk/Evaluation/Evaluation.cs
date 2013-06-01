@@ -12,23 +12,27 @@ namespace Evaluation
     [TestFixture]
     public class Evaluation
     {
-
+        private string _languageSamplesDir = @"d:\Files\Projects\NLP\NTextCat\Datasets\Tomato";
+        //private string _identifierFolder = @"d:\Files\Projects\NLP\NTextCat\Datasets\Tomato\lm_char4000\";
+        private string _identifierFile = @"d:\Files\Projects\NLP\NTextCat\Datasets\Tomato\profile4000\profile.xml";
+        //private string _identifierFile = @"d:\WikiDump\Wiki\extract\trainData20M\profile4000\profile.xml";
+        private string _outputFolder = @"d:\Files\Projects\NLP\NTextCat\Datasets\Tomato\ConfusionMatrix";
+        HashSet<string> _mostCommonLanguages = new HashSet<string> { "dan", "deu", "eng", "fra", "ita", "jpn", "kor", "nld", "nor", "por", "rus", "spa", "swe", "zho" };
+        
         [Test]
         public void SanityCheck()
         {
-            var mostCommonLanguagesArray = 
-                //File.ReadAllLines(@"d:\WikiDump\Wiki\extract\trainData\__mostCommon.list");
-                new[] {"fr", "en", "he", "de", "simple"};
-            var mostCommonLanguages = mostCommonLanguagesArray.Select((item, i) => new { item, i }).ToDictionary(_ => _.item, _ => _.i);
-            
-            var factory = new NaiveBayesLanguageIdentifierFactory();
-            NaiveBayesLanguageIdentifier identifier;
-            using (var stream = File.OpenRead(@"d:\WikiDump\Wiki\extract\trainData20M\profile4000\profile.xml"))
             {
-                identifier = factory.Load(stream, lm => mostCommonLanguages.ContainsKey(lm.Language.Iso639_2));
+                var factory = new NaiveBayesLanguageIdentifierFactory();
+                var identifier = factory.Load(_identifierFile, lm => _mostCommonLanguages.Contains(lm.Language.Iso639_2T ?? lm.Language.Iso639_3));
+                var result = identifier.Identify("you got me").ToArray();
             }
-            var enumerable = identifier.Identify("you got me");
-            var identify = new CharLanguageIdentifier(@"d:\WikiDump\Wiki\extract\trainData20M\lm_char4000_4", 4000).Identify("you got me");
+
+            {
+                var factory = new RankedLanguageIdentifierFactory();
+                var identifier = factory.Load(_identifierFile, lm => _mostCommonLanguages.Contains(lm.Language.Iso639_2T ?? lm.Language.Iso639_3));
+                var result = identifier.Identify("you got me").ToArray();
+            }
         }
 
         [Test]
@@ -36,23 +40,21 @@ namespace Evaluation
         [Timeout(3600*1000)]
         public void Evaluate()
         {
-            var mostCommonLanguagesArray = File.ReadAllLines(@"d:\WikiDump\Wiki\extract\trainData\__mostCommon.list");
-            var mostCommonLanguages = mostCommonLanguagesArray.Select((item, i) => new { item, i }).ToDictionary(_ => _.item, _ => _.i);
-            
-            var factory = new NaiveBayesLanguageIdentifierFactory();
-            NaiveBayesLanguageIdentifier identifier;
-            using (var stream = File.OpenRead(@"d:\WikiDump\Wiki\extract\trainData20M\profile4000\profile.xml"))
             {
-                identifier = factory.Load(stream, lm => mostCommonLanguages.ContainsKey(lm.Language.Iso639_2));
+                var factory = new NaiveBayesLanguageIdentifierFactory();
+                var identifier = factory.Load(_identifierFile, lm => _mostCommonLanguages.Contains(lm.Language.Iso639_2T));
+                GetConfusions(identifier.Identify, "Naive", _mostCommonLanguages);
             }
-            GetConfusions(identifier.Identify, "Naive", mostCommonLanguagesArray);
-            var identifier2 = new CharLanguageIdentifier(@"d:\WikiDump\Wiki\extract\trainData20M\lm_char4000_mostCommon", 4000);
-            GetConfusions(identifier2.Identify, "CharRanked", mostCommonLanguagesArray);
+
+            {
+                var factory = new RankedLanguageIdentifierFactory();
+                var identifier = factory.Load(_identifierFile, lm => _mostCommonLanguages.Contains(lm.Language.Iso639_2T));
+                GetConfusions(identifier.Identify, "Ranked", _mostCommonLanguages);
+            }
         }
 
-        private void GetConfusions(Func<string, IEnumerable<Tuple<LanguageInfo, double>>> identify, string method, string[] mostCommonLanguagesArray)
+        private void GetConfusions(Func<string, IEnumerable<Tuple<LanguageInfo, double>>> identify, string method, HashSet<string> mostCommonLanguagesArray)
         {
-            var languageSamplesDir = @"d:\WikiDump\Wiki\extract\trainData";
             var mostCommonLanguages = mostCommonLanguagesArray.Select((item, i) => new { item, i }).ToDictionary(_ => _.item, _ => _.i);
             var windowLengthList =
                 Enumerable.Range(1, 10).Concat(new[] { 13, 16, 20, 23, 26, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180, 200 }).ToArray();
@@ -61,7 +63,7 @@ namespace Evaluation
                 .Select(
                 lang =>
                     {
-                        var text = File.ReadAllText(Path.Combine(languageSamplesDir, lang + ".txt"));
+                        var text = File.ReadAllText(Path.Combine(_languageSamplesDir, lang + ".txt"));
                         var middle = text.Length/2;
                         var window = 10*1000*1000;
                         // take the middle of 1M characters length
@@ -89,7 +91,7 @@ namespace Evaluation
                                             var actuals =
                                                 tokens.Buffer(5, samplePeriod)
                                                     .Select(tokenWindow => System.String.Join(" ", tokenWindow))
-                                                    .Select(windowText => identify(windowText).First().Item1.Iso639_2)
+                                                    .Select(windowText => identify(windowText).First().Item1.Iso639_2T)
                                                     .ToArray();
                                             return Tuple.Create(lang, windowLength, actuals);
                                         });
@@ -109,10 +111,10 @@ namespace Evaluation
                                                  })
                                              .ToArray();
                                      var matrix = new GeneralConfusionMatrix(
-                                         mostCommonLanguagesArray.Length, experiment.Select(_ => _.Item1).ToArray(), experiment.Select(_ => _.Item2).ToArray());
-                                     using(var writer = new StreamWriter(Path.Combine(@"d:\Files\Projects\NLP\NTextCat\AllRep4\trunk", windowLength+"."+method+".csv")))
+                                         mostCommonLanguagesArray.Count, experiment.Select(_ => _.Item1).ToArray(), experiment.Select(_ => _.Item2).ToArray());
+                                     using (var writer = new StreamWriter(Path.Combine(_outputFolder, windowLength + "." + method + ".csv")))
                                      {
-                                        PrintMatrix(writer, matrix, mostCommonLanguagesArray);
+                                        PrintMatrix(writer, matrix, mostCommonLanguagesArray.ToArray());
                                      }
                                  });
         }

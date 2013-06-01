@@ -9,6 +9,7 @@ namespace IvanAkcheurov.NClassify
     {
         long GetNumberOfCopies(T item);
         IEnumerable<T> DistinctItems { get; }
+        long DistinctItemsCount { get; }
         bool Add(T item, long count);
         bool RemoveCopies(T item, long count);
         void RemoveAllCopies(T item);

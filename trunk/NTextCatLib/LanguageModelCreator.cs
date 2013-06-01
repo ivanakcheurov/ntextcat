@@ -12,7 +12,7 @@ namespace IvanAkcheurov.NTextCat.Lib
     {
         public static IDistribution<ulong> CreateLangaugeModel(IEnumerable<ulong> tokens, int minOccuranceNumberThreshold, int maxTokensInDistribution)
         {
-            IModifiableDistribution<ulong> distribution = new Distribution<ulong>(new GaussianBag());
+            IModifiableDistribution<ulong> distribution = new Distribution<ulong>(new Bag<ulong>());
             distribution.AddEventRange(tokens);
             // text_cat prunes by count and then by rank.
             // resulting distribution should not contain threshold-values (text_cat excludes them),

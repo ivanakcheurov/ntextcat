@@ -19,15 +19,36 @@ namespace IvanAkcheurov.NTextCat.Lib
 
         public static void Save<T>(IEnumerable<LanguageModel<T>> languageModels, int maximumSizeOfDistribution, int maxNGramLength, Stream outputStream)
         {
+            var languageModelsCache = languageModels.ToArray();
+            var languageMarks =
+            new Dictionary<string, Func<LanguageInfo, string>>
+                {
+                    {"ISO 639-3", lm => lm.Iso639_3},
+                    {"ISO 639-2-T", lm => lm.Iso639_2T},
+                    {"English name", lm => lm.EnglishName},
+                    {"local name", lm => lm.LocalName},
+                    {"any name available", lm => lm.Iso639_3 ?? lm.Iso639_2T ?? lm.EnglishName ?? lm.LocalName},
+                };
+            var f = 
+                languageMarks.ToDictionary(_ => _.Key, _ => languageModelsCache.Select(lm => _.Value(lm.Language)).ToList())
+                .FirstOrDefault(_ => _.Value.All(name => name != null));
+            var xComment =
+                f.Key == null
+                    ? new XComment("WARNING! Some of the language model(s) do(es)n't have any language name assigned")
+                    : new XComment("Contains models for the following languages (by " + f.Key  + "): " + String.Join(", ", f.Value));
+
+            if (languageModelsCache.Any(lm => lm.Language.Iso639_3 != null))
+                ;
             var persister = new XmlLanguageModelPersister<T>();
             var xDoc =
                 new XDocument(
+                    xComment,
                     new XElement(LanguageIdentificationProfileElement,
-                                 new XElement(ParametersElement,
+                        new XElement(ParametersElement,
                                               new XElement(MaximumSizeOfDistributionElement, maximumSizeOfDistribution),
                                               new XElement(MaxNGramLengthElement, maxNGramLength)),
                                  new XElement(LanguageModelsElement,
-                                              languageModels.Select(persister.ToXml)
+                                              languageModelsCache.Select(persister.ToXml)
 
                                      )));
 

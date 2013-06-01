@@ -7,6 +7,11 @@ using IvanAkcheurov.Commons.IO;
 
 namespace IvanAkcheurov.NTextCat.Lib.Legacy
 {
+    
+    /// <summary>
+    /// This is a byte based language identifier. It works on a byte level (streams) and can identify the encoding of a binary text file.
+    /// </summary>
+    [Obsolete("It's no longer maintained and may be removed in the future versions. Though probably it's still intact as covered by unit tests")]
     public class LanguageIdentifier
     {
         private const int ToManyLanguagesThresholdDefault = 10;

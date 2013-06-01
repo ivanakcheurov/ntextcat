@@ -7,6 +7,9 @@ using IvanAkcheurov.NClassify;
 
 namespace IvanAkcheurov.NTextCat.Lib
 {
+    /// <summary>
+    /// Extracts char-ngrams out of TextReader, char[] or string.
+    /// </summary>
     public class CharacterNGramExtractor : IFeatureExtractor<TextReader, string>, IFeatureExtractor<char[], string>, IFeatureExtractor<string, string> 
     {
         private readonly int _maxNGramLength = 5;
@@ -20,16 +23,34 @@ namespace IvanAkcheurov.NTextCat.Lib
             _maxLinesToRead = maxLinesToRead;
         }
 
+        /// <summary>
+        /// Splits text into tokens, transforms each "token" into "_token_" (prepends and appends underscores) 
+        /// and then extracts proper ngrams out of each "_token_".
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>the sequence of ngrams extracted</returns>
         public IEnumerable<string> GetFeatures(string text)
         {
             return GetFeatures(new StringReader(text));
         }
 
+        /// <summary>
+        /// Splits text into tokens, transforms each "token" into "_token_" (prepends and appends underscores) 
+        /// and then extracts proper ngrams out of each "_token_".
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>the sequence of ngrams extracted</returns>
         public IEnumerable<string> GetFeatures(char[] text)
         {
             return GetFeatures(new string(text));
         }
 
+        /// <summary>
+        /// Splits text into tokens, transforms each "token" into "_token_" (prepends and appends underscores) 
+        /// and then extracts proper ngrams out of each "_token_".
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>the sequence of ngrams extracted</returns>
         public IEnumerable<string> GetFeatures(TextReader text)
         {
             long numberOfLinesRead = 0;

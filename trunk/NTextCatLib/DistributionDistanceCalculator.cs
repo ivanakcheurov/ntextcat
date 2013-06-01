@@ -13,7 +13,7 @@ namespace IvanAkcheurov.NTextCat.Lib
 
             double result =
                 1.0 - 
-                languageModel1.Events.Intersect(languageModel2.Events)
+                languageModel1.DistinctRepresentedEvents.Intersect(languageModel2.DistinctRepresentedEvents)
                     .Select(ngram => Math.Min(languageModel1.GetEventFrequency(ngram), languageModel2.GetEventFrequency(ngram)))
                     .Sum();
             return result;

@@ -1,0 +1,26 @@
+NTextCat 0.2.1
+* Recommended length of a text snippet has been reduced to 5 (though mostly a single word is handled correctly).
+* Simplified and made more consistent API.
+* Fixed NaiveBayesLanguageIdentifier so that it performs as good as RankedLanguageIdentifier
+* NTextCat.exe provides the main command line interface from now on (it's command line API may be changed in several subsequent releases).
+* Much better support for asian languages.
+* Based on the feedback, a set of 14 the most popular languages has been selected. It has become a default. The set: Chinese, Danish, Dutch, English, French, German, Italian, Japanese, Korean, Norwegian, Portugese, Russian, Spanish, Swedish
+* SqlServerClrIntegration is not in the release yet. It will be reintroduced in one of the next releases recompiled and verified for SQL Server 2012.
+* Fixed a bug in GaussianBag
+* More rigid testing routines as preparations to produce a stable release.
+
+NTextCat 0.2.0a
+* Character based language identifiers (have better quality than byte based ones):
+    - NaiveBayesLanguageIdentifier
+    - CharLanguageIdentifier
+    - RankedLanguageIdentifier
+Please consult Evaluation.Evaluation.SanityCheck test for usage details (http://ntextcat.codeplex.com/SourceControl/changeset/view/20397#289013)
+* Temporarily removed SqlServerClrIntegration. It will be reintroduced in the next release recompiled and verified for SQL Server 2012.
+* Discontinued .Net 3.5 Client Profile package as it was the only way to use NTextCat inside of SQL Server. Now SQL Server 2012 is able to use assemblies targeting .Net 4.0.
+
+NTextCat 0.1.7
+* SQL Server Integration via User Defined Functions (SQL Server 2008/2012, both via SqlServerClrIntegration.dll from .NET 3.5 folder)
+
+NTextCat 0.1.6
+* Performance improvements (up to x2 times faster): http://ntextcat.codeplex.com/discussions/273996
+* New sets of language models (please take a look at README.Txt)

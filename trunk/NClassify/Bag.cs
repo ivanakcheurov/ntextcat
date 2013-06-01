@@ -24,6 +24,11 @@ namespace IvanAkcheurov.NClassify
             get { return _store.Keys; }
         }
 
+        public long DistinctItemsCount
+        {
+            get { return _store.Keys.Count; }
+        }
+
         public bool Add(T item, long copiesCount)
         {
             long oldCount;

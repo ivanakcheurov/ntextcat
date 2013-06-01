@@ -6,10 +6,14 @@ using IvanAkcheurov.NClassify;
 
 namespace IvanAkcheurov.NTextCat.Lib
 {
+    /// <summary>
+    /// Identifies the language of a given text.
+    /// Please use <see cref="RankedLanguageIdentifierFactory"/> to load an instance of this class from a file
+    /// </summary>
     public class RankedLanguageIdentifier
     {
-        private readonly List<LanguageModel<string>> _languageModels;
-        private KnnMonoCategorizedClassifier<IDistribution<string>, LanguageInfo> _classifier;
+        //private readonly List<LanguageModel<string>> _languageModels;
+        private RankedClassifier<string> _classifier;
 
         public int MaxNGramLength { get; private set; }
         public int MaximumSizeOfDistribution { get; private set; }
@@ -23,12 +27,18 @@ namespace IvanAkcheurov.NTextCat.Lib
             OccuranceNumberThreshold = occuranceNumberThreshold;
             OnlyReadFirstNLines = onlyReadFirstNLines;
 
-            _languageModels = languageModels.ToList();
-            
-            _classifier =
-                new KnnMonoCategorizedClassifier<IDistribution<string>, LanguageInfo>(
-                    new DistributionDistanceCalculator(),
-                    _languageModels.ToDictionary(lm => lm.Features, lm => lm.Language));
+            //_languageModels = languageModels.ToList();
+
+            //_classifier =
+            //    new KnnMonoCategorizedClassifier<IDistribution<string>, LanguageInfo>(
+            //        (IDistanceCalculator<IDistribution<string>>) new RankingDistanceCalculator<IDistribution<string>>(MaximumSizeOfDistribution),
+            //        _languageModels.ToDictionary(lm => lm.Features, lm => lm.Language));
+
+            _classifier = new RankedClassifier<string>(MaximumSizeOfDistribution);
+            foreach (var languageModel in languageModels)
+            {
+                _classifier.AddEtalonLanguageModel(languageModel);
+            }
         }
 
 

@@ -10,7 +10,7 @@ namespace IvanAkcheurov.NClassify
         public double CalculateDistance(IDistribution<T> obj1, IDistribution<T> obj2)
         {
             double result =
-                obj1.Events.Union(obj2.Events)
+                obj1.DistinctRepresentedEvents.Union(obj2.DistinctRepresentedEvents)
                     .Select(ngram => Math.Abs(obj1.GetEventFrequency(ngram) - obj2.GetEventFrequency(ngram)))
                     .Sum() / 2;
             return result;
