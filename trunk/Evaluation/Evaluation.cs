@@ -65,7 +65,7 @@ namespace Evaluation
                     {
                         var text = File.ReadAllText(Path.Combine(_languageSamplesDir, lang + ".txt"));
                         var middle = text.Length/2;
-                        var window = 10*1000*1000;
+                        var window = 1*1000*1000;
                         // take the middle of 1M characters length
                         return Tuple.Create(lang, text.Substring(Math.Max(middle - window/2, 0), Math.Min(window - 1, text.Length)));
                     })
@@ -87,9 +87,9 @@ namespace Evaluation
                                     windowLength =>
                                         {
                                             var windowCount = tokenNumber - windowLength + 1;
-                                            var samplePeriod = (int) Math.Ceiling(windowCount/1000.0); //1000 samples on average
+                                            var samplePeriod = (int) Math.Ceiling(windowCount/100.0); //100 samples on average
                                             var actuals =
-                                                tokens.Buffer(5, samplePeriod)
+                                                tokens.Buffer(windowLength, samplePeriod)
                                                     .Select(tokenWindow => System.String.Join(" ", tokenWindow))
                                                     .Select(windowText => identify(windowText).First().Item1.Iso639_2T)
                                                     .ToArray();

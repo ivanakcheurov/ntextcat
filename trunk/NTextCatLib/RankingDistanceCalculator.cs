@@ -76,7 +76,7 @@ namespace IvanAkcheurov.NTextCat.Lib
                                        : Math.Abs(rank - ngramAndRank.Value);
                 totalDistance += rankDistance;
             }
-            return totalDistance;
+            return totalDistance / (double) Math.Max(count1, count2);
         }
     }
 }
