@@ -43,3 +43,4 @@ How to identify language using managed API
 ------------------------------------------
 With Use of NTextCat as library that you can reference from your application to empower it with language identification capabilities.
 http://ntextcat.codeplex.com/wikipage?title=NTextCat.Lib.Legacy%20samples&referringTitle=Home
+For always the latest and working API reference, please use unit-tests in the solution. e.g. https://ntextcat.svn.codeplex.com/svn/trunk/NTextCatLib.Test/LanguageIdentificationTest.cs

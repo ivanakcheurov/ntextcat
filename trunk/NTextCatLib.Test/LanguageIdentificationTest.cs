@@ -11,7 +11,7 @@ namespace IvanAkcheurov.NTextCatLib.Test
     [TestFixture]
     public class LanguageIdentificationTest
     {
-        private string _identifierFile = @"..\..\..\..\..\Datasets\Tomato\profile4000\profile.xml";
+        private string _identifierFile = @"..\..\..\LanguageModels\Core14.profile.xml";
 
         [Test]
         public void TestNaiveBayesLanguageIdentifierFactory()
