@@ -8,4 +8,8 @@ assembly_info:
   assembly_version: "{version}"
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
+platform: Any CPU
 configuration: Release
+build:
+  parallel: true
+  project: src\NTextCat\NTextCat.csproj
