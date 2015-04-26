@@ -1,3 +1,4 @@
+@using NTextCatDemoSite.Controllers
 @{
     ViewBag.Title = "Home Page";
 }
@@ -5,45 +6,55 @@
 <script src="../../Scripts/jquery.gritter.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
-        $('#lnkButton').button().click(function () {
+        var timer;
+        var origvalue;
+
+        function identify() {
             if ($('#txtLanguage').val().length == 0) {
-                var unique_id1 = $.gritter.add({
-                    title: 'Please enter some text!',
-                    text: 'Please enter some text to identify language of it.',
-                    sticky: true,
-                    time: '',
-                    class_name: 'my-sticky-class'
-                });
+                $('#result').html('<b>Please enter some text in the field above.</b>');
                 return;
             }
+            $('#result').html('<i>Identifying the language...<i>');
             $.post('/Home/Index', { text: $('#txtLanguage').val() }, function (data) {
                 $("#dialog:ui-dialog").dialog("destroy");
                 if (data.length > 0) {
-                    var unique_id2 = $.gritter.add({
-                        title: 'Language Identified..',
-                        text: 'The Language of the text entered is ' + data + '.',
-                        sticky: true,
-                        time: '',
-                        class_name: 'my-sticky-class'
-                    });
+                    $('#result').html('The language of the text entered is <b>' + data + '</b>.');
                 } else {
-                    $('#model-text').text('Cannot Find the language.');
-                    var unique_id3 = $.gritter.add({
-                        title: 'Cannot Find the language!!',
-                        text: 'NTextCat is unable to identify the language of this text. Please provide some more text to identify language.',
-                        sticky: true,
-                        time: '',
-                        class_name: 'my-sticky-class'
-                    });
+                    $('#result').html('<b>Cannot determine the language.</b>');
                 }
             });
+
+        }
+
+        $("#txtLanguage").bind('input propertychange', function () {
+            clearTimeout(timer);
+            origvalue = $('#txtLanguage').val();
+            timer = setTimeout(function () {
+                if (origvalue == $('#txtLanguage').val()) {
+                    identify();
+                }
+            }, 1000);
         });
+        $('#lnkButton').button().click(identify);
     });
 </script>
 <div>
-    <h5>
-        Enter Text to check for Language</h5>
-    <textarea id="txtLanguage" style="width: 800px; height: 400px;"></textarea>
     <br />
-    <a href="#" id="lnkButton" style="margin-top: 15px;">Get the Language</a>
+    <table>
+        <tr>
+            <td colspan="2">
+                <h5>Enter Text to check for Language</h5>
+                <textarea rows="1000" cols="100" id="txtLanguage" style="width: 800px; height: 400px;"></textarea>                
+            </td>
+        </tr>
+        <tr>
+            <td><a href="#" id="lnkButton" style="margin-top: 15px;">Get the Language</a></td>
+            <td><div id="result" style="margin-top: 15px;"></div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>The current profile contains the following languages: @HomeController.GetLanguages()</p>
+            </td>
+        </tr>
+    </table>
 </div>

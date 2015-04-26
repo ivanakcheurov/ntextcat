@@ -1,8 +1,9 @@
+@using NTextCatDemoSite.Controllers
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/Product">
 <head>
     <meta charset="utf-8" />
-    <title>NTextCat</title>
+    <title>NTextCat @HomeController.GetAssemblyVersion()</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />
     <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
@@ -16,7 +17,7 @@
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-                <p class="site-title">@*@Html.ActionLink("your logo here.", "Index", "Home")*@NTextCat</p>
+                <p class="site-title">@*@Html.ActionLink("your logo here.", "Index", "Home")*@NTextCat @HomeController.GetAssemblyVersion()</p>
             </div>
             <div class="float-right">
                 <section id="login">

@@ -44,7 +44,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NTextCatLib\Properties\CommonAssemblyInfo.cs">
+    <Compile Include="..\NTextCat\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Bag.cs" />

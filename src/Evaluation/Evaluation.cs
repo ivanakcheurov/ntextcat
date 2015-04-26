@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Accord.Statistics.Analysis;
-using IvanAkcheurov.NTextCat.Lib;
+using NTextCat;
 using IvanAkcheurov.NTextCat.Lib.Legacy;
 using NUnit.Framework;
 

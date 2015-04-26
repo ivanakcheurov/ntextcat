@@ -9,9 +9,9 @@ using System.Xml;
 using IvanAkcheurov.Commons;
 using Mono.Options;
 using IvanAkcheurov.NClassify;
-using IvanAkcheurov.NTextCat.Lib;
+using NTextCat;
 
-namespace IvanAkcheurov.NTextCat.App
+namespace IvanAkcheurov.NTextCat.Cli
 {
     class Program
     {
