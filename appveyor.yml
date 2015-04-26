@@ -4,7 +4,7 @@ branches:
   - master
 assembly_info:
   patch: true
-  file: src\NTextCatLib\Properties\CommonAssemblyInfo.cs
+  file: src\NTextCat\Properties\CommonAssemblyInfo.cs
   assembly_version: "{version}"
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
