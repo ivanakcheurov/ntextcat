@@ -1,7 +1,9 @@
 version: 0.2.1.{build}
 branches:
   only:
-  - master
+    master
+cache:
+  packages -> **\packages.config
 assembly_info:
   patch: true
   file: src\NTextCat\Properties\CommonAssemblyInfo.cs
@@ -13,3 +15,9 @@ configuration: Release
 build:
   parallel: true
   project: src\NTextCat\NTextCat.csproj
+
+# Automatically register private account and/or project AppVeyor NuGet feeds.
+nuget:
+  account_feed: false
+  project_feed: true
+  disable_publish_on_pr: true
