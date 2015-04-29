@@ -15,7 +15,10 @@ configuration: Release
 build:
   parallel: true
   project: src\NTextCat\NTextCat.csproj
-
+test:
+  # assemblies to test - optional
+  assemblies:
+    - **\*.Test.dll
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
   account_feed: false
