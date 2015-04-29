@@ -86,7 +86,9 @@
     <None Include="..\StrongNameKey.snk">
       <Link>StrongNameKey.snk</Link>
     </None>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

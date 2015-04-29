@@ -1,6 +1,7 @@
 ﻿-- Pre-Deployment script
 -- Deploys all prerequisites (references assemblies) for main assembly.
-:setvar AssemblyDir "c:\your\path\to\ntextcat\folder\"
+--:setvar AssemblyDir "c:\your\path\to\ntextcat\folder\"
+:setvar AssemblyDir "d:\Files\Projects\NLP\NTextCat\Rep\ntextcat - Copy\src\SqlServerClrIntegration\obj\sqlclr\"
 :setvar DatabaseName "Test"
 
 EXEC sp_configure 'clr enabled', 1;
@@ -45,17 +46,10 @@ FROM '$(AssemblyDir)Ionic.Zip.dll'
 WITH PERMISSION_SET = UNSAFE
 GO
 /****** Object:  SqlAssembly [IvanAkcheurov.NTextCat.Lib.dll]    Script Date: 05/18/2012 18:05:32 ******/
-IF NOT EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'IvanAkcheurov.NTextCat.Lib.dll' and is_user_defined = 1)
-CREATE ASSEMBLY [IvanAkcheurov.NTextCat.Lib.dll]
+IF NOT EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'NTextCat.dll' and is_user_defined = 1)
+CREATE ASSEMBLY [NTextCat.dll]
 AUTHORIZATION [dbo]
-FROM '$(AssemblyDir)IvanAkcheurov.NTextCat.Lib.dll'
-WITH PERMISSION_SET = UNSAFE
-GO
-/****** Object:  SqlAssembly [IvanAkcheurov.NTextCat.Lib.Legacy.dll]    Script Date: 05/18/2012 18:05:32 ******/
-IF NOT EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'IvanAkcheurov.NTextCat.Lib.Legacy.dll' and is_user_defined = 1)
-CREATE ASSEMBLY [IvanAkcheurov.NTextCat.Lib.Legacy.dll]
-AUTHORIZATION [dbo]
-FROM '$(AssemblyDir)IvanAkcheurov.NTextCat.Lib.Legacy.dll'
+FROM '$(AssemblyDir)NTextCat.dll'
 WITH PERMISSION_SET = UNSAFE
 GO
 /****** Object:  SqlAssembly [SqlServerClrIntegration]    Script Date: 05/18/2012 18:05:32 ******/

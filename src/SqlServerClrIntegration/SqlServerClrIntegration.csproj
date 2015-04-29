@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>SqlServerClrIntegration</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SGenUseProxyTypes>false</SGenUseProxyTypes>
     <PermissionLevel>3</PermissionLevel>
     <TargetFrameworkProfile>
@@ -59,22 +59,17 @@
       <SubType>SQLCLR</SubType>
     </Reference>
     <Reference Include="IvanAkcheurov.Commons.dll">
-      <HintPath>obj\sqlclr\IvanAkcheurov.Commons.dll.dll</HintPath>
+      <HintPath>obj\sqlclr\IvanAkcheurov.Commons.dll</HintPath>
       <Private>False</Private>
       <SubType>SQLCLR</SubType>
     </Reference>
     <Reference Include="IvanAkcheurov.NClassify.dll">
-      <HintPath>obj\sqlclr\IvanAkcheurov.NClassify.dll.dll</HintPath>
+      <HintPath>obj\sqlclr\IvanAkcheurov.NClassify.dll</HintPath>
       <Private>False</Private>
       <SubType>SQLCLR</SubType>
     </Reference>
-    <Reference Include="IvanAkcheurov.NTextCat.Lib.dll">
-      <HintPath>obj\sqlclr\IvanAkcheurov.NTextCat.Lib.dll.dll</HintPath>
-      <Private>False</Private>
-      <SubType>SQLCLR</SubType>
-    </Reference>
-    <Reference Include="IvanAkcheurov.NTextCat.Lib.Legacy.dll">
-      <HintPath>obj\sqlclr\IvanAkcheurov.NTextCat.Lib.Legacy.dll.dll</HintPath>
+    <Reference Include="NTextCat.dll">
+      <HintPath>obj\sqlclr\NTextCat.dll</HintPath>
       <Private>False</Private>
       <SubType>SQLCLR</SubType>
     </Reference>
@@ -88,6 +83,7 @@
     </Compile>
     <Compile Include="IdentifyLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IdentifierSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Deploy.sql">
@@ -120,7 +116,7 @@
     <PreBuildEvent>if exist "$(SolutionDir)LanguageModels\LanguageModels.zip" del "$(SolutionDir)LanguageModels\LanguageModels.zip"
 7z.exe a "$(SolutionDir)LanguageModels\LanguageModels.zip" "$(SolutionDir)LanguageModels\*"</PreBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
