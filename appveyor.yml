@@ -18,7 +18,7 @@ build:
 test:
   # assemblies to test - optional
   assemblies:
-    - **\*.Test.dll
+    - '**\*.Test.dll'
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
   account_feed: false
