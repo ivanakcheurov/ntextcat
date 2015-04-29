@@ -15,6 +15,8 @@ configuration: Release
 build:
   parallel: true
   project: src\NTextCat\NTextCat.csproj
+after_build:
+  - ps: Get-ChildItem -Recurse .
 test:
   # assemblies to test - optional
   assemblies:
