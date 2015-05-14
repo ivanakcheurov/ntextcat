@@ -23,11 +23,11 @@ after_build:
   - ps: Get-ChildItem -Recurse .
 test:
   assemblies:
-  #  - '**\*.Test.dll'
-    - src\NTextCat.Test\bin\Release\NTextCat.Test.dll
+    - '**\*.Test.dll'
+  #  - src\NTextCat.Test\bin\Release\NTextCat.Test.dll
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 after_test:
-  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=$(configuration)
+  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=%CONFIGURATION%
   - ps: Get-ChildItem -Recurse .
 artifacts:
   - path: '**\NTextCat.*.nupkg'
