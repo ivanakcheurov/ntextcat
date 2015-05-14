@@ -27,3 +27,7 @@ nuget:
   account_feed: false
   project_feed: true
   disable_publish_on_pr: true
+after_test:
+  - ps: nuget pack src\NTextCat\NTextCat.nuspec
+artifacts:
+  - path: 'src\NTextCat\NTextCat.*.nupkg'
