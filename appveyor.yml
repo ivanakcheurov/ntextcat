@@ -14,7 +14,7 @@ platform: AnyCPU
 configuration: Release
 build:
   parallel: true
-  project: src\NTextCat\NTextCat.csproj
+  project: src\NTextCat.sln
 after_build:
   - ps: Get-ChildItem -Recurse .
 test:
@@ -24,11 +24,11 @@ test:
     - src\NTextCat.Test\bin\Release\NTextCat.Test.dll
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 nuget:
-  account_feed: false
+  account_feed: true
   project_feed: true
-  disable_publish_on_pr: true
+  # disable_publish_on_pr: true
 after_test:
-  - ps: nuget pack src\NTextCat\NTextCat.nuspec
+  - ps: nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Prop Configuration=Release
   - ps: Get-ChildItem -Recurse .
 artifacts:
-  - path: 'src\NTextCat\NTextCat.*.nupkg'
+  - path: '**\NTextCat.*.nupkg'
