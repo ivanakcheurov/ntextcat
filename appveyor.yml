@@ -5,7 +5,7 @@ branches:
 skip_tags: true
 clone_depth: 50
 cache:
-  packages -> **\packages.config
+  src\packages -> **\packages.config
 assembly_info:
   patch: true
   file: src\NTextCat\Properties\CommonAssemblyInfo.cs
@@ -15,10 +15,16 @@ assembly_info:
 platform: Any CPU
 configuration: Release
 build:
-  # parallel: true
+  parallel: true
   project: src\NTextCat.sln
   publish_nuget: true
   publish_nuget_symbols: true
+  include_nuget_references: true
+nuget:
+  account_feed: true
+  project_feed: true
+  disable_publish_on_pr: true
+  
 after_build:
   - ps: Get-ChildItem -Recurse .
 test:
@@ -27,11 +33,8 @@ test:
   #  - src\NTextCat.Test\bin\Release\NTextCat.Test.dll
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 after_test:
-  - dir
-  - dir src\NTextCat\bin\Release
-  - echo nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop "Configuration=%CONFIGURATION%;Platform=AnyCPU" -Verbosity detailed
   - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop "Configuration=%CONFIGURATION%;Platform=AnyCPU" -Verbosity detailed
-  - ps: Get-ChildItem -Recurse .
+
 artifacts:
   - path: '**\NTextCat.*.nupkg'
   - path: src\NTextCat\bin\$(configuration)
