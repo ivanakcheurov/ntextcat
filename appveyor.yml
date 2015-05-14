@@ -28,8 +28,9 @@ test:
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 after_test:
   - dir
-  - echo nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=%CONFIGURATION% -Verbosity detailed
-  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=%CONFIGURATION% -Verbosity detailed
+  - dir src\NTextCat\bin\Release
+  - echo nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop "Configuration=%CONFIGURATION%;Platform=AnyCPU" -Verbosity detailed
+  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop "Configuration=%CONFIGURATION%;Platform=AnyCPU" -Verbosity detailed
   - ps: Get-ChildItem -Recurse .
 artifacts:
   - path: '**\NTextCat.*.nupkg'
