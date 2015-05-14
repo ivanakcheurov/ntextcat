@@ -21,7 +21,7 @@ namespace NTextCat
 
         public static TSetting GetSetting<TSetting>(string key, TSetting defaultValue)
         {
-            var setting = ConfigurationSettings.AppSettings[key];
+            var setting = ConfigurationManager.AppSettings[key];
             if (setting == null)
                 return defaultValue;
             var result = (TSetting)Convert.ChangeType(setting, typeof(TSetting), System.Globalization.CultureInfo.InvariantCulture);
