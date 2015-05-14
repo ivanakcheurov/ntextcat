@@ -29,5 +29,6 @@ nuget:
   disable_publish_on_pr: true
 after_test:
   - ps: nuget pack src\NTextCat\NTextCat.nuspec
+  - ps: Get-ChildItem -Recurse .
 artifacts:
   - path: 'src\NTextCat\NTextCat.*.nupkg'
