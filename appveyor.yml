@@ -27,7 +27,8 @@ test:
   #  - src\NTextCat.Test\bin\Release\NTextCat.Test.dll
 # Automatically register private account and/or project AppVeyor NuGet feeds.
 after_test:
-  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=%CONFIGURATION%
+  - echo nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=%CONFIGURATION%
+  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop Configuration=%CONFIGURATION% -Verbose
   - ps: Get-ChildItem -Recurse .
 artifacts:
   - path: '**\NTextCat.*.nupkg'
