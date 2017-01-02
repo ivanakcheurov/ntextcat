@@ -53,12 +53,21 @@
                 return;
             }
             $('#result').html('<i>Identifying the language...<i>');
-            $.post('https://ntextcat.azurewebsites.net/api/language-identification', { text: $('#txtLanguage').val() }, function (data) {
-                $("#dialog:ui-dialog").dialog("destroy");
-                if (data.length > 0) {
-                    $('#result').html('The language of the text entered is <b>' + data + '</b>.');
-                } else {
-                    $('#result').html('<b>Cannot determine the language.</b>');
+
+            $.ajax({
+                type: "POST",
+                url: "https://ntextcat.azurewebsites.net/api/language-identification",
+                // The key needs to match your method's input parameter (case-sensitive).
+                data: JSON.stringify({ text: $('#txtLanguage').val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                function (data) {
+                    $("#dialog:ui-dialog").dialog("destroy");
+                    if (data.length > 0) {
+                        $('#result').html('The language of the text entered is <b>' + data + '</b>.');
+                    } else {
+                        $('#result').html('<b>Cannot determine the language.</b>');
+                    }
                 }
             });
 
