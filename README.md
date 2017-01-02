@@ -5,6 +5,8 @@
     
 Please try it out: **<a href="http://ivanakcheurov.github.io/ntextcat/">Online DEMO</a>**
 
+<a href="http://www.nuget.org/packages/NTextCat/">NuGet</a>
+
 NTextCat 0.2.1
 * Recommended length of a text snippet has been reduced to 5 (though mostly a single word is handled correctly).
 * Simplified and made more consistent API.
