@@ -28,7 +28,7 @@ namespace NTextCat.Test
                 var distribution = CreateModel(featureExtractor, trainingItem.Value);
                 trainedModels.Add(distribution, trainingItem.Key);
             }
-            var classifier = 
+            var classifier  =
                 new KnnMonoCategorizedClassifier<IDistribution<string>, string>(new VectorDistanceCalculator<string>(), trainedModels);
             var resultSports = classifier.Classify(CreateModel(featureExtractor,
                 "Fitch Ratings on Wednesday said Britain's latest budget proposals show commitment to its existing deficit reduction strategy and do not impact its AAA credit rating.")).ToArray();
