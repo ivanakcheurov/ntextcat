@@ -64,7 +64,7 @@
                 success: function (data) {
                     $("#dialog:ui-dialog").dialog("destroy");
                     if (data.length > 0) {
-                        $('#result').html('The language of the text entered is <b>' + data + '</b>.');
+                        $('#result').html('The language of the text entered is <b>' + data.toUpperCase() + '</b>.');
                     } else {
                         $('#result').html('<b>Cannot determine the language.</b>');
                     }
