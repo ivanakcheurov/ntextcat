@@ -33,7 +33,16 @@ namespace NTextCat.Test
             Assert.Equal("rus", res2.First().Item1.Iso639_2T);
         }
 
-        
+        [Fact]
+        public void TestRankedLanguageIdentifierFactory_Eng()
+        {
+            var factory = new RankedLanguageIdentifierFactory();
+            var identifier = factory.Load(_identifierFile);
+            var res = identifier.Identify("What is the meaning of this");
+            Assert.Equal("eng", res.First().Item1.Iso639_2T);
+        }
+
+
         [Fact]
         public void TestTrainIdentifyCycle_Naive()
         {
