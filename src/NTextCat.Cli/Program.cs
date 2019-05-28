@@ -6,12 +6,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using IvanAkcheurov.Commons;
+using NTextCat.Commons;
 using Mono.Options;
-using IvanAkcheurov.NClassify;
-using NTextCat;
+using NTextCat.NClassify;
+using NTextCat.Core;
 
-namespace IvanAkcheurov.NTextCat.Cli
+namespace NTextCat.Cli
 {
     class Program
     {
