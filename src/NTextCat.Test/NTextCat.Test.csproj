@@ -75,16 +75,6 @@
     <Compile Include="TokenizerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NClassify\NClassify.csproj">
-      <Project>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</Project>
-      <Name>NClassify</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NTextCat\NTextCat.csproj">
-      <Project>{E645E620-70F5-4DF7-96DD-5189F353D79A}</Project>
-      <Name>NTextCat</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="TestData\expected.txt" />
     <Content Include="TestData\sample.txt" />
   </ItemGroup>

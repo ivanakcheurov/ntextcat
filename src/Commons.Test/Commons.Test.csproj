@@ -54,12 +54,6 @@
     <Compile Include="TestTextReaderStream.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commons\Commons.csproj">
-      <Project>{40BA5817-6C02-489A-AF9D-B211643C1493}</Project>
-      <Name>Commons</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

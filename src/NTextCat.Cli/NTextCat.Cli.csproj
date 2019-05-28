@@ -69,20 +69,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commons\Commons.csproj">
-      <Project>{40BA5817-6C02-489A-AF9D-B211643C1493}</Project>
-      <Name>Commons</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NClassify\NClassify.csproj">
-      <Project>{7AFA72EE-492B-4C8E-9016-C062A01FD75E}</Project>
-      <Name>NClassify</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NTextCat\NTextCat.csproj">
-      <Project>{E645E620-70F5-4DF7-96DD-5189F353D79A}</Project>
-      <Name>NTextCat</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\StrongNameKey.snk">
       <Link>StrongNameKey.snk</Link>
     </None>
