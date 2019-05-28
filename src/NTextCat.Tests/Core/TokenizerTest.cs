@@ -13,7 +13,7 @@ namespace NTextCat.Test
             var inputText = "first second,--214 third";
             var actual = tokenizer.GetTokens(inputText);
             var expected = new[] { "first", "second", "third" };
-            Assert.Same(actual, expected);
+            Assert.Equal(actual, expected);
 
         }
     }

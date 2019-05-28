@@ -17,8 +17,8 @@ namespace NTextCat.Test
             var trainingDocuments =
                 new Dictionary<string, string>
                     {
-                        { "sports", File.ReadAllText("..\\..\\TestData\\Sports.txt") }, 
-                        { "economy", File.ReadAllText("..\\..\\TestData\\Economy.txt") },
+                        { "sports", File.ReadAllText("Core\\TestData\\Sports.txt") }, 
+                        { "economy", File.ReadAllText("Core\\TestData\\Economy.txt") },
                     };
             var featureExtractor = new BagOfWordsFeatureExtractor();
             var trainedModels = new Dictionary<IDistribution<string>, string>();

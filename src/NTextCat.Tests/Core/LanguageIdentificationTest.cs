@@ -9,7 +9,7 @@ namespace NTextCat.Test
 
     public class LanguageIdentificationTest
     {
-        private string _identifierFile = @"..\..\..\LanguageModels\Core14.profile.xml";
+        private string _identifierFile = @"..\..\..\..\LanguageModels\Core14.profile.xml";
 
         [Fact]
         public void TestNaiveBayesLanguageIdentifierFactory()
@@ -33,13 +33,7 @@ namespace NTextCat.Test
             Assert.Equal("rus", res2.First().Item1.Iso639_2T);
         }
 
-        [Fact(Skip = "Identifies as Bulgarian instead of Russian when in 200+ languages mode")]
-        public void Test2()
-        {
-            //"Главная задача сэмпла - предоставить желающим качать возможность оценить реальное качество материала без скачивания всей раздачи целиком. Поэтому вырезать сэмпл надо из середины фильма и без каких либо искажений. Достаточно фрагмента на 1-2 минуты. Заливать сэмпл следует только на файлообменники";
-        }
-
-
+        
         [Fact]
         public void TestTrainIdentifyCycle_Naive()
         {

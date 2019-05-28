@@ -7,13 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Core\TestData\Economy.txt" />
     <None Remove="Core\TestData\expected.txt" />
     <None Remove="Core\TestData\sample.txt" />
+    <None Remove="Core\TestData\Sports.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Core\TestData\expected.txt" />
-    <Content Include="Core\TestData\sample.txt" />
+    <Content Include="Core\TestData\Economy.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\TestData\expected.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\TestData\sample.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\TestData\Sports.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
