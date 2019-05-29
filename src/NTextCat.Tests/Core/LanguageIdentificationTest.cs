@@ -9,7 +9,8 @@ namespace NTextCat.Test
 
     public class LanguageIdentificationTest
     {
-        private string _identifierFile = @"..\..\..\..\LanguageModels\Core14.profile.xml";
+        //private readonly string _identifierFile = @"..\..\..\..\LanguageModels\Wiki280.profile.xml";
+        private readonly string _identifierFile = @"..\..\..\..\LanguageModels\Core14.profile.xml";
 
         [Fact]
         public void TestNaiveBayesLanguageIdentifierFactory()
@@ -34,12 +35,21 @@ namespace NTextCat.Test
         }
 
         [Fact]
-        public void TestRankedLanguageIdentifierFactory_Eng()
+        public void TestRankedLanguageIdentifierFactory_ENG()
         {
             var factory = new RankedLanguageIdentifierFactory();
             var identifier = factory.Load(_identifierFile);
             var res = identifier.Identify("What is the meaning of this");
             Assert.Equal("eng", res.First().Item1.Iso639_2T);
+        }
+
+        [Fact]
+        public void TestRankedLanguageIdentifierFactory_NLD()
+        {
+            var factory = new RankedLanguageIdentifierFactory();
+            var identifier = factory.Load(_identifierFile);
+            var res = identifier.Identify("Nu komt de aap uit de mouw");
+            Assert.Equal("nld", res.First().Item1.Iso639_2T);
         }
 
 

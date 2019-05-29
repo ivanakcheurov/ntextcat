@@ -24,6 +24,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LanguageModels", "LanguageModels", "{2D88E576-72B1-4498-92DA-5D602B260E3F}"
 	ProjectSection(SolutionItems) = preProject
 		LanguageModels\Core14.profile.xml = LanguageModels\Core14.profile.xml
+		LanguageModels\Wiki280.profile.xml = LanguageModels\Wiki280.profile.xml
+		LanguageModels\Wiki82.profile.xml = LanguageModels\Wiki82.profile.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wikipedia-All-Utf8", "Wikipedia-All-Utf8", "{97071653-694E-412F-BF2E-C1AB6D77DA51}"
