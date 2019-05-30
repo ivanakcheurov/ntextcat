@@ -24,8 +24,7 @@ namespace NTextCat.Core
             var setting = ConfigurationManager.AppSettings[key];
             if (setting == null)
                 return defaultValue;
-            var result = (TSetting)Convert.ChangeType(setting, typeof(TSetting), System.Globalization.CultureInfo.InvariantCulture);
-            return result;
+            return (TSetting)Convert.ChangeType(setting, typeof(TSetting), System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public BasicProfileFactoryBase()
@@ -51,8 +50,7 @@ namespace NTextCat.Core
         public T Train(IEnumerable<Tuple<LanguageInfo, TextReader>> input)
         {
             var languageModels = TrainModels(input).ToList();
-            var identifier = Create(languageModels);
-            return identifier;
+            return Create(languageModels);
         }
 
         /// <summary>
@@ -88,8 +86,7 @@ namespace NTextCat.Core
         {
             IEnumerable<string> tokens = new CharacterNGramExtractor(MaxNGramLength, OnlyReadFirstNLines).GetFeatures(text);
             IDistribution<string> distribution = LanguageModelCreator.CreateLangaugeModel(tokens, OccuranceNumberThreshold, MaximumSizeOfDistribution);
-            var languageModel = new LanguageModel<string>(distribution, languageInfo);
-            return languageModel;
+            return new LanguageModel<string>(distribution, languageInfo);
         }
 
         public void SaveProfile(IEnumerable<LanguageModel<string>> languageModels, string outputFilePath)

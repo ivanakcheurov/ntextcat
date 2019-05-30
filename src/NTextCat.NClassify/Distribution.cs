@@ -162,7 +162,7 @@ namespace NTextCat.NClassify
         public void PruneByCount(long minCountAllowed)
         {
             if (minCountAllowed < 0)
-                throw new ArgumentOutOfRangeException("minCountAllowed", "Only non-negative values allowed");
+                throw new ArgumentOutOfRangeException(nameof(minCountAllowed), "Only non-negative values allowed");
             IEnumerable<T> removedItems =
                 _store
                 .Where(kvp => kvp.Value < minCountAllowed)

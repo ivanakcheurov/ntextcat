@@ -46,14 +46,12 @@ namespace NTextCat.Core
                 new KnnMonoCategorizedClassifier<IDictionary<T, int>, LanguageInfo>(
                     new RankingDistanceCalculator<T>(_defaultNgramRankOnAbsence),
                     _etalonLanguageModel2languageName);
-            IEnumerable<Tuple<LanguageInfo, double>> likelyLanguages = classifier.Classify(rankedGuessedLanguageModel);
-            return likelyLanguages;
+            return classifier.Classify(rankedGuessedLanguageModel);
         }
 
         private static IDictionary<T, int> GetRankedLanguageModel(IDistribution<T> languageModel)
         {
-            Dictionary<T, int> rankedLanguageModel = languageModel.OrderByDescending<KeyValuePair<T, long>, long>(e => e.Value).Select((e, i) => new { event_ = e.Key, rank = i + 1 }).ToDictionary(p => p.event_, p => p.rank);
-            return rankedLanguageModel;
+            return languageModel.OrderByDescending<KeyValuePair<T, long>, long>(e => e.Value).Select((e, i) => new { event_ = e.Key, rank = i + 1 }).ToDictionary(p => p.event_, p => p.rank);
         }
     }
 }

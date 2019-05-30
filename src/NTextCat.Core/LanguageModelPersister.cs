@@ -69,8 +69,7 @@ namespace NTextCat.Core
 
         public static NGram StringToNgram(string str)
         {
-            ulong ngram = str.Aggregate<char, NGram>(0, (ngr, c) => (ngr << 8) + CharToByte(c));
-            return ngram;
+            return str.Aggregate<char, NGram>(0, (ngr, c) => (ngr << 8) + CharToByte(c));
         }
 
         public static byte CharToByte(char c)

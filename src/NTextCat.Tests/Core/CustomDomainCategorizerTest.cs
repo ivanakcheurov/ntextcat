@@ -47,8 +47,7 @@ namespace NTextCat.Test
             {
                 bag.Add(feature.Item1, feature.Item2);
             }
-            var distribution = new Distribution<string>(bag);
-            return distribution;
+            return new Distribution<string>(bag);
         }
     }
 }

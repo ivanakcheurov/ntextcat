@@ -24,8 +24,7 @@ namespace NTextCat.Core
         {
             var extractor = new CharacterNGramExtractor(MaxNGramLength, OnlyReadFirstNLines);
             var tokens = extractor.GetFeatures(text);
-            var likelyLanguages = _classifier.Classify(tokens);
-            return likelyLanguages;
+            return _classifier.Classify(tokens);
         }
     }
 }

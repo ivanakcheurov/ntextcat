@@ -22,8 +22,7 @@ namespace NTextCat.Core
 
         public override NaiveBayesLanguageIdentifier Create(IEnumerable<LanguageModel<string>> languageModels, int maxNGramLength, int maximumSizeOfDistribution, int occuranceNumberThreshold, int onlyReadFirstNLines)
         {
-            var result = new NaiveBayesLanguageIdentifier(languageModels, maxNGramLength, onlyReadFirstNLines);
-            return result;
+            return new NaiveBayesLanguageIdentifier(languageModels, maxNGramLength, onlyReadFirstNLines);
         }
     }
 }

@@ -20,15 +20,13 @@ namespace NTextCat.NClassify
             var rankedDistribution1 = obj1.OrderByDescending<KeyValuePair<T, long>, long>(e => e.Value).Select((e, i) => new { event_ = e.Key, rank = i + 1 }).ToDictionary(p => p.event_, p => p.rank);
             var rankedDistribution2 = obj2.OrderByDescending<KeyValuePair<T, long>, long>(e => e.Value).Select((e, i) => new { event_ = e.Key, rank = i + 1 }).ToDictionary(p => p.event_, p => p.rank);
             // todo: 400 is hardcoded!
-            int distance =
-                obj1.DistinctRepresentedEvents
+            return                 obj1.DistinctRepresentedEvents
                     .Union(obj2.DistinctRepresentedEvents)
                     .Select(
                         e =>
                         Math.Abs(getRankOrDefault(rankedDistribution1, e, 400) -
                                  getRankOrDefault(rankedDistribution2, e, 400)))
                     .Sum();
-            return distance;
         }
     }
 }

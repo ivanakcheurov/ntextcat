@@ -20,7 +20,7 @@ namespace NTextCat.Commons
 
         public StringsTextReader(IEnumerable<string> strings)
         {
-            if (strings == null) throw new ArgumentNullException("strings");
+            if (strings == null) throw new ArgumentNullException(nameof(strings));
             _strings = strings.GetEnumerator();
             _currentLineIsNewLine = true;
             if (_strings.MoveNext() == false)
@@ -66,11 +66,11 @@ namespace NTextCat.Commons
         public override int Read(char[] buffer, int index, int count)
         {
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (count < 0)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             if (buffer.Length - index < count)
                 throw new ArgumentException("should have: (buffer.Length - index < count) true");
             

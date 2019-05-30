@@ -14,14 +14,12 @@ namespace NTextCat.Test
         {
             string methodName = methodInfo.Name;
             string typeName = methodInfo.DeclaringType.Name;
-            IEnumerable<TestData> testDataPairs =
-                Directory.GetFiles(string.Format("..\\..\\TestData\\{0}.{1}\\", typeName, methodName), "*" + InputDataFilenameSuffix)
+            return                 Directory.GetFiles(string.Format("..\\..\\TestData\\{0}.{1}\\", typeName, methodName), "*" + InputDataFilenameSuffix)
                     .Select(i => 
                         new TestData(
                             inputData : File.ReadAllBytes(i),
                             expectedResult: File.ReadAllBytes(i.Remove(i.Length - InputDataFilenameSuffix.Length) + ExpectedResultsFilenameSuffix))
                             );
-            return testDataPairs;
         }
         public class TestData
         {

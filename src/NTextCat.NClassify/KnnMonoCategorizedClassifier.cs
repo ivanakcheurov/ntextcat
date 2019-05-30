@@ -21,12 +21,12 @@ namespace NTextCat.NClassify
 
         public KnnMonoCategorizedClassifier(IDistanceCalculator<TItem> distanceCalculator, IDictionary<TItem, TCategory> knownInstances)
         {
-            if (distanceCalculator == null) throw new ArgumentNullException("distanceCalculator");
-            if (knownInstances == null) throw new ArgumentNullException("knownInstances");
+            if (distanceCalculator == null) throw new ArgumentNullException(nameof(distanceCalculator));
+            if (knownInstances == null) throw new ArgumentNullException(nameof(knownInstances));
             _distanceCalculator = distanceCalculator;
             _knownInstances = new Dictionary<TItem, TCategory>(knownInstances);
             if (_knownInstances.Count == 0)
-                throw new ArgumentException("Cannot be empty", "knownInstances");
+                throw new ArgumentException("Cannot be empty", nameof(knownInstances));
         }
 
         public IEnumerable<Tuple<TCategory, double>> Classify(TItem item)

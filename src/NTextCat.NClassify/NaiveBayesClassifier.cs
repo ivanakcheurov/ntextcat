@@ -17,7 +17,7 @@ namespace NTextCat.NClassify
         public NaiveBayesClassifier(IDictionary<TCategory, IDistribution<TFeature>> knownInstances, double? kSmoothFactor)
         {
             _kSmoothFactor = kSmoothFactor;
-            if (knownInstances == null) throw new ArgumentNullException("knownInstances");
+            if (knownInstances == null) throw new ArgumentNullException(nameof(knownInstances));
             //throw new NotImplementedException("bug: SOUNDS LIKE A TOTAL REPEATING EVENT COUNT!!!");
             _globalTotalEventCount = knownInstances.Sum(d => d.Value.TotalEventCountWithNoise);
             //not exactly true because some features might be in multiple categories and should count only once

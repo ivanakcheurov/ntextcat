@@ -21,16 +21,16 @@ namespace NTextCat.Commons.IO
             _encoding = encoding;
             _maxByteCountPerChar = _encoding.GetMaxByteCount(1);
             _encoder = encoding.GetEncoder();
-            if (bufferSize <= 0) throw new ArgumentOutOfRangeException("bufferSize", "zero or negative");
+            if (bufferSize <= 0) throw new ArgumentOutOfRangeException(nameof(bufferSize), "zero or negative");
             _charBuffer = new char[bufferSize];
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (count <= 0) throw new ArgumentOutOfRangeException("count", "zero or negative");
+            if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count), "zero or negative");
             int charsToReadLeft = count/_maxByteCountPerChar;
             if (charsToReadLeft == 0)
-                throw new ArgumentOutOfRangeException("count", "too small count, read at least " + _maxByteCountPerChar + " bytes");
+                throw new ArgumentOutOfRangeException(nameof(count), "too small count, read at least " + _maxByteCountPerChar + " bytes");
             int totalBytesWritten = 0;
             while (charsToReadLeft > 0)
             {

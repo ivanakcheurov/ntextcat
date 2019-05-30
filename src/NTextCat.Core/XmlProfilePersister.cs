@@ -60,23 +60,20 @@ namespace NTextCat.Core
         public static IEnumerable<LanguageModel<T>> Load<T>(Stream sourceStream, out int maximumSizeOfDistribution, out int maxNGramLength)
         {
             var xDocument = XDocument.Load(sourceStream);
-            var result = Load<T>(xDocument.Root, out maximumSizeOfDistribution, out maxNGramLength);
-            return result;
+            return Load<T>(xDocument.Root, out maximumSizeOfDistribution, out maxNGramLength);
         }
 
         public static IEnumerable<LanguageModel<T>> Load<T>(XElement xProfile, out int maximumSizeOfDistribution, out int maxNGramLength)
         {
             if (xProfile.Name != LanguageIdentificationProfileElement)
-                throw new ArgumentException("Xml root is not " + LanguageIdentificationProfileElement, "xProfile");
+                throw new ArgumentException("Xml root is not " + LanguageIdentificationProfileElement, nameof(xProfile));
 
             var xParameters = xProfile.Element(ParametersElement);
             maximumSizeOfDistribution = int.Parse(xParameters.Element(MaximumSizeOfDistributionElement).Value);
             maxNGramLength = int.Parse(xParameters.Element(MaxNGramLengthElement).Value);
             var xLanguageModels = xProfile.Element(LanguageModelsElement);
             var persister = new XmlLanguageModelPersister<T>();
-            var languageModelList =
-                xLanguageModels.Elements(XmlLanguageModelPersister<T>.RootElement).Select(persister.Load).ToList();
-            return languageModelList;
+            return xLanguageModels.Elements(XmlLanguageModelPersister<T>.RootElement).Select(persister.Load).ToList();
 
         }
     }

@@ -37,8 +37,7 @@ namespace NTextCat.Core
         public LanguageModel<T> Load(Stream sourceStream)
         {
             var xDocument = XDocument.Load(sourceStream);
-            var result = Load(xDocument.Root);
-            return result;
+            return Load(xDocument.Root);
         }
 
         public LanguageModel<T> Load(XElement xLanguageModel)
@@ -84,8 +83,7 @@ namespace NTextCat.Core
 
         public XElement ToXml(LanguageModel<T> languageModel)
         {
-            var result =
-                new XElement(RootElement,
+            return                 new XElement(RootElement,
                              new XElement(LanguageElement,
                                           new[]
                                               {
@@ -106,7 +104,6 @@ namespace NTextCat.Core
                                                   new XElement(NGramElement,
                                                                new XAttribute(TextAttribute, _serializeFeature(event_)),
                                                                new XAttribute(CountAttribute, languageModel.Features.GetEventCount(event_))))));
-            return result;
         }
     }
 }

@@ -54,8 +54,7 @@ namespace NTextCat.Core
             var extractor = new CharacterNGramExtractor(MaxNGramLength, OnlyReadFirstNLines);
             var tokens = extractor.GetFeatures(text);
             var model = LanguageModelCreator.CreateLangaugeModel(tokens, OccuranceNumberThreshold, MaximumSizeOfDistribution);
-            var likelyLanguages = _classifier.Classify(model);
-            return likelyLanguages;
+            return _classifier.Classify(model);
         }
     }
 }

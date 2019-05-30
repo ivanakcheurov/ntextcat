@@ -17,8 +17,7 @@ namespace NTextCat.Core
         public IEnumerable<Tuple<string, int>> GetFeatures(string document)
         {
             var words = GetFeatureStream(document);
-            var features = words.WhereNot(_stopWords.Contains).GroupBy(w => w, (key, group) => Tuple.Create(key, group.Count()));
-            return features;
+            return words.WhereNot(_stopWords.Contains).GroupBy(w => w, (key, group) => Tuple.Create(key, group.Count()));
             //Tuple<string, int>[] bagOfWords = this.GetFeatures("some interesting document").ToArray();
             //int totalNumberOfWords = bagOfWords.Sum(t => t.Item2);
             //IEnumerable<Tuple<string, double>> distribution = bagOfWords.Select(t => Tuple.Create(t.Item1, (double) t.Item2/totalNumberOfWords));

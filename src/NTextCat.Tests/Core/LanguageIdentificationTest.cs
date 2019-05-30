@@ -130,15 +130,12 @@ koningin Elizabeth.";
 ��чёные утверждают, что Шекспир посещал школу короля Эдуарда VI в Стратфорде-на-Эйвоне, где изучал творчество таких поэтов, 
 как Овидий и Плавт[6], однако школьные журналы не сохранились[7], и теперь ничего нельзя сказать наверняка.";
 
-            var testCases =
-                new[]
+            return                 new[]
                     {
                         new TestCase { ISO639_2T = "eng", Standard = englishStandard, Query = englishQuery},
                         new TestCase { ISO639_2T = "nld", Standard = dutchStandard, Query = dutchQuery},
                         new TestCase { ISO639_2T = "rus", Standard = russianStandard, Query = russianQuery},
                     };
-
-            return testCases;
         }
 
         public class TestCase

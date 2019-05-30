@@ -18,7 +18,7 @@ namespace NTextCat.Core
         public CharacterNGramExtractor(int maxNGramLength, long maxLinesToRead = long.MaxValue)
         {
             if (maxNGramLength <= 0)
-                throw new ArgumentOutOfRangeException("maxNGramLength", "should be positive integer number");
+                throw new ArgumentOutOfRangeException(nameof(maxNGramLength), "should be positive integer number");
             _maxNGramLength = maxNGramLength;
             _maxLinesToRead = maxLinesToRead;
         }

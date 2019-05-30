@@ -23,8 +23,7 @@ namespace NTextCat.Core
 
         public override RankedLanguageIdentifier Create(IEnumerable<LanguageModel<string>> languageModels, int maxNGramLength, int maximumSizeOfDistribution, int occuranceNumberThreshold, int onlyReadFirstNLines)
         {
-            var result = new RankedLanguageIdentifier(languageModels, maxNGramLength, maximumSizeOfDistribution, occuranceNumberThreshold, onlyReadFirstNLines);
-            return result;
+            return new RankedLanguageIdentifier(languageModels, maxNGramLength, maximumSizeOfDistribution, occuranceNumberThreshold, onlyReadFirstNLines);
         }
 
         
