@@ -9,8 +9,8 @@ namespace NTextCat.Core
 {
     public class Tokenizer : IFeatureExtractor<TextReader, string>, IFeatureExtractor<char[], string>, IFeatureExtractor<string, string> 
     {
-        public int MaxLinesToRead { get; private set; }
-        public Func<char, bool> IsSeparatorPredicate { get; private set; }
+        public int MaxLinesToRead { get; }
+        public Func<char, bool> IsSeparatorPredicate { get; }
 
         public Tokenizer(int maxLinesToRead = int.MaxValue)
             :this(maxLinesToRead, IsSeparator)

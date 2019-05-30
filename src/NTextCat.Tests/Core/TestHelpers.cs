@@ -30,8 +30,8 @@ namespace NTextCat.Test
                 ExpectedResult = expectedResult;
             }
 
-            public byte[] InputData { get; private set; }
-            public byte[] ExpectedResult { get; private set; }
+            public byte[] InputData { get; }
+            public byte[] ExpectedResult { get; }
         }
     }
 }

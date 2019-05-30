@@ -12,10 +12,10 @@ namespace NTextCat.Core
         /// <summary>
         /// A code of the language according to ISO639-2 (Part2T)
         /// </summary>
-        public string Iso639_2T { get; private set; }
-        public string Iso639_3 { get; private set; }
-        public string EnglishName { get; private set; }
-        public string LocalName { get; private set; }
+        public string Iso639_2T { get; }
+        public string Iso639_3 { get; }
+        public string EnglishName { get; }
+        public string LocalName { get; }
 
         public LanguageInfo(string iso6392T, string iso6393, string englishName, string localName)
         {

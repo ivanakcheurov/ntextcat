@@ -8,10 +8,10 @@ namespace NTextCat.Core
 {
     public class LanguageModel<T>
     {
-        public LanguageInfo Language { get; private set; }
+        public LanguageInfo Language { get; }
 
-        public IDictionary<string, string> Metadata { get; private set; }
-        
+        public IDictionary<string, string> Metadata { get; }
+
         public IDistribution<T> Features { get; private set; }
 
         public LanguageModel(IDistribution<T> features, LanguageInfo language)

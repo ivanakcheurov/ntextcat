@@ -10,15 +10,15 @@ namespace NTextCat.Core
 {
     public abstract class BasicProfileFactoryBase<T>
     {
-        public int MaxNGramLength { get; private set; }
-        public int MaximumSizeOfDistribution { get; private set; }
-        public int OccuranceNumberThreshold { get; private set; }
-        public int OnlyReadFirstNLines { get; private set; }
+        public int MaxNGramLength { get; }
+        public int MaximumSizeOfDistribution { get; }
+        public int OccuranceNumberThreshold { get; }
+        public int OnlyReadFirstNLines { get; }
 
         /// <summary>
         /// true if it is allowed to use more than one thread for training
         /// </summary>
-        public bool AllowUsingMultipleThreadsForTraining { get; private set; }
+        public bool AllowUsingMultipleThreadsForTraining { get; }
 
         public static TSetting GetSetting<TSetting>(string key, TSetting defaultValue)
         {

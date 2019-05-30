@@ -15,8 +15,8 @@ namespace NTextCat.Core
         //private readonly List<LanguageModel<string>> _languageModels;
         private RankedClassifier<string> _classifier;
 
-        public int MaxNGramLength { get; private set; }
-        public int MaximumSizeOfDistribution { get; private set; }
+        public int MaxNGramLength { get; }
+        public int MaximumSizeOfDistribution { get; }
         public int OccuranceNumberThreshold { get; set; }
         public int OnlyReadFirstNLines { get; set; }
         private List<LanguageModel<string>> _languageModels = new List<LanguageModel<string>>();

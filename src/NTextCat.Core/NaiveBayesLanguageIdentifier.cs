@@ -8,7 +8,7 @@ namespace NTextCat.Core
 {
     public class NaiveBayesLanguageIdentifier
     {
-        public int MaxNGramLength { get; private set; }
+        public int MaxNGramLength { get; }
         public int OnlyReadFirstNLines { get; set; }
         private NaiveBayesClassifier<IEnumerable<string>, string, LanguageInfo> _classifier;
 
