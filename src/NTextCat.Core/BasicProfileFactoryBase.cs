@@ -14,6 +14,7 @@ namespace NTextCat.Core
         public int MaximumSizeOfDistribution { get; private set; }
         public int OccuranceNumberThreshold { get; private set; }
         public int OnlyReadFirstNLines { get; private set; }
+
         /// <summary>
         /// true if it is allowed to use more than one thread for training
         /// </summary>
@@ -45,6 +46,7 @@ namespace NTextCat.Core
         {
             return Create(languageModels, MaxNGramLength, MaximumSizeOfDistribution, OccuranceNumberThreshold, OnlyReadFirstNLines);
         }
+
         public abstract T Create(IEnumerable<LanguageModel<string>> languageModels, int maxNGramLength, int maximumSizeOfDistribution, int occuranceNumberThreshold, int onlyReadFirstNLines);
 
         public T Train(IEnumerable<Tuple<LanguageInfo, TextReader>> input)

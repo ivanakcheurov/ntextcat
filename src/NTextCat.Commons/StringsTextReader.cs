@@ -42,6 +42,7 @@ namespace NTextCat.Commons
             _length = 0;
             base.Dispose(disposing);
         }
+
         public void CheckDisposed()
         {
             if (_disposed)
@@ -126,6 +127,7 @@ namespace NTextCat.Commons
             }
             return string.Empty;
         }
+
         private bool HasNoTextLeftSkippingEmpties()
         {
             do

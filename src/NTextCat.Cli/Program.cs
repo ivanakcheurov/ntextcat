@@ -16,6 +16,7 @@ namespace NTextCat.Cli
     class Program
     {
         private const string NoPromptSwitch = "noprompt";
+
         static void Main(string[] args)
         {
             //Debugger.Launch();
@@ -242,6 +243,7 @@ namespace NTextCat.Cli
                 return new StreamReader(fileName, true);
             return new StreamReader(fileName, encoding);
         }
+
         /// <summary>
         /// 
         /// </summary>

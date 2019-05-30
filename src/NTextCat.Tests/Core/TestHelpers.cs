@@ -21,6 +21,7 @@ namespace NTextCat.Test
                             expectedResult: File.ReadAllBytes(i.Remove(i.Length - InputDataFilenameSuffix.Length) + ExpectedResultsFilenameSuffix))
                             );
         }
+
         public class TestData
         {
             public TestData(byte[] inputData, byte[] expectedResult)

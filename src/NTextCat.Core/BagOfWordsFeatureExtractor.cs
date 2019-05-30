@@ -14,6 +14,7 @@ namespace NTextCat.Core
     public class BagOfWordsFeatureExtractor : IFeatureExtractor<string, Tuple<string, int>>
     {
         private static readonly HashSet<string> _stopWords = new HashSet<string>(GetFeatureStream(RawStopwords));
+
         public IEnumerable<Tuple<string, int>> GetFeatures(string document)
         {
             var words = GetFeatureStream(document);
