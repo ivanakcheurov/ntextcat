@@ -117,7 +117,7 @@ namespace NTextCat.Core
 
         private static bool IsSeparator(char b)
         {
-            return Char.IsLetter(b) == false;
+            return !Char.IsLetter(b);
         }
     }
 }

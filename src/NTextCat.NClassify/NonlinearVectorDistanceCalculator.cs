@@ -13,7 +13,7 @@ namespace NTextCat.NClassify
                 (rankedDistribution, event_, defaultRank) =>
                 {
                     int rank;
-                    if (rankedDistribution.TryGetValue(event_, out rank) == false)
+                    if (!rankedDistribution.TryGetValue(event_, out rank))
                         rank = defaultRank;
                     return rank;
                 };

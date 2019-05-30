@@ -213,7 +213,7 @@ namespace NTextCat.Commons
         /// <returns>Sequence of those items of input sequence for which <paramref name="whereFunc"/> returns false</returns>
         public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> sequence, Func<T, bool> whereFunc)
         {
-            return sequence.Where(element => whereFunc(element) == false);
+            return sequence.Where(element => !whereFunc(element));
         }
 
         /// <summary>

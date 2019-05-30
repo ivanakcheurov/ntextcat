@@ -264,7 +264,7 @@ namespace NTextCat.Cli
                 acceptableResults.Clear();
 
 
-            if (acceptableResults.Any() == false)
+            if (!acceptableResults.Any())
                 Console.WriteLine("unknown");
             else
             {

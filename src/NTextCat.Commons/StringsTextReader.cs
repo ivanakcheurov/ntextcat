@@ -23,7 +23,7 @@ namespace NTextCat.Commons
             if (strings == null) throw new ArgumentNullException(nameof(strings));
             _strings = strings.GetEnumerator();
             _currentLineIsNewLine = true;
-            if (_strings.MoveNext() == false)
+            if (!_strings.MoveNext())
                 _finished = true;
             else
                 _sNext = _strings.Current;
@@ -148,7 +148,7 @@ namespace NTextCat.Commons
                 }
                 else
                 {
-                    if (_strings.MoveNext() == false)
+                    if (!_strings.MoveNext())
                     {
                         _finished = true;
                         return true;
@@ -176,7 +176,7 @@ namespace NTextCat.Commons
                     _sNext = null;
                     _currentLineIsNewLine = false;
                 }
-                else if (_strings.MoveNext() == false)
+                else if (!_strings.MoveNext())
                 {
                     _finished = true;
                     return true;

@@ -71,7 +71,7 @@ namespace NTextCat.Core
             foreach (var ngramAndRank in unknown)
             {
                 int rank;
-                int rankDistance = known.TryGetValue(ngramAndRank.Key, out rank) == false
+                int rankDistance = !known.TryGetValue(ngramAndRank.Key, out rank)
                                        ? _defaultRankDistanceOnAbsence
                                        : Math.Abs(rank - ngramAndRank.Value);
                 totalDistance += rankDistance;

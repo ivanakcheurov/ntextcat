@@ -35,7 +35,7 @@ namespace NTextCat.NClassify
             foreach (var knownInstance in _knownInstances)
             {
                 DistanceSumAndCount distanceSumAndCount;
-                if (categoryDistances.TryGetValue(knownInstance.Value, out distanceSumAndCount) == false)
+                if (!categoryDistances.TryGetValue(knownInstance.Value, out distanceSumAndCount))
                 {
                     distanceSumAndCount = new DistanceSumAndCount {DistanceSum = 0, Count = 0};
                     categoryDistances.Add(knownInstance.Value, distanceSumAndCount);

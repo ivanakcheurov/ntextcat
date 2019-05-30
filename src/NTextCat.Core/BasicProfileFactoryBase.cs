@@ -120,7 +120,7 @@ namespace NTextCat.Core
         public T Load(Func<LanguageModel<string>, bool> filterPredicate = null)
         {
             var defaultProfile = GetSetting("LanguageIdentificationProfileFilePath", string.Empty);
-            if (File.Exists(defaultProfile) == false)
+            if (!File.Exists(defaultProfile))
                 throw new InvalidOperationException("Cannot find a profile in the following path: '" + defaultProfile + "'");
             return Load(defaultProfile, filterPredicate);
         }
