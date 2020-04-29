@@ -6,16 +6,17 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using IvanAkcheurov.Commons;
+using NTextCat.Commons;
 using Mono.Options;
-using IvanAkcheurov.NClassify;
-using NTextCat;
+using NTextCat.NClassify;
+using NTextCat.Core;
 
-namespace IvanAkcheurov.NTextCat.Cli
+namespace NTextCat.Cli
 {
     class Program
     {
         private const string NoPromptSwitch = "noprompt";
+
         static void Main(string[] args)
         {
             //Debugger.Launch();
@@ -242,6 +243,7 @@ namespace IvanAkcheurov.NTextCat.Cli
                 return new StreamReader(fileName, true);
             return new StreamReader(fileName, encoding);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -264,7 +266,7 @@ namespace IvanAkcheurov.NTextCat.Cli
                 acceptableResults.Clear();
 
 
-            if (acceptableResults.Any() == false)
+            if (!acceptableResults.Any())
                 Console.WriteLine("unknown");
             else
             {
