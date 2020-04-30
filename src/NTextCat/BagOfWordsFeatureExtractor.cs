@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using IvanAkcheurov.Commons;
-using IvanAkcheurov.NClassify;
+using NTextCat.Commons;
+using NTextCat.NClassify;
 
 namespace NTextCat
 {

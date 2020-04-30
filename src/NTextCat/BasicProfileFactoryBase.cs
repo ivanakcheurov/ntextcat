@@ -4,7 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
-using IvanAkcheurov.NClassify;
+using NTextCat.NClassify;
 
 namespace NTextCat
 {
@@ -19,17 +19,8 @@ namespace NTextCat
         /// </summary>
         public bool AllowUsingMultipleThreadsForTraining { get; private set; }
 
-        public static TSetting GetSetting<TSetting>(string key, TSetting defaultValue)
-        {
-            var setting = ConfigurationManager.AppSettings[key];
-            if (setting == null)
-                return defaultValue;
-            var result = (TSetting)Convert.ChangeType(setting, typeof(TSetting), System.Globalization.CultureInfo.InvariantCulture);
-            return result;
-        }
-
         public BasicProfileFactoryBase()
-            : this(5, GetSetting("MaximumSizeOfDistribution", 4000), GetSetting("OccuranceNumberThreshold", 0), int.MaxValue)
+            : this(5, 4000, 0, int.MaxValue)
         {
         }
 
@@ -118,14 +109,6 @@ namespace NTextCat
             var languageModels = TrainModels(input).ToList();
             SaveProfile(languageModels, outputStream);
             return Create(languageModels, MaxNGramLength, MaximumSizeOfDistribution, OccuranceNumberThreshold, OnlyReadFirstNLines);
-        }
-
-        public T Load(Func<LanguageModel<string>, bool> filterPredicate = null)
-        {
-            var defaultProfile = GetSetting("LanguageIdentificationProfileFilePath", string.Empty);
-            if (File.Exists(defaultProfile) == false)
-                throw new InvalidOperationException("Cannot find a profile in the following path: '" + defaultProfile + "'");
-            return Load(defaultProfile, filterPredicate);
         }
 
         public T Load(string inputFilePath, Func<LanguageModel<string>, bool> filterPredicate = null)

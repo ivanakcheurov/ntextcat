@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Xunit;
 using System.Linq;
-using System.Text;
-using NTextCat;
-using NUnit.Framework;
 
 namespace NTextCat.Test
 {
-    [TestFixture]
+
     public class TokenizerTest
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var tokenizer = new Tokenizer();
             var inputText = "first second,--214 third";
             var actual = tokenizer.GetTokens(inputText);
             var expected = new[] { "first", "second", "third" };
-            Assert.That(actual, Is.EquivalentTo(expected));
+            Assert.True(expected.SequenceEqual(actual), "two sequences don't match");
 
         }
     }

@@ -1,49 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using NTextCat;
-using NUnit.Framework;
+using Xunit;
 
 namespace NTextCat.Test
 {
-    [TestFixture]
+
     public class LanguageIdentificationTest
     {
-        private string _identifierFile = @"..\..\..\LanguageModels\Core14.profile.xml";
+        private string _identifierFile = Path.Combine("..", "..", "..", "..", "LanguageModels", "Core14.profile.xml");
 
-        [Test]
+        [Fact]
         public void TestNaiveBayesLanguageIdentifierFactory()
         {
             var factory = new NaiveBayesLanguageIdentifierFactory();
             var identifier = factory.Load(_identifierFile);
             var res = identifier.Identify("был зачитан вслух");
-            Assert.That(res.First().Item1.Iso639_2T, Is.EqualTo("rus"));
+            Assert.Equal("rus", res.First().Item1.Iso639_2T);
             var res2 = identifier.Identify("Главная задача сэмпла - предоставить желающим качать возможность оценить реальное качество материала без скачивания всей раздачи целиком. Поэтому вырезать сэмпл надо из середины фильма и без каких либо искажений. Достаточно фрагмента на 1-2 минуты. Заливать сэмпл следует только на файлообменники");
-            Assert.That(res2.First().Item1.Iso639_2T, Is.EqualTo("rus"));
+            Assert.Equal("rus", res2.First().Item1.Iso639_2T);
         }
 
-        [Test]
+        [Fact]
         public void TestRankedLanguageIdentifierFactory()
         {
             var factory = new RankedLanguageIdentifierFactory();
             var identifier = factory.Load(_identifierFile);
             var res = identifier.Identify("был зачитан вслух");
-            Assert.That(res.First().Item1.Iso639_2T, Is.EqualTo("rus"));
+            Assert.Equal("rus", res.First().Item1.Iso639_2T);
             var res2 = identifier.Identify("Главная задача сэмпла - предоставить желающим качать возможность оценить реальное качество материала без скачивания всей раздачи целиком. Поэтому вырезать сэмпл надо из середины фильма и без каких либо искажений. Достаточно фрагмента на 1-2 минуты. Заливать сэмпл следует только на файлообменники");
-            Assert.That(res2.First().Item1.Iso639_2T, Is.EqualTo("rus"));
+            Assert.Equal("rus", res2.First().Item1.Iso639_2T);
         }
 
-        [Test]
-        [Ignore("Identifies as Bulgarian instead of Russian when in 200+ languages mode")]
+        [Fact(Skip = "Identifies as Bulgarian instead of Russian when in 200+ languages mode")]
         public void Test2()
         {
             //"Главная задача сэмпла - предоставить желающим качать возможность оценить реальное качество материала без скачивания всей раздачи целиком. Поэтому вырезать сэмпл надо из середины фильма и без каких либо искажений. Достаточно фрагмента на 1-2 минуты. Заливать сэмпл следует только на файлообменники";
         }
 
 
-        [Test]
+        [Fact]
         public void TestTrainIdentifyCycle_Naive()
         {
             TestCase[] testCases = PrepareTestCases();
@@ -53,11 +49,11 @@ namespace NTextCat.Test
 
             foreach (var testCase in testCases)
             {
-                Assert.That(identifier.Identify(testCase.Query).First().Item1.Iso639_2T, Is.EqualTo(testCase.ISO639_2T));
+                Assert.Equal(identifier.Identify(testCase.Query).First().Item1.Iso639_2T, testCase.ISO639_2T);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestTrainIdentifyCycle_Ranked()
         {
             TestCase[] testCases = PrepareTestCases();
@@ -67,7 +63,7 @@ namespace NTextCat.Test
 
             foreach (var testCase in testCases)
             {
-                Assert.That(identifier.Identify(testCase.Query).First().Item1.Iso639_2T, Is.EqualTo(testCase.ISO639_2T));
+                Assert.Equal(identifier.Identify(testCase.Query).First().Item1.Iso639_2T, testCase.ISO639_2T);
             }
         }
 
