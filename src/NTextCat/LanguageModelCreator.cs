@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using IvanAkcheurov.NClassify;
+using NTextCat.NClassify;
 using NGram = System.UInt64;
 
 namespace NTextCat

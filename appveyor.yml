@@ -24,9 +24,10 @@ build:
   publish_nuget: false             # package projects with .nuspec files and push to 
 
 after_build:
-- cmd: botnet pack ./src/NTextCat/NTextCat.csproj
+- cmd: echo "Building packages"
+- cmd: dotnet pack ./src/NTextCat/NTextCat.csproj
 
-artifacts
+artifacts:
 - path: '**\*.nupkg'
 
 deploy:
@@ -63,5 +64,4 @@ for:
       package_version: '{version}-{branch}'
       assembly_version: '{version}'
       file_version: '{version}'
-      informational_version: '{version}-{branch}'
       informational_version: '{version}-{branch}'

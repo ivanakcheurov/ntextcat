@@ -1,19 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace NTextCat.Test
 {
-    [TestFixture]
+
     public class CharacterNgramExtractorTest
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             //using (FileStream stream = new FileStream("TestData\\sample.txt", FileMode.Open))
             var ngrams = new HashSet<string>(new CharacterNGramExtractor(5).GetFeatures("The quick brown fox"));
-            Assert.IsTrue(ngrams.SetEquals(expectedNgrams));
+            Assert.True(ngrams.SetEquals(expectedNgrams));
         }
 
         private readonly string[] expectedNgrams =
@@ -25,18 +23,18 @@ namespace NTextCat.Test
                     "f", "_f", "o", "fo", "_fo", "x", "ox", "fox", "_fox", "x_", "ox_", "fox_", "_fox_"
                 };
 
-        [Test]
+        [Fact]
         public void TestMaxLinesToRead()
         {
             //using (FileStream stream = new FileStream("TestData\\sample.txt", FileMode.Open))
             var ngrams = new HashSet<string>(new CharacterNGramExtractor(1, 5).GetFeatures("abcdef\rghjjk\nlmn\nopq\r\nrstu\r\nvwxyz"));
             foreach (char ngram in "abcdefghjjklmnopqrstu")
             {
-                Assert.IsTrue(ngrams.Contains(ngram.ToString()));
+                Assert.Contains(ngram.ToString(), ngrams);
             }
             foreach (char ngram in "vwxyz")
             {
-                Assert.IsFalse(ngrams.Contains(ngram.ToString()));
+                Assert.DoesNotContain(ngram.ToString(), ngrams);
             }
         }
     }

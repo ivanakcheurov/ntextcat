@@ -1,5 +1,5 @@
-NTextCat 0.2.1
-http://ntextcat.codeplex.com
+NTextCat
+https://github.com/ivanakcheurov/ntextcat
 
 NTextCat is a text classification utility (tool and API).
 The primary target is language identification. So it helps you to recognize (identify) the language of a text snippet.
