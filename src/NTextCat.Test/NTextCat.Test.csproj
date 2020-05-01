@@ -25,9 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NTextCat.Commons\NTextCat.Commons.csproj" />
     <ProjectReference Include="..\NTextCat\NTextCat.csproj" />
-    <ProjectReference Include="..\NTextCat.NClassify\NTextCat.NClassify.csproj" />
   </ItemGroup>
 
 </Project>

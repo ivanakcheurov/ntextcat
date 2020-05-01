@@ -4,11 +4,38 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\StrongNameKey.snk</AssemblyOriginatorKeyFile>
+        
+    <PackageId>NTextCat</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Ivan Akcheurov</Authors>
+    <Description>Helps to recognize (identify) the language of a given text. NTextCat is a text classification utility (tool and API).</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>
+            - Upgraded to .NET Standard 2.0. 
+            - Removed SQL DB adapter.
+    </PackageReleaseNotes>
+    <PackageTags>Language;Identification;Detection;Recognition</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IncludeSource>true</IncludeSource>
+    <RepositoryUrl>https://github.com/ivanakcheurov/ntextcat</RepositoryUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\netstandard2.0\NTextCat.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <DocumentationFile>bin\Release\netstandard2.0\NTextCat.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NTextCat.Commons\NTextCat.Commons.csproj" />
-    <ProjectReference Include="..\NTextCat.NClassify\NTextCat.NClassify.csproj" />
+    <Content Include="../LanguageModels/Core14.profile.xml">
+      <Pack>true</Pack>
+      <PackagePath>content</PackagePath>
+    </Content>
+    <Content Include="../README.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
   </ItemGroup>
-
 </Project>
