@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using IvanAkcheurov.Commons;
+using NTextCat.Commons;
 using Mono.Options;
-using IvanAkcheurov.NClassify;
-using NTextCat;
 
-namespace IvanAkcheurov.NTextCat.Cli
+using Microsoft.Extensions.Configuration;
+
+namespace NTextCat.Cli
 {
     class Program
     {
@@ -21,12 +20,18 @@ namespace IvanAkcheurov.NTextCat.Cli
             //Debugger.Launch();
             //MemoryStream s = new MemoryStream();
             //Console.OpenStandardInput().CopyTo(s);
-            double defaultWorstAcceptableThreshold = XmlConvert.ToDouble(ConfigurationManager.AppSettings["WorstAcceptableThreshold"]);
-            int defaultTooManyLanguagesThreshold = XmlConvert.ToInt32(ConfigurationManager.AppSettings["TooManyLanguagesThreshold"]);
-            string defaultLanguageIdentificationProfileFilePath = ConfigurationManager.AppSettings["LanguageIdentificationProfileFilePath"];
-            int defaultOccuranceNumberThreshold = XmlConvert.ToInt32(ConfigurationManager.AppSettings["OccuranceNumberThreshold"]);
-            int defaultMaximumSizeOfDistribution = XmlConvert.ToInt32(ConfigurationManager.AppSettings["MaximumSizeOfDistribution"]);
-            bool defaultDisallowMultithreading = XmlConvert.ToBoolean(ConfigurationManager.AppSettings["DisallowMultithreading"]);
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+
+            double defaultWorstAcceptableThreshold = XmlConvert.ToDouble(config["WorstAcceptableThreshold"]);
+            int defaultTooManyLanguagesThreshold = XmlConvert.ToInt32(config["TooManyLanguagesThreshold"]);
+            string defaultLanguageIdentificationProfileFilePathUnix = config["LanguageIdentificationProfileFilePath"];
+            string defaultLanguageIdentificationProfileFilePath = defaultLanguageIdentificationProfileFilePathUnix.Replace('/', Path.DirectorySeparatorChar);
+            int defaultOccuranceNumberThreshold = XmlConvert.ToInt32(config["OccuranceNumberThreshold"]);
+            int defaultMaximumSizeOfDistribution = XmlConvert.ToInt32(config["MaximumSizeOfDistribution"]);
+            bool defaultDisallowMultithreading = XmlConvert.ToBoolean(config["DisallowMultithreading"]);
 
             bool opt_help = false;
             string opt_train = null;

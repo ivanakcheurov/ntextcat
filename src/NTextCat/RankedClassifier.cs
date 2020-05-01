@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IvanAkcheurov.NClassify;
+using NTextCat.NClassify;
 
 namespace NTextCat
 {

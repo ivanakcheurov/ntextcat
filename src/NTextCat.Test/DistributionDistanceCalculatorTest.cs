@@ -1,42 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IvanAkcheurov.NClassify;
-using NTextCat;
-using NUnit.Framework;
-using Accord.Statistics.Analysis;
+﻿using NTextCat.NClassify;
+using Xunit;
 
 namespace NTextCat.Test
 {
-    [TestFixture]
+
     public class DistributionDistanceCalculatorTest
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var distanceCalculator = new DistributionDistanceCalculator();
-            Assert.That(
-                distanceCalculator.CalculateDistance(
+            Assert.Equal(
+1.0,                 distanceCalculator.CalculateDistance(
                     new Distribution<string>(new Bag<string> {{"1", 1}, {"2", 1}, {"3", 1}}),
-                    new Distribution<string>(new Bag<string> { { "A", 1 }, { "B", 1 }, { "C", 1 } })), Is.EqualTo(1.0).Within(0.000000000000001));
+                    new Distribution<string>(new Bag<string> { { "A", 1 }, { "B", 1 }, { "C", 1 } })));
 
-            Assert.That(
-                distanceCalculator.CalculateDistance(
+            Assert.Equal(
+0.0,                 distanceCalculator.CalculateDistance(
                     new Distribution<string>(new Bag<string> { { "1", 1 }, { "2", 1 }, { "3", 1 } }),
-                    new Distribution<string>(new Bag<string> { { "1", 1 }, { "2", 1 }, { "3", 1 } })), Is.EqualTo(0.0));
+                    new Distribution<string>(new Bag<string> { { "1", 1 }, { "2", 1 }, { "3", 1 } })));
 
-            Assert.That(
+            Assert.Equal(
+                0.625,
                 distanceCalculator.CalculateDistance(
                     new Distribution<string>(new Bag<string> {{"1", 1}, {"2", 2}}),
-                    new Distribution<string>(new Bag<string> {{"2", 3}, {"4", 5}})),
-                Is.EqualTo(0.625).Within(0.000000000000001));
+                    new Distribution<string>(new Bag<string> {{"2", 3}, {"4", 5}})));
 
-            Assert.That(
+            Assert.Equal(
+                0.25, 
                 distanceCalculator.CalculateDistance(
                     new Distribution<string>(new Bag<string> { { "1", 1 }, { "2", 5 }, { "3", 2 } }),
-                    new Distribution<string>(new Bag<string> { { "1", 1 }, { "2", 5 }, { "4", 2 } })), 
-                Is.EqualTo(0.25).Within(0.000000000000001));
+                    new Distribution<string>(new Bag<string> { { "1", 1 }, { "2", 5 }, { "4", 2 } })));
         }
     }
 }

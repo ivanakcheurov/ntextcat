@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using IvanAkcheurov.NClassify;
-using NTextCat;
-using NUnit.Framework;
+using NTextCat.NClassify;
+using Xunit;
 
 namespace NTextCat.Test
 {
-    [TestFixture]
+
     public class CustomDomainCategorizerTest
     {
-        [Test]
+        [Fact]
         public void Test()
         {
             var trainingDocuments =
                 new Dictionary<string, string>
                     {
-                        { "sports", File.ReadAllText("..\\..\\TestData\\Sports.txt") }, 
-                        { "economy", File.ReadAllText("..\\..\\TestData\\Economy.txt") },
+                        { "sports", File.ReadAllText(Path.Combine("..","..","..","TestData","Sports.txt")) }, 
+                        { "economy", File.ReadAllText(Path.Combine("..","..","..","TestData","Economy.txt")) },
                     };
             var featureExtractor = new BagOfWordsFeatureExtractor();
             var trainedModels = new Dictionary<IDistribution<string>, string>();
@@ -32,12 +30,12 @@ namespace NTextCat.Test
                 new KnnMonoCategorizedClassifier<IDistribution<string>, string>(new VectorDistanceCalculator<string>(), trainedModels);
             var resultSports = classifier.Classify(CreateModel(featureExtractor,
                 "Fitch Ratings on Wednesday said Britain's latest budget proposals show commitment to its existing deficit reduction strategy and do not impact its AAA credit rating.")).ToArray();
-            Assert.GreaterOrEqual(resultSports.Length, 1);
-            Assert.AreEqual(resultSports[0].Item1, "economy");
+            Assert.True(resultSports.Length >= 1);
+            Assert.Equal("economy", resultSports[0].Item1);
             var resultFinance = classifier.Classify(CreateModel(featureExtractor,
                 "Ryan Flannigan strikes a four off the last ball to help Scotland claim a four-wicket win over Canada in the fifth-place play-off at the qualifying tournament for the ICC World Twenty20 in Dubai.")).ToArray();
-            Assert.GreaterOrEqual(resultFinance.Length, 1);
-            Assert.AreEqual(resultFinance[0].Item1, "sports");
+            Assert.True(resultFinance.Length >= 1);
+            Assert.Equal("sports", resultFinance[0].Item1);
         }
 
         private static IDistribution<string> CreateModel(IFeatureExtractor<string, Tuple<string, int>> featureExtractor, string document)
