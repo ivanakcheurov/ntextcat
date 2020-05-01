@@ -1,42 +1,67 @@
-version: 0.2.1.{build}
-branches:
-  only:
-    - master
-skip_tags: true
-clone_depth: 50
-cache:
-  src\packages -> **\packages.config
-assembly_info:
-  patch: true
-  file: src\NTextCat\Properties\CommonAssemblyInfo.cs
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
-platform: Any CPU
-configuration: Release
-build:
-  parallel: true
-  project: src\NTextCat.sln
-  publish_nuget: true
-  publish_nuget_symbols: true
-  include_nuget_references: true
-nuget:
-  account_feed: true
-  project_feed: true
-  disable_publish_on_pr: true
-  
-after_build:
-  - ps: Get-ChildItem -Recurse .
-test:
-  assemblies:
-    - '**\*.Test.dll'
-  #  - src\NTextCat.Test\bin\Release\NTextCat.Test.dll
-# Automatically register private account and/or project AppVeyor NuGet feeds.
-after_test:
-  - nuget pack src\NTextCat\NTextCat.csproj -IncludeReferencedProjects -Symbols -Prop "Configuration=%CONFIGURATION%;Platform=AnyCPU" -Verbosity detailed
+# version format
+version: 0.3.{build}
 
-artifacts:
-  - path: '**\NTextCat.*.nupkg'
-  - path: src\NTextCat\bin\$(configuration)
-    name: NTextCat binaries
-    type: zip
+# you can use {branch} name in version format too
+# version: 1.0.{build}-{branch}
+
+# Do not build feature branch with open Pull Requests
+skip_branch_with_pr: true
+
+skip_commits: 
+  message: /NO_BUILD/
+
+image: Visual Studio 2019
+
+install:
+  # to avoid a build error "project.assets.json not found"
+  - dotnet restore ./src
+
+# Build settings, not to be confused with "before_build" and "after_build".
+# "project" is relative to the original build directory and not influenced by directory changes in "before_build".
+build:
+  parallel: true                  # enable MSBuild parallel builds
+  project: src/NTextCat/NTextCat.csproj       # path to Visual Studio solution or project
+  publish_nuget: false             # package projects with .nuspec files and push to 
+
+after_build:
+- cmd: botnet pack ./src/NTextCat/NTextCat.csproj
+
+artifacts
+- path: '**\*.nupkg'
+
+deploy:
+  - provider: NuGet
+    skip_symbols: false     # generate and publish NuGet symbol packages
+    api_key:
+      secure: HsYsJEJ+1QjI7I2ZTGzCtwqohFlYK67CUq4xemWtdBfhjOpwdWD7sTNVbcG0Lg32
+    
+
+for:    
+  -
+    branches:
+      only:
+        - master
+
+    configuration: Release
+        
+    dotnet_csproj:
+      patch: true
+      file: '**\*.csproj'
+      version: '{version}'
+      package_version: '{version}'
+      assembly_version: '{version}'
+      file_version: '{version}'
+      informational_version: '{version}'
+
+  -
+    configuration: Debug
+        
+    dotnet_csproj:
+      patch: true
+      file: '**\*.csproj'
+      version: '{version}'
+      package_version: '{version}-{branch}'
+      assembly_version: '{version}'
+      file_version: '{version}'
+      informational_version: '{version}-{branch}'
+      informational_version: '{version}-{branch}'
