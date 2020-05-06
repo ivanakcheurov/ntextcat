@@ -12,6 +12,10 @@ skip_commits:
 
 image: Visual Studio 2019
 
+# debugging appveyor.yml with RDP to the build server
+# init:
+#   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 install:
   # to avoid a build error "project.assets.json not found"
   - dotnet restore ./src
@@ -21,11 +25,9 @@ install:
 build:
   parallel: true                  # enable MSBuild parallel builds
   project: src/NTextCat/NTextCat.csproj       # path to Visual Studio solution or project
-  publish_nuget: false             # package projects with .nuspec files and push to 
-
-after_build:
-- cmd: echo "Building packages"
-- cmd: dotnet pack ./src/NTextCat/NTextCat.csproj
+  publish_nuget: true             # package projects with .nuspec files and push to artifacts
+  publish_nuget_symbols: true     # generate and publish NuGet symbol packages
+  verbosity: minimal
 
 artifacts:
 - path: '**\*.nupkg'
@@ -35,7 +37,10 @@ deploy:
     skip_symbols: false     # generate and publish NuGet symbol packages
     api_key:
       secure: HsYsJEJ+1QjI7I2ZTGzCtwqohFlYK67CUq4xemWtdBfhjOpwdWD7sTNVbcG0Lg32
-    
+
+# debugging appveyor.yml with RDP to the build server
+# on_finish:
+#   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 for:    
   -
