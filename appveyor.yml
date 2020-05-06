@@ -24,7 +24,7 @@ install:
 # "project" is relative to the original build directory and not influenced by directory changes in "before_build".
 build:
   parallel: true                  # enable MSBuild parallel builds
-  project: src/NTextCat/NTextCat.csproj       # path to Visual Studio solution or project
+  project: src/NTextCat.sln       # path to Visual Studio solution or project
   publish_nuget: true             # package projects with .nuspec files and push to artifacts
   publish_nuget_symbols: true     # generate and publish NuGet symbol packages
   use_snupkg_format: true
