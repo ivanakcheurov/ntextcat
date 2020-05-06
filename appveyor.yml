@@ -27,10 +27,8 @@ build:
   project: src/NTextCat/NTextCat.csproj       # path to Visual Studio solution or project
   publish_nuget: true             # package projects with .nuspec files and push to artifacts
   publish_nuget_symbols: true     # generate and publish NuGet symbol packages
+  use_snupkg_format: true
   verbosity: minimal
-
-artifacts:
-- path: '**\*.nupkg'
 
 deploy:
   - provider: NuGet
