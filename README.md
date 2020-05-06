@@ -1,28 +1,40 @@
 # ntextcat
-<img src=https://ci.appveyor.com/api/projects/status/2to4pti81u4lpj7q?retina=true>
 
-    PM> Install-Package NTextCat
-    
-Please try it out: **<a href="http://ivanakcheurov.github.io/ntextcat/">Online DEMO</a>**
+| Appveyor | NuGet | License |
+|----------|-------| --------|
+|[![Build status](https://ci.appveyor.com/api/projects/status/github/ivanakcheurov/NTextCat?svg=true)](https://ci.appveyor.com/project/ivanakcheurov/NTextCat/branch/master) |[![NuGet](https://img.shields.io/nuget/v/NTextCat.svg)](https://www.nuget.org/packages/NTextCat/) [![Usage](https://img.shields.io/nuget/dt/NTextCat.svg)](https://www.nuget.org/stats/packages/NTextCat?groupby=Version) |[![License](https://img.shields.io/github/license/ivanakcheurov/NTextCat.svg)](https://github.com/ivanakcheurov/NTextCat/blob/master/license.MIT)|
 
-<a href="http://www.nuget.org/packages/NTextCat/">NuGet</a>
+## Why NTextCat?
+- *NTextCat* helps to recognize (identify) the language of a given text (e.g. read a sentence and say it is *Italian*). 
+- *NTextCat* can also be used for text classification (e.g. read a paragraph and say it belongs to *Sports* category).
 
-NTextCat 0.2.1
-* Recommended length of a text snippet has been reduced to 5 (though mostly a single word is handled correctly).
-* Simplified and made more consistent API.
-* Fixed NaiveBayesLanguageIdentifier so that it performs as good as RankedLanguageIdentifier
-* NTextCat.exe provides the main command line interface from now on (it's command line API may be changed in several subsequent releases).
-* Much better support for asian languages.
-* Based on the feedback, a set of 14 the most popular languages has been selected. It has become a default. The set: Chinese, Danish, Dutch, English, French, German, Italian, Japanese, Korean, Norwegian, Portugese, Russian, Spanish, Swedish
-* SqlServerClrIntegration is not in the release yet. It will be reintroduced in one of the next releases recompiled and verified for SQL Server 2012.
-* Fixed a bug in GaussianBag
-* More rigid testing routines as preparations to produce a stable release.
+Try it out yourself: [ONLINE DEMO](https://ivanakcheurov.github.io/ntextcat/).
+Recommended input: a snippet of text with at least 5 words (though it works quite OK with just a couple of words). 
 
-<h3>The MIT License (MIT)</h3>
-Copyright (c) 2017 Ivan Akcheurov
+## How to use
+*NTextCat* supports .NET Standard 2.0.
+Just install the [NTextCat NuGet package](https://www.nuget.org/packages/NTextCat/):
+```
+dotnet add package NTextCat
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Then we can use *NTextCat* to detect the language of a text.
+```csharp
+using NTextCat;
+...
+// Don't forget to deploy a language profile (e.g. Core14.profile.xml) with your application.
+// (take a look at "content" folder inside of NTextCat nupkg and here: https://github.com/ivanakcheurov/ntextcat/tree/master/src/LanguageModels).
+var factory = new RankedLanguageIdentifierFactory();
+var identifier = factory.Load("Core14.profile.xml"); // can be an absolute or relative path. Beware of 260 chars limitation of the path length in Windows. Linux allows 4096 chars.
+var languages = identifier.Identify("your text to get its language identified");
+var mostCertainLanguage = languages.FirstOrDefault();
+if (mostCertainLanguage != null)  
+    Console.WriteLine("The language of the text is '{0}' (ISO639-3 code)", mostCertainLanguage.Item1.Iso639_3);  
+else 
+    Console.WriteLine("The language couldn’t be identified with an acceptable degree of certainty");
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// outputs: The language of the text is 'eng' (ISO639-3 code)
+```
+
+
