@@ -56,7 +56,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "https://ntextcat.azurewebsites.net/api/language-identification",
+                url: "https://ntextcat-func-win.azurewebsites.net/api/HttpTrigger1",
                 // The key needs to match your method's input parameter (case-sensitive).
                 data: JSON.stringify({ text: $('#txtLanguage').val() }),
                 contentType: "application/json; charset=utf-8",
