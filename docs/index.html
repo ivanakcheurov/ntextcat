@@ -28,15 +28,6 @@
         </div>
     </header>
     <div id="body">
-        <div id="fb-root">
-        </div>
-        <script>            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-                fjs.parentNode.insertBefore(js, fjs);
-            } (document, 'script', 'facebook-jssdk'));</script>
         
         <section class="content-wrapper main-content clear-fix">
             
@@ -62,7 +53,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    //$("#dialog:ui-dialog").dialog("destroy");
+                    $("#dialog:ui-dialog").dialog("destroy");
                     if (data.length > 0) {
                         $('#result').html('The language of the text entered is <b>' + data.toUpperCase() + '</b>.');
                     } else {
@@ -116,35 +107,8 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p>
-                    &copy; 2016 - NTextCat</p>
-                <p><a href="/Home/about">About Us</a></p>
-            </div>
-            <div class="float-right">
-                <ul id="social">
-                    <li>
-                        <!-- Place this tag where you want the +1 button to render -->
-                        <div class="g-plusone" data-href="http://www.NTextCat.com">
-                        </div>
-                        <!-- Place this render call where appropriate -->
-                        <script type="text/javascript">
-                            (function () {
-                                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                                po.src = 'https://apis.google.com/js/plusone.js';
-                                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                            })();
-                        </script>
-                    </li>
-                    <li><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.NTextCat.com"
-                        data-text="NTextCat is text classification utility (tool and API). Primary target is language identification. So it helps you to recognize (identify) the language of text (or binary) snippet. NTextCat is inspired by famous Perl utility for language identification: TextCat"
-                        data-via="NTextCat">Tweet</a>
-                        <script>                            !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
-                    </li>
-                    <li>
-                        <div class="fb-like" data-href="http://www.NTextCat.com" data-send="false" data-layout="button_count"
-                            data-width="150" data-show-faces="true">
-                        </div>
-                    </li>
-                </ul>
+                    &copy; 2020 - NTextCat</p>
+                <p><a href="http://github.com/ivanakcheurov/ntextcat/">GitHub</a></p>
             </div>
         </div>
     </footer>
