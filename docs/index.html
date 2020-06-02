@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/Product">
 <head>
-    <base href="/ntextcat/" />
     <meta charset="utf-8" />
     <title>NTextCat 0.3.65</title>
     <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -45,27 +44,24 @@
             }
             $('#result').html('<i>Identifying the language...<i>');
 
-            $.ajax({
-                type: "POST",
-                url: "https://ntextcat-func-win.azurewebsites.net/api/HttpTrigger1",
-                // The key needs to match your method's input parameter (case-sensitive).
-                data: JSON.stringify({ text: $('#txtLanguage').val() }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    $("#dialog:ui-dialog").dialog("destroy");
-                    if (data.length > 0) {
-                        $('#result').html('The language of the text entered is <b>' + data.toUpperCase() + '</b>.');
-                    } else {
-                        $('#result').html('<b>Cannot determine the language.</b>');
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        $("#dialog:ui-dialog").dialog("destroy");
+                        if (this.responseText.length > 0) {
+                            $('#result').html('The language of the text entered is <b>' + this.responseText.toUpperCase() + '</b>.');
+                        } else {
+                            $('#result').html('<b>Cannot determine the language.</b>');
+                        }
                     }
-                },
-                failure: function(errMsg) {
-                    $('#result').html('<b>Cannot determine the language:</b> ' + errMsg);
+                    else{
+                        $('#result').html('<b>Error</b>:' + this.responseText);
+                    }
                 }
-
-            });
-
+            };
+            xhttp.open("POST", "https://ntextcat-func-win.azurewebsites.net/api/HttpTrigger1", true);
+            xhttp.send(JSON.stringify({ text: $('#txtLanguage').val() }));
         }
 
         $("#txtLanguage").bind('input propertychange', function () {
